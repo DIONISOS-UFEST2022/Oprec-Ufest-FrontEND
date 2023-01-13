@@ -3,9 +3,9 @@ import "./About.scss"
 import axios from "axios"
 
 export function About() {
-  axios.get("http://127.0.0.1:8000/api/test").then((res) => {
-    console.log(res.data)
-  })
+  // axios.get("http://127.0.0.1:8000/api/test").then((res) => {
+  //   console.log(res.data)
+  // })
 
   return (
     <Box className="about">

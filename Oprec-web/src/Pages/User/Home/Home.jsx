@@ -25,7 +25,7 @@ export default function Home() {
 
     return (
         <Box ref={homeRef} className="home" height={"900px"}>
-            <div class="circle first"></div>
+            <div className="circle first"></div>
             <Heading opacity={0} ref={homeTitleRef}>Really feels like Home. </Heading>
         </Box>
     )

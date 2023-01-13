@@ -17,7 +17,7 @@ function LinkCard(props) {
 export function Footer() {
     return (<Box>
         <Flex
-            templateAreas={`"section1 section2 section3 section4"
+            templateareas={`"section1 section2 section3 section4"
             "foot foot foot foot"`}
             className="Footer"
             direction={{ base: 'column', md: 'row' }}

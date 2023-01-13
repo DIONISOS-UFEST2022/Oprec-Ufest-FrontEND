@@ -13,6 +13,7 @@ import {
 } from 'react-transition-group';
 import "./User.scss"
 import { Register } from './Login/Register';
+import { Join } from './Join/Join';
 
 
 function FadeDiv(props) {
@@ -24,6 +25,7 @@ function FadeDiv(props) {
             transform={props.state === "entered" ? "translate(0,0)" : "translate(30%, 0% )"}
             opacity={props.state === "entered" ? 1 : 0}
             display={props.state === "exited" ? "none" : "block"}
+            timeout={props.timeout}
         >
             {props.children}
         </Box>
@@ -33,7 +35,7 @@ function FadeDiv(props) {
 
 const FadeTransition = ({ children, ...rest }) => (
     <Transition {...rest}>
-        {state => <FadeDiv state={state}>{children}</FadeDiv>}
+        {state => <FadeDiv timeout={500} state={state}>{children}</FadeDiv>}
     </Transition>
 );
 
@@ -48,12 +50,10 @@ export function User() {
         <Box className="user">
             <AllContext.Provider value={{ page, setpage }}>
                 <Navbar handleClick={handleClick} />
-                <SwitchTransition
-                    timeout={250}
-                    unmountOnExit
-                    mountOnEnter
-                >
-                    <FadeTransition key={page}>
+                <SwitchTransition>
+                    <FadeTransition key={page}
+                        timeout={200}
+                    >
                         {(() => {
                             switch (page) {
                                 case 'home':
@@ -66,13 +66,16 @@ export function User() {
                                     return <Login handleClick={handleClick} />
                                 case 'register':
                                     return <Register handleClick={handleClick} />
+                                case 'join':
+                                    return <Join handleClick={handleClick} />
                                 default:
                                     return null;
                             }
                         })()}
-                        <Footer />
+
                     </FadeTransition>
                 </SwitchTransition>
+                <Footer />
             </AllContext.Provider>
         </Box>
     )

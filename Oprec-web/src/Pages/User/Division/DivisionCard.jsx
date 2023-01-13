@@ -1,10 +1,10 @@
 import { Box, Text, Image } from "@chakra-ui/react";
-import "./Divison.scss"
+import "./Division.scss"
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect } from 'react';
 
-export function DivisonCard(Props) {
+export function DivisionCard(Props) {
     useEffect(() => {
         AOS.init();
     }, [])
@@ -22,9 +22,9 @@ export function DivisonCard(Props) {
             }
 
         >
-            <Box className="DivisonCard">
-                <Image className="DivisonLogo" />
-                <h1 className="DivisonCardTitle">{Props.name} - {Props.divison}</h1>
+            <Box className="DivisionCard">
+                <Image className="DivisionLogo" />
+                <h1 className="DivisionCardTitle">{Props.name} - {Props.Division}</h1>
                 <Text className="namedesc">&ldquo; {Props.namedesc} &rdquo;</Text>
             </Box>
         </Box>)

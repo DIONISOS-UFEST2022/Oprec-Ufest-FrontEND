@@ -24,7 +24,7 @@ const schema = Yup.object().shape({
 
 });
 
-export function Register(props) {
+export function Join(props) {
     // next input when press enter
     const formInput = useRef(null);
     const EnterHandleClick = (e) => {
@@ -55,7 +55,7 @@ export function Register(props) {
                         <div className="form">
                             {/* Passing handleSubmit parameter tohtml form onSubmit property */}
                             <form noValidate onSubmit={handleSubmit}>
-                                <span>Register</span>
+                                <span>JOIN US!</span>
                                 {/* Our input html with passing formik parameters like handleChange, values, handleBlur to input properties */}
                                 <input
                                     ref={formInput}

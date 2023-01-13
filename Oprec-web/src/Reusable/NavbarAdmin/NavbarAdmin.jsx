@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import { AllContext } from "../Context/AllContext";
-import "./Navbar.scss";
+import "./NavbarAdmin.scss";
 
 
 
@@ -23,7 +23,7 @@ function NavbarButton(props) {
     )
 }
 
-export function Navbar(props) {
+export function NavbarAdmin(props) {
     const { page, setpage } = useContext(AllContext);
 
     return (
@@ -31,11 +31,10 @@ export function Navbar(props) {
             <Box className="Navbar"
                 width={"100%"}
             >
-                <NavbarButton color={page === "join" ? "red" : "white"} className="NavbarMenu" Title={"JOIN US!"} onClick={() => { props.handleClick('join'); }} />
-                <NavbarButton color={page === "home" ? "red" : "white"} className="NavbarMenu" Title={"Home"} onClick={() => { props.handleClick('home'); }} />
-                <NavbarButton color={page === "about" ? "red" : "white"} className="NavbarMenu" Title={"About"} onClick={() => { props.handleClick('about'); }} />
-                <NavbarButton color={page === "divison" ? "red" : "white"} className="NavbarMenu" Title={"Division"} onClick={() => { props.handleClick('divison'); }} />
-                <NavbarButton color={page === "login" ? "red" : "white"} className="NavbarMenu" Title={"Login"} onClick={() => { props.handleClick('login'); }} />
+                <NavbarButton color={page === "home" ? "red" : "white"} className="NavbarMenu" Title={"Database"} onClick={() => { props.handleClick('database'); }} />
+                <NavbarButton color={page === "about" ? "red" : "white"} className="NavbarMenu" Title={"Division"} onClick={() => { props.handleClick('division'); }} />
+                <NavbarButton color={page === "about" ? "red" : "white"} className="NavbarMenu" Title={"Feature"} onClick={() => { props.handleClick('feature'); }} />
+
             </Box>
             <Box className="NavbarMobile"
                 width={"100%"}
@@ -57,7 +56,6 @@ export function Navbar(props) {
                                     <NavbarButton className="MenuItem" Title={"Division"} onClick={() => { props.handleClick('divison'); }} />
                                     <br />
                                     <NavbarButton className="MenuItem" Title={"Login"} onClick={() => { props.handleClick('login'); }} />
-                                    <br />
                                 </Box>
                             </PopoverBody>
                         </PopoverContent>
