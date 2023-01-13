@@ -1,0 +1,26 @@
+.Footer{
+    width: 100%;
+    justify-content: space-between;
+    overflow: hidden;
+
+    .title{
+        color: #fff;
+        font-weight: bolder;
+    }
+    .footersection{
+        width: 100%;
+        background-color: #000;
+        color: #fff;
+        padding: 20px;
+        text-align: left;
+        // border: 1px solid white;
+    }
+
+}
+
+.footerfoot{
+    padding: 20px;
+    text-align: center;
+    color: #fff;
+    background-color: #000;
+}

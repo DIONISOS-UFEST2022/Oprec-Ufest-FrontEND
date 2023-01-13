@@ -1,0 +1,37 @@
+.Divison {
+    h1 {
+        font-size: 100px;
+        font-weight: bolder;
+        color: #000;
+    }
+}
+
+.DivisonCard {
+    text-align: left;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    color: white;
+    background-color: black;
+    height: 200px;
+
+    .DivisonLogo {
+        width: 100px;
+        height: 100px;
+        margin-right: 10px;
+    }
+
+    .DivisonCardTitle {
+        color: white;
+        font-weight: bolder;
+        font-size: 20px;
+    }
+
+    .namedesc {
+        color: rgb(131, 131, 131);
+        font-size: 15px;
+        font-weight: bold;
+        font-style: italic;
+    }
+}
