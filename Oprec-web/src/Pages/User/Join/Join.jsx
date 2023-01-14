@@ -1,13 +1,40 @@
-import { Box, Text, Link } from "@chakra-ui/react";
+import { Box, Text, Link, Select } from "@chakra-ui/react";
 import "./Login.scss";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useRef } from "react";
 
-
+// Dekorasi
+// Publikasi
+// Keamanan
+// Fresh Money
+// Sponsor
+// Dokumentasi
+// Acara
+// Perlengkapan
+// Lomba
+// Konsumsi
+// Website
+// Visual
 
 // Creating schema
 const schema = Yup.object().shape({
+    divisi: Yup.string()
+        .oneOf([
+            "Dekorasi",
+            "Publikasi",
+            "Keamanan",
+            "Fresh Money",
+            "Sponsor",
+            "Dokumentasi",
+            "Acara",
+            "Perlengkapan",
+            "Lomba",
+            "Konsumsi",
+            "Website",
+            "Visual"
+        ])
+        .required("Division is a required field"),
     fullname: Yup.string()
         .required("Full Name is a required field"),
     nim: Yup.string()
@@ -37,7 +64,7 @@ export function Join(props) {
             {/* Wrapping form inside formik tag and passing our schema to validationSchema prop */}
             <Formik
                 validationSchema={schema}
-                initialValues={{ email: "", password: "", fullname: "", nim: "", repassword: "" }}
+                initialValues={{ input: "", password: "", fullname: "", nim: "", repassword: "", email: "", divisi: "" }}
                 onSubmit={(values) => {
                     // Alert the input values of the form that we filled
                     alert(JSON.stringify(values));
@@ -56,7 +83,33 @@ export function Join(props) {
                             {/* Passing handleSubmit parameter tohtml form onSubmit property */}
                             <form noValidate onSubmit={handleSubmit}>
                                 <span>JOIN US!</span>
-                                {/* Our input html with passing formik parameters like handleChange, values, handleBlur to input properties */}
+                                <br />
+                                <select id="divisi"
+                                    name="divisi"
+                                    placeholder="Select a Country"
+                                    className="form-control inp_text"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.divisi}
+                                >
+                                    <option value='Dekorasi'>Dekorasi</option>
+                                    <option value='Publikasi'>Publikasi</option>
+                                    <option value='Keamanan'>Keamanan</option>
+                                    <option value='Fresh Money'>Fresh Money</option>
+                                    <option value='Sponsor'>Sponsor</option>
+                                    <option value='Dokumentasi'>Dokumentasi</option>
+                                    <option value='Acara'>Acara</option>
+                                    <option value='Perlengkapan'>Perlengkapan</option>
+                                    <option value='Lomba'>Lomba</option>
+                                    <option value='Konsumsi'>Konsumsi</option>
+                                    <option value='Website'>Website</option>
+                                    <option value='Visual'>Visual</option>
+                                </select>
+                                <p className="error">
+                                    {errors.divisi && touched.divisi && errors.divisi}
+                                </p>
+                                <br />
+
                                 <input
                                     ref={formInput}
                                     onKeyDownCapture={EnterHandleClick}
@@ -116,7 +169,7 @@ export function Join(props) {
                                     placeholder="Enter password"
                                     className="form-control"
                                 />
-                                  <p className="error">
+                                <p className="error">
                                     {errors.password && touched.password && errors.password}
                                 </p>
                                 <input
@@ -130,7 +183,7 @@ export function Join(props) {
                                     placeholder="Re-Enter password"
                                     className="form-control"
                                 />
-                                  <p className="error">
+                                <p className="error">
                                     {errors.repassword && touched.repassword && errors.repassword}
                                 </p>
                                 {/* If validation is not passed show errors */}
@@ -152,3 +205,17 @@ export function Join(props) {
 
     );
 }
+
+
+// Dekorasi
+// Publikasi
+// Keamanan
+// Fresh Money
+// Sponsor
+// Dokumentasi
+// Acara
+// Perlengkapan
+// Lomba
+// Konsumsi
+// Website
+// Visual
