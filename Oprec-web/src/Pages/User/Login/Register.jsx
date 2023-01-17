@@ -3,8 +3,10 @@ import "./Login.scss";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useRef } from "react";
-
-
+import { useSelector, useDispatch } from "react-redux";
+import { selectPage } from "../../../Redux/features/page/pageSlice";
+import { pageChanged } from "../../../Redux/features/page/pageSlice";
+import { userLogin, userRegister } from "../../../Redux/features/users/userDataSlice";
 
 // Creating schema
 const schema = Yup.object().shape({
@@ -25,6 +27,8 @@ const schema = Yup.object().shape({
 });
 
 export function Register(props) {
+    // use dispatch to change page
+    const dispatch = useDispatch();
     // next input when press enter
     const formInput = useRef(null);
     const EnterHandleClick = (e) => {
@@ -32,6 +36,7 @@ export function Register(props) {
             formInput.current.focus()
         }
     }
+    const userData = useSelector((state) => state);
     return (
         <Box className="Login">
             {/* Wrapping form inside formik tag and passing our schema to validationSchema prop */}
@@ -41,6 +46,12 @@ export function Register(props) {
                 onSubmit={(values) => {
                     // Alert the input values of the form that we filled
                     alert(JSON.stringify(values));
+                    dispatch(userRegister(
+                        {
+                            email: values.email,
+                        }
+                    ));
+                    console.log(userData);
                 }}
             >
                 {({
@@ -116,7 +127,7 @@ export function Register(props) {
                                     placeholder="Enter password"
                                     className="form-control"
                                 />
-                                  <p className="error">
+                                <p className="error">
                                     {errors.password && touched.password && errors.password}
                                 </p>
                                 <input
@@ -130,7 +141,7 @@ export function Register(props) {
                                     placeholder="Re-Enter password"
                                     className="form-control"
                                 />
-                                  <p className="error">
+                                <p className="error">
                                     {errors.repassword && touched.repassword && errors.repassword}
                                 </p>
                                 {/* If validation is not passed show errors */}
@@ -140,7 +151,7 @@ export function Register(props) {
                             <br />
                             <Text fontSize={"15px"}>
                                 Already have account?{' '}
-                                <Link color='teal.500' onClick={() => { props.handleClick('login'); }}>
+                                <Link color='teal.500' onClick={() => { dispatch(pageChanged('login')) }}>
                                     Login now!
                                 </Link>
                             </Text>

@@ -1,7 +1,7 @@
 import { Box, Heading } from "@chakra-ui/react";
 import { useState } from "react";
 import { Database } from "../Database/Database";
-import { DivisonMenu } from "./DivisionMenuDetail";
+import { DivisonMenu } from "./DivisonDetail/DivisionMenuDetail";
 import { DivisionNav } from "./DivisionNav";
 
 export function Division(props) {
@@ -11,7 +11,7 @@ export function Division(props) {
     };
     return (
         <Box className="Divison">
-   
+
             {(() => {
                 switch (division) {
                     case 'divison':

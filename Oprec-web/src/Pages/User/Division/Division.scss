@@ -10,7 +10,7 @@
     text-align: left;
     border: 1px solid black;
     border-radius: 10px;
-    padding: 10px;
+    padding: 20px;
     margin: 10px;
     color: white;
     background-color: black;
@@ -20,6 +20,8 @@
         width: 100px;
         height: 100px;
         margin-right: 10px;
+        border-radius: 50%;
+        border: 1px solid white;
     }
 
     .DivisionCardTitle {
@@ -33,5 +35,36 @@
         font-size: 15px;
         font-weight: bold;
         font-style: italic;
+    }
+}
+
+
+
+
+
+.Gallery {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
+    .gallery {
+        background: #EEE;
+    }
+
+    .gallery-cell {
+        width: 66%;
+        height: 200px;
+        margin-right: 10px;
+        background: #8C8;
+        counter-increment: gallery-cell;
+    }
+
+    /* cell number */
+    .gallery-cell:before {
+        display: block;
+        text-align: center;
+        content: counter(gallery-cell);
+        line-height: 200px;
+        font-size: 80px;
+        color: white;
     }
 }

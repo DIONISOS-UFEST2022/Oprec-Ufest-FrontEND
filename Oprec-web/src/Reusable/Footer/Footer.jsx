@@ -24,32 +24,46 @@ export function Footer() {
         >
             <Box className="footersection" area={'section1'}>
                 <Center>
-                    <Image background={"white"} height="100px" width={"100px"} />
+                    <Image className="image" background={"white"} />
                 </Center>
             </Box>
             <Box className="footersection" area={'section2'}>
                 <Text className="title">Address</Text>
-                Universitas Multimedia Nusantara
-                <br />
-                Jl. Scientia Boulevard,
-                <br />
-                Gading Serpong,
-                <br />
-                Tangerang Banten - 15811,
-                <br />
-                Indonesia
+                <Text className="address">
+                    Universitas Multimedia Nusantara
+                    <br />
+                    Jl. Scientia Boulevard,
+                    <br />
+                    Gading Serpong,
+                    <br />
+                    Tangerang Banten - 15811,
+                    <br />
+                    Indonesia
+                </Text>
             </Box>
             <Box className="footersection" area={'section3'}>
                 <Text className="title">Contact</Text>
-                <LinkCard image={icon_email} title="umnfestival@umn.ac.id" />
-                <LinkCard image={icon_instagram} title="@umnfestival" />
-                <LinkCard image={icon_tiktok} title="@umnfestival" />
-                <LinkCard image={icon_line} title="@877tuixh" />
+                <a target={"_blank"} className="link" href="mailto:umnfestival@umn.ac.id">
+                    <LinkCard image={icon_email} title="umnfestival@umn.ac.id" />
+                </a>
+                <a className="link" href="https://www.tiktok.com/@umnfestival">
+                    <LinkCard image={icon_instagram} title="@umnfestival" />
+                </a>
+                <a className="link" href="https://www.tiktok.com/@umnfestival">
+                    <LinkCard image={icon_tiktok} title="@umnfestival" />
+                </a>
+                <a className="link" href="https://page.line.me/?accountId=877tuixh">
+                    <LinkCard image={icon_line} title="@877tuixh" />
+                </a>
             </Box>
             <Box className="footersection" area={'section4'}>
                 <Text className="title">Link</Text>
-                <LinkCard image={icon_youtube} title="UMN Festival" />
-                <LinkCard image={icon_website} title="UMN Festival" />
+                <a target={"_blank"} className="link" href="https://www.youtube.com/channel/UCnXYSFlUeQn8dFDtYo4HABQ">
+                    <LinkCard image={icon_youtube} title="UMN Festival" />
+                </a>
+                <a target={"_blank"} className="link" href="https://ufest.umn.ac.id">
+                    <LinkCard image={icon_website} title="UMN Festival" />
+                </a>
             </Box>
         </Flex>
         <Box className="footerfoot" area={'foot'}>

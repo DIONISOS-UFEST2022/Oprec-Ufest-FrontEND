@@ -1,9 +1,16 @@
-import { Box, Heading, Image } from "@chakra-ui/react"
+import { Box, Button, Heading, Image } from "@chakra-ui/react"
 import { useEffect, useRef } from "react"
+import { Bird } from "./bird/bird";
 import "./Home.scss"
+import { BgBush, Bush } from "./testbush/bush";
+import { useDispatch } from "react-redux";
+import { pageChanged } from "../../../Redux/features/page/pageSlice";
 
-export default function Home() {
-    const homeTitleRef = useRef(null);
+
+
+export default function Home(props) {
+    const dispatch = useDispatch();
+    const homeTitleRef = useRef();
     useEffect(() => {
         setTimeout(() => {
             document.querySelectorAll('.circle').forEach(e => {
@@ -24,9 +31,19 @@ export default function Home() {
     const homeRef = useRef(null);
 
     return (
-        <Box ref={homeRef} className="home" height={"900px"}>
+        <Box ref={homeRef} className="home" height={"1000px"}>
+            <Bird />
+            <BgBush />
             <div className="circle first"></div>
-            <Heading opacity={0} ref={homeTitleRef}>Really feels like Home. </Heading>
+            <Image className="pilar left" />
+            <Image className="pilar right" />
+            <Image height={["200px", "300px", "400px"]} width={["200px", "300px", "400px"]} className="home-image" />
+            <Heading className="heading" opacity={0} ref={homeTitleRef}>Welcome Sparta! </Heading>
+            <Button className="joinbtn"
+                onClick={() => { dispatch(pageChanged("join")); }}
+            >DAFTAR UFEST!</Button>
+
+            <Bush />
         </Box>
     )
 }

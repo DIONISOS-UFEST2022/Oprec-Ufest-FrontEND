@@ -2,8 +2,14 @@ import { Box, Text, Link } from "@chakra-ui/react";
 import "./Login.scss";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import { Register } from "./Register";
+import { useSelector, useDispatch } from "react-redux";
+import { selectPage } from "../../../Redux/features/page/pageSlice";
+import { pageChanged } from "../../../Redux/features/page/pageSlice";
+import { userRoleAdded } from "../../../Redux/features/users/userRoleSlice";
+import axios from "axios";
+
 // Creating schema
 const schema = Yup.object().shape({
     email: Yup.string()
@@ -15,6 +21,8 @@ const schema = Yup.object().shape({
 });
 
 export function Login(props) {
+    // use dispatch to change page
+    const dispatch = useDispatch();
     // next input when press enter
     const formInput = useRef(null);
     const EnterHandleClick = (e) => {
@@ -31,6 +39,21 @@ export function Login(props) {
                 onSubmit={(values) => {
                     // Alert the input values of the form that we filled
                     alert(JSON.stringify(values));
+                    dispatch(userRoleAdded("user"));
+                    dispatch(pageChanged("home"));
+                    // axios.post("http://localhost:3001/login", values)
+                    //     .then((res) => {
+                    //         console.log(res);
+                    //         if (res.data === "success") {
+                    //             dispatch(userRoleAdded("user"));
+                    //             dispatch(pageChanged("home"));
+                    //         }
+                    //     }
+                    //     )
+                    //     .catch((err) => {
+                    //         console.log(err);
+                    //     }
+                    //     )
                 }}
             >
                 {({
@@ -85,7 +108,7 @@ export function Login(props) {
                             <br />
                             <Text fontSize={"15px"}>
                                 Dont have account?{' '}
-                                <Link color='teal.500' onClick={() => { props.handleClick('register'); }}>
+                                <Link color='teal.500' onClick={() => { dispatch(pageChanged("register")) }}>
                                     Register Now!
                                 </Link>
                             </Text>

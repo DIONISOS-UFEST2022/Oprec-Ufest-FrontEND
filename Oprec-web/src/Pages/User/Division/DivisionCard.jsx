@@ -1,4 +1,4 @@
-import { Box, Text, Image } from "@chakra-ui/react";
+import { Box, Text, Image, Flex } from "@chakra-ui/react";
 import "./Division.scss"
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -17,15 +17,17 @@ export function DivisionCard(Props) {
             // data-aos-mirror='true'
             _hover={
                 {
-                   opacity: 0.8,
+                    opacity: 0.8,
                 }
             }
 
         >
             <Box className="DivisionCard">
-                <Image className="DivisionLogo" />
-                <h1 className="DivisionCardTitle">{Props.name} - {Props.Division}</h1>
-                <Text className="namedesc">&ldquo; {Props.namedesc} &rdquo;</Text>
+                <Flex>
+                    <Image className="DivisionLogo" />
+                    <h1 className="DivisionCardTitle">{Props.name} - {Props.Division}</h1>
+                    <Text className="namedesc">&ldquo; {Props.namedesc} &rdquo;</Text>
+                </Flex>
             </Box>
         </Box>)
 }

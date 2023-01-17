@@ -1,20 +1,21 @@
 import { Box, Button } from "@chakra-ui/react";
 import {
-    Grid, GridItem, Popover,
-    PopoverTrigger,
-    PopoverContent,
-    PopoverHeader,
-    PopoverBody,
-    PopoverFooter,
-    PopoverArrow,
-    PopoverCloseButton,
-    PopoverAnchor,
-    Portal
+    useDisclosure,
+    Drawer,
+    DrawerBody,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerOverlay,
+    DrawerContent,
+    DrawerCloseButton,
 } from "@chakra-ui/react";
-import { useContext, useEffect, useState } from "react";
-import { AllContext } from "../Context/AllContext";
+import React, { useContext, useEffect, useState } from "react";
 import "./Navbar.scss";
-
+import { useSelector, useDispatch } from "react-redux";
+import { selectuserRole } from "../../Redux/features/users/userRoleSlice";
+import { selectPage } from "../../Redux/features/page/pageSlice";
+import { pageChanged } from "../../Redux/features/page/pageSlice";
+import { Profile } from "./Profile";
 
 
 function NavbarButton(props) {
@@ -24,47 +25,53 @@ function NavbarButton(props) {
 }
 
 export function Navbar(props) {
-    const { page, setpage } = useContext(AllContext);
-
+    const user = useSelector(selectuserRole);
+    const page = useSelector(selectPage);
+    const dispatch = useDispatch();
+    function Xhandle(x) {
+        document.getElementsByClassName("container")[0].classList.toggle("change");
+        document.getElementsByClassName("menuMobile")[0].classList.toggle("active");
+    }
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const btnRef = React.useRef()
     return (
         <>
-            <Box className="Navbar"
-                width={"100%"}
-            >
-                <NavbarButton color={page === "join" ? "red" : "white"} className="NavbarMenu" Title={"JOIN US!"} onClick={() => { props.handleClick('join'); }} />
-                <NavbarButton color={page === "home" ? "red" : "white"} className="NavbarMenu" Title={"Home"} onClick={() => { props.handleClick('home'); }} />
-                <NavbarButton color={page === "about" ? "red" : "white"} className="NavbarMenu" Title={"About"} onClick={() => { props.handleClick('about'); }} />
-                <NavbarButton color={page === "divison" ? "red" : "white"} className="NavbarMenu" Title={"Division"} onClick={() => { props.handleClick('divison'); }} />
-                <NavbarButton color={page === "login" ? "red" : "white"} className="NavbarMenu" Title={"Login"} onClick={() => { props.handleClick('login'); }} />
+            {/* This is desktop navbar */}
+            <Box className="Navbar">
+                {user === "user" ? <NavbarButton color={page === "join" ? "red" : "white"} className="NavbarMenu" Title={"JOIN US!"} onClick={() => { dispatch(pageChanged("join")) }} /> : ""}
+                <NavbarButton color={page === "home" ? "red" : "white"} className="NavbarMenu" Title={"Home"} onClick={() => { dispatch(pageChanged("home")) }} />
+                <NavbarButton color={page === "about" ? "red" : "white"} className="NavbarMenu" Title={"About"} onClick={() => { dispatch(pageChanged("about")) }} />
+                <NavbarButton color={page === "divison" ? "red" : "white"} className="NavbarMenu" Title={"Division"} onClick={() => { dispatch(pageChanged("divison")) }} />
+                {user === "user" ? "" : <NavbarButton color={page === "login" ? "red" : "white"} className="NavbarMenu" Title={"Login"} onClick={() => {dispatch(pageChanged("login")) }} />}
+                {user === "user" ? <Profile /> : ""}
             </Box>
-            <Box className="NavbarMobile"
-                width={"100%"}
-            >
-                <Popover>
-                    <PopoverTrigger>
-                        <Button className="NavbarMobileTrigger">=</Button>
-                    </PopoverTrigger>
-                    <Portal>
-                        <PopoverContent>
-                            <PopoverArrow />
-                            <PopoverCloseButton />
-                            <PopoverBody>
-                                <Box className="NavbarMobileMenu">
-                                    <NavbarButton className="MenuItem" Title={"Home"} onClick={() => { props.handleClick('home'); }} />
-                                    <br />
-                                    <NavbarButton className="MenuItem" Title={"About"} onClick={() => { props.handleClick('about'); }} />
-                                    <br />
-                                    <NavbarButton className="MenuItem" Title={"Division"} onClick={() => { props.handleClick('divison'); }} />
-                                    <br />
-                                    <NavbarButton className="MenuItem" Title={"Login"} onClick={() => { props.handleClick('login'); }} />
-                                    <br />
-                                </Box>
-                            </PopoverBody>
-                        </PopoverContent>
-                    </Portal>
-                </Popover>
 
+            {/* This is mobile navbar */}
+            <Box className="NavbarMobile">
+                <Button ref={btnRef} className="NavbarMobileButton container" onClick={onOpen}>
+                    <div className="bar1"></div>
+                    <div className="bar2"></div>
+                    <div className="bar3"></div>
+                </Button>
             </Box>
+            <Drawer
+                isOpen={isOpen}
+                placement='right'
+                onClose={onClose}
+                finalFocusRef={btnRef}
+            >
+                <DrawerOverlay />
+                <DrawerContent>
+                    <DrawerCloseButton />
+                    <DrawerBody>
+                    </DrawerBody>
+                    <DrawerFooter>
+                        <Button variant='outline' mr={3} onClick={onClose}>
+                            CLOSE
+                        </Button>
+                    </DrawerFooter>
+                </DrawerContent>
+            </Drawer>
         </>
 
     )

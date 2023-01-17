@@ -1,24 +1,43 @@
-.Footer{
+.Footer {
     width: 100%;
     justify-content: space-between;
     overflow: hidden;
+    padding-top: 70px;
+    background-color: #000;
 
-    .title{
+    .title {
+        margin: 10px;
         color: #fff;
         font-weight: bolder;
+        font-size: 25px;
+
     }
-    .footersection{
+
+    .footersection {
         width: 100%;
         background-color: #000;
         color: #fff;
         padding: 20px;
         text-align: left;
-        // border: 1px solid white;
+
+        .image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+        }
+
+        .address {
+            margin: 10px;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
     }
 
 }
 
-.footerfoot{
+.footerfoot {
     padding: 20px;
     text-align: center;
     color: #fff;
