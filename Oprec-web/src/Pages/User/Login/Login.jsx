@@ -37,23 +37,34 @@ export function Login(props) {
                 validationSchema={schema}
                 initialValues={{ email: "", password: "" }}
                 onSubmit={(values) => {
-                    // Alert the input values of the form that we filled
-                    alert(JSON.stringify(values));
-                    dispatch(userRoleAdded("user"));
-                    dispatch(pageChanged("home"));
-                    // axios.post("http://localhost:3001/login", values)
-                    //     .then((res) => {
-                    //         console.log(res);
-                    //         if (res.data === "success") {
-                    //             dispatch(userRoleAdded("user"));
-                    //             dispatch(pageChanged("home"));
-                    //         }
-                    //     }
-                    //     )
-                    //     .catch((err) => {
-                    //         console.log(err);
-                    //     }
-                    //     )
+                    axios.post("http://127.0.0.1:8000/api/login", values)
+                        .then((res) => {
+                            axios.get("http://127.0.0.1:8000/api/me", {
+                                headers:
+                                    { Authorization: `Bearer ${res.data}` }
+                            })
+                                .then((result) => {
+                                    console.log(result.data.data.role_id);
+                                    if (result.data.data.role_id === 1) {
+                                        dispatch(userRoleAdded("admin"));
+                                        dispatch(pageChanged("database"));
+                                    } else if (result.data.data.role_id === 2) {
+                                        dispatch(userRoleAdded("user"));
+                                        dispatch(pageChanged("home"));
+                                    }
+                                })
+                                .catch((err) => {
+                                    console.log(err);
+                                    alert("Verification failed");
+                                    // console.log(err);
+                                })
+                        }
+                        )
+                        .catch((err) => {
+                            console.log(err);
+                            alert("Login failed");
+                        }
+                        )
                 }}
             >
                 {({
