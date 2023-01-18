@@ -5,16 +5,10 @@ import 'aos/dist/aos.css';
 import { useEffect } from 'react';
 
 export function DivisionCard(Props) {
-    useEffect(() => {
-        AOS.init();
-    }, [])
     return (
         <Box
             willChange={"transform"}
             transition={"all 0.5s ease-in-out"}
-            // data-aos="fade-left"
-            // data-aos-duration="500"
-            // data-aos-mirror='true'
             _hover={
                 {
                     opacity: 0.8,

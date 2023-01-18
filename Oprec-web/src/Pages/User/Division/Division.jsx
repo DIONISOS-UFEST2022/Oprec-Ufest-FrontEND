@@ -9,21 +9,9 @@ import { useEffect } from 'react';
 import { AdvancedCarousel } from './DivisonCarousel/Carousel'
 
 export function Division(props) {
-    // useEffect(() => {
-    //     AOS.init();
-    // }, [])
     return (<>
-
         <Box className="Division">
-            <Center>
-                <h1> This is Division</h1>
-            </Center>
-            {/* {DivisionData.map((item) => {
-                return <DivisionCard key={item.id} name={item.name} Division={item.Division} namedesc={item.namedesc} />
-            })} */}
             <AdvancedCarousel />
         </Box>
-
-
     </>)
 }

@@ -1,7 +1,6 @@
 @media screen and (max-width: 772px) {
-    .Navbar {
+    .NavbarUser {
         display: none;
-        height: 0;
     }
 
     .NavbarMobile {
@@ -51,7 +50,7 @@
 
 // in bigger device
 @media screen and (min-width: 772px) {
-    .Navbar {
+    .NavbarUser {
         position: -webkit-sticky;
         /* Safari */
         position: sticky;
@@ -62,18 +61,9 @@
         background-color: rgb(0, 0, 0);
         display: flex;
         justify-content: right;
-        height: 130px;
-        width: 100%;
-
-        .NavbarMenu {
-            height: 100px;
-            transition: 250ms;
-            margin: 10px;
-        }
-
-        .NavbarMenu:hover {
-            border-bottom: 10px solid white;
-        }
+        padding-top: 10px;
+        padding-bottom: 10px;
+        height: 40px;
     }
 
     .NavbarMobile {
@@ -90,7 +80,6 @@
     }
 
 }
-
 
 
 .NavModal {

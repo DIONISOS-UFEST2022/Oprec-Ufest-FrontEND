@@ -1,12 +1,13 @@
-import { Box, Button, Heading, Image } from "@chakra-ui/react"
+import { Box, Heading, Image } from "@chakra-ui/react"
 import { useEffect, useRef } from "react"
 import { Bird } from "./bird/bird";
 import "./Home.scss"
 import { BgBush, Bush } from "./testbush/bush";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import * as React from 'react';
+import Button from '@mui/material/Button';
 import { pageChanged } from "../../../Redux/features/page/pageSlice";
-
-
+import { selectuserRole } from "../../../Redux/features/users/userRoleSlice";
 
 export default function Home(props) {
     const dispatch = useDispatch();
@@ -29,7 +30,7 @@ export default function Home(props) {
     })
 
     const homeRef = useRef(null);
-
+    const userRole = useSelector(selectuserRole);
     return (
         <Box ref={homeRef} className="home" height={"1000px"}>
             <Bird />
@@ -40,9 +41,14 @@ export default function Home(props) {
             <Image height={["200px", "300px", "400px"]} width={["200px", "300px", "400px"]} className="home-image" />
             <Heading className="heading" opacity={0} ref={homeTitleRef}>Welcome Sparta! </Heading>
             <Button className="joinbtn"
-                onClick={() => { dispatch(pageChanged("join")); }}
+                onClick={() => {
+                    if (userRole === "guest") {
+                        dispatch(pageChanged("login"));
+                    } else {
+                        dispatch(pageChanged("join"));
+                    }
+                }}
             >DAFTAR UFEST!</Button>
-
             <Bush />
         </Box>
     )

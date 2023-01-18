@@ -14,6 +14,9 @@ import { Field } from "formik";
 import { Radio, RadioGroup, Stack } from '@chakra-ui/react'
 import { FileUploader } from "react-drag-drop-files";
 import Thankyou from "./Thankyou";
+import { Autocomplete } from "@mui/material";
+import TextField from '@mui/material/TextField';
+import { JurusanData } from "./AutoComplete";
 
 // Dekorasi
 // Publikasi
@@ -161,9 +164,8 @@ export function Join(props) {
                                                 <Box className="wrapper">
                                                     Hal hal yang perlu dipersiapkan:
                                                     <ol>
-                                                        <li className="list">Lorem</li>
-                                                        <li className="list">Lorem</li>
-                                                        <li className="list">Lorem</li>
+                                                        <li className="list">Sertifikat vaksin Covid-19 ketiga</li>
+                                                        <li className="list">Link Google Drive berisi Portofolio khusus Divisi Dokumentasi dan Visual</li>
                                                     </ol>
                                                 </Box>
                                                 <button type="button" onClick={() => {
@@ -185,6 +187,13 @@ export function Join(props) {
                                                     placeholder="Masukan Jurusan"
                                                     className="form-control inp_text"
                                                     id="jurusan"
+                                                />
+                                                <Autocomplete
+                                                    disablePortal
+                                                    id="combo-box-demo"
+                                                    options={JurusanData}
+                                                    sx={{ width: 300 }}
+                                                    renderInput={(params) => <TextField {...params} label="Jurusan" />}
                                                 />
                                                 <p className="error">
                                                     {errors.jurusan && touched.jurusan && errors.jurusan}

@@ -1,9 +1,13 @@
 {
   "dependencies": {
+    "@mui/material": "^5.11.5",
+    "@mui/styled-engine-sc": "^5.11.0",
     "@reduxjs/toolkit": "^1.9.1",
     "react-redux": "^8.0.5",
+    "react-search-field": "^2.0.1",
     "redux": "^4.2.0",
-    "redux-devtools-extension": "^2.13.9"
+    "redux-devtools-extension": "^2.13.9",
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {
     "@redux-devtools/core": "^3.13.1"

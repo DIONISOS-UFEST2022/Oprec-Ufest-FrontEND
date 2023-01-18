@@ -8,25 +8,17 @@ import {
     Td,
     TableCaption,
     TableContainer,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-    useDisclosure,
-    Button,
-    Text,
-    Image,
     Heading,
     Box,
-    Divider
+    Divider,
+    Input
 } from '@chakra-ui/react'
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "./Database.scss";
-import { Dummydata } from "./../Division/dummy";
+import { useSelector, useDispatch } from 'react-redux';
+import { selectUser, setUserToken, userRegister } from '../../../Redux/features/users/userDataSlice';
+import { selectuserToken } from '../../../Redux/features/users/userRoleSlice';
 
 function DatabaseCard(props) {
     return (
@@ -48,20 +40,34 @@ function Analytic(props) {
 }
 
 export function Database(props) {
+    const dispatch = useDispatch();
     const [MapData, setMapData] = useState([]);
-    // useEffect(() => {
-    //     axios.get("http://127.0.0.1:8000/api/test").then((res) => {
-    //         setMapData(res.data)
-    //         console.log(res.data)
-    //     })
-    // },[])
-
+    const token = useSelector(selectuserToken);
+    const user = useSelector(selectUser);
+    const [userData, SetuserData] = useState([]);
+    const [query, setQuery] = useState([]);
+    useEffect(() => {
+        axios.get("http://127.0.0.1:8000/api/users", {
+            headers:
+                { Authorization: `Bearer ${token}` }
+        })
+            .then((result) => {
+                // console.log(result.data.data[0].name);
+                SetuserData(result.data.data);
+                // setMapData(result.data[0].name);
+            })
+            .catch((err) => {
+                // alert("Verification failed");
+                console.log(err);
+            })
+    }, [])
     return (
         <Box className="database">
-            <Analytic lenght={Dummydata.length} />
+            <Analytic lenght={userData.length} />
             <br />
             <Divider />
             <br />
+            <Input className='input' type="text" placeholder='Enter Query' onChange={event => { setQuery(event.target.value) }} />
             <TableContainer className='databaseTabel'>
                 <Heading overflow={"hidden"}>Database</Heading>
                 <Table variant='simple'>
@@ -74,22 +80,17 @@ export function Database(props) {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {Dummydata.map((data) => {
-                            return <DatabaseCard divisi={data.divisi} name={data.name} jurusan={data.jurusan} angkatan={data.angkatan} nim={data.nim} />
-                        })
-                        }
+                        {userData.filter(post => {
+                            if (query === '') {
+                                return post;
+                            } else if (post.name.toString().toLowerCase().includes(query.toString().toLowerCase()) || post.nim.includes(query)) {
+                                return post;
+                            }
+                        }).map((post, index) => (
+                            <DatabaseCard key={index} name={post.name} jurusan={post.jurusan} angkatan={post.angkatan} nim={post.nim} />
+                        ))}
                     </Tbody>
-                    <Tfoot>
-                        {/* <Tr>
-                        <Th>Nama</Th>
-                        <Th>Jurusan/Angkatan</Th>
-                        <Th>NIM</Th>
-                    </Tr> */}
-                    </Tfoot>
                 </Table>
             </TableContainer>
-            {MapData.map((data) => {
-                return <DatabaseCard data={data} />
-            })}
         </Box>)
 }

@@ -11,7 +11,7 @@ import {
 
 } from 'react-transition-group';
 import "./User.scss"
-import { Register } from './Login/Register';
+import { Register } from './Register/Register';
 import { Join } from './Join/Join';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectPage } from '../../Redux/features/page/pageSlice';

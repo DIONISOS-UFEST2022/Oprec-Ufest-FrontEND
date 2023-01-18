@@ -1,0 +1,17 @@
+export const JurusanData = [
+    {label : 'Informatika'},
+    {label : 'Teknik Komputer'},
+    {label : 'Teknik Elektro'},
+    {label : 'Teknik Fisika'},
+    {label : 'Sistem Informasi'},
+    {label : 'Perhotelan'},
+    {label : 'Akuntansi'},
+    {label : 'Managemen'},
+    {label : 'Magister Managemen Teknologi'},
+    {label : 'Strategic Communication'},
+    {label : 'Jurnalistik'},
+    {label : 'Magister Ilmu Komunikasi'},
+    {label : 'Desain Komunikasi Visual'},
+    {label : 'Arsitektur'},
+    {label : 'Film & Animasi'},
+]

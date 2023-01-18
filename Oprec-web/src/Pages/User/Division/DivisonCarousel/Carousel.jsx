@@ -1,9 +1,25 @@
+// import { Button } from '@mui/material';
+import { Button } from '@chakra-ui/react';
 import React from 'react';
 import { useSnapCarousel } from 'react-snap-carousel';
+import "./Carousel.scss";
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+import { Center } from '@chakra-ui/react';
+
 
 export const AdvancedCarousel = () => {
     const { scrollRef, pages, activePageIndex, next, prev, goTo } =
         useSnapCarousel();
+    const horizontalScroll = (e) => {
+        console.log(e.target);
+        e.target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'center'
+        });
+    }
+
     return (
         <>
             <ul
@@ -16,6 +32,7 @@ export const AdvancedCarousel = () => {
             >
                 {Array.from({ length: 12 }).map((_, i) => (
                     <li
+                    onMouseOver={horizontalScroll}
                         style={{
                             backgroundColor: 'aqua',
                             fontSize: '50px',
@@ -34,25 +51,29 @@ export const AdvancedCarousel = () => {
                     >
                         Item {i}
                     </li>
+
                 ))}
             </ul>
-            <div>
+            {/* <div>
                 {activePageIndex + 1} / {pages.length}
-            </div>
-            <button onClick={() => prev()}>Prev</button>
-            <button onClick={() => next()}>Next</button>
-            <ol style={{ display: 'flex' }}>
-                {pages.map((_, i) => (
-                    <li key={i}>
-                        <button
-                            style={i === activePageIndex ? { opacity: 0.5 } : {}}
-                            onClick={() => goTo(i)}
-                        >
-                            {i + 1}
-                        </button>
-                    </li>
-                ))}
-            </ol>
+            </div> */}
+            {/* 
+            <Button onClick={() => prev()}>Prev</Button>
+            <Button onClick={() => next()}>Next</Button> */}
+            <Center>
+                <div style={{ display: 'flex' }}>
+                    {pages.map((_, i) => (
+                        <div key={i}>
+                            <Button className='CarouselDotNav'
+                                style={i === activePageIndex ? { opacity: 0.5 } : {}}
+                                onClick={() => goTo(i)}
+                            >
+                                {/* {i + 1} */}
+                            </Button>
+                        </div>
+                    ))}
+                </div>
+            </Center>
         </>
     );
 };

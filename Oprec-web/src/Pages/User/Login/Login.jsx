@@ -1,14 +1,20 @@
-import { Box, Text, Link } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
+import { Link, CircularProgress } from "@material-ui/core";
+import Alert from '@mui/material/Alert';
 import "./Login.scss";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { useContext, useRef } from "react";
-import { Register } from "./Register";
-import { useSelector, useDispatch } from "react-redux";
+import { useRef } from "react";
+import { Register } from "../Register/Register";
+import { useSelector, useDispatch, useStore } from "react-redux";
 import { selectPage } from "../../../Redux/features/page/pageSlice";
 import { pageChanged } from "../../../Redux/features/page/pageSlice";
-import { userRoleAdded } from "../../../Redux/features/users/userRoleSlice";
+import { userRoleAdded, loginUser, loginUserFai, loginUserSuccess } from "../../../Redux/features/users/userRoleSlice";
 import axios from "axios";
+import useCookie from 'react-use-cookie';
+import { userTokenAdded } from "../../../Redux/features/users/userRoleSlice";
+import { useState } from "react";
+
 
 // Creating schema
 const schema = Yup.object().shape({
@@ -21,7 +27,8 @@ const schema = Yup.object().shape({
 });
 
 export function Login(props) {
-    // use dispatch to change page
+    const [loading, Setloading] = useState(false);
+    const [error, Seterror] = useState(false);
     const dispatch = useDispatch();
     // next input when press enter
     const formInput = useRef(null);
@@ -30,39 +37,44 @@ export function Login(props) {
             formInput.current.focus()
         }
     }
+    // const token = useSelector(setUserToken);
     return (
         <Box className="Login">
-            {/* Wrapping form inside formik tag and passing our schema to validationSchema prop */}
+            {error ? <Alert severity="error">Login error, email or password incorrect!</Alert> : "" }
             <Formik
                 validationSchema={schema}
                 initialValues={{ email: "", password: "" }}
                 onSubmit={(values) => {
+                    Setloading(true);
                     axios.post("http://127.0.0.1:8000/api/login", values)
                         .then((res) => {
+                            dispatch(userTokenAdded(res.data));
                             axios.get("http://127.0.0.1:8000/api/me", {
                                 headers:
                                     { Authorization: `Bearer ${res.data}` }
                             })
                                 .then((result) => {
-                                    console.log(result.data.data.role_id);
                                     if (result.data.data.role_id === 1) {
                                         dispatch(userRoleAdded("admin"));
+                                        dispatch(userRoleAdded("admin"));
                                         dispatch(pageChanged("database"));
+                                        Setloading(false);
                                     } else if (result.data.data.role_id === 2) {
                                         dispatch(userRoleAdded("user"));
                                         dispatch(pageChanged("home"));
+                                        Setloading(false);
                                     }
                                 })
                                 .catch((err) => {
                                     console.log(err);
-                                    alert("Verification failed");
-                                    // console.log(err);
+                                    Seterror(true);
+                                    Setloading(false);
                                 })
                         }
                         )
                         .catch((err) => {
-                            console.log(err);
-                            alert("Login failed");
+                            Seterror(true);
+                            Setloading(false);
                         }
                         )
                 }}
@@ -77,10 +89,8 @@ export function Login(props) {
                 }) => (
                     <div className="login">
                         <div className="form">
-                            {/* Passing handleSubmit parameter tohtml form onSubmit property */}
                             <form noValidate onSubmit={handleSubmit}>
                                 <span>Login</span>
-                                {/* Our input html with passing formik parameters like handleChange, values, handleBlur to input properties */}
                                 <input
                                     ref={formInput}
                                     onKeyDownCapture={EnterHandleClick}
@@ -89,15 +99,13 @@ export function Login(props) {
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.email}
-                                    placeholder="Enter email id / username"
+                                    placeholder="Enter email"
                                     className="form-control inp_text"
                                     id="email"
                                 />
-                                {/* If validation is not passed show errors */}
                                 <p className="error">
                                     {errors.email && touched.email && errors.email}
                                 </p>
-                                {/* Our input html with passing formik parameters like handleChange, values, handleBlur to input properties */}
                                 <input
                                     ref={formInput}
                                     onKeyDownCapture={EnterHandleClick}
@@ -109,18 +117,17 @@ export function Login(props) {
                                     placeholder="Enter password"
                                     className="form-control"
                                 />
-                                {/* If validation is not passed show errors */}
                                 <p className="error">
                                     {errors.password && touched.password && errors.password}
                                 </p>
-                                {/* Click on submit button to submit the form */}
-                                <button type="submit">Login</button>
+                                <button type="submit">{loading ? (<CircularProgress />) : "Login"}</button>
+
                             </form>
                             <br />
                             <Text fontSize={"15px"}>
-                                Dont have account?{' '}
-                                <Link color='teal.500' onClick={() => { dispatch(pageChanged("register")) }}>
-                                    Register Now!
+                                Belum punya akun?{' '}
+                                <Link onClick={() => { dispatch(pageChanged("register")) }}>
+                                    Daftar Sekarang!
                                 </Link>
                             </Text>
                         </div>
