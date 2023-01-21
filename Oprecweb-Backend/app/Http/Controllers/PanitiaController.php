@@ -7,8 +7,8 @@ use App\Models\panitia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use PhpParser\Node\Stmt\Return_;
-use Symfony\Component\HttpFoundation\File\File;
+use App\Http\Controllers\GoogleSheetController;
+use App\Http\Services\GoogleSheetsServices;
 
 class PanitiaController extends Controller
 {
@@ -59,6 +59,7 @@ class PanitiaController extends Controller
 
         $panitia = panitia::create($request->all());
 
+
         if ($request->vaccine_certificate) {
             $filename = Str::random(25);
             $extension = $request->vaccine_certificate->extension();
@@ -70,6 +71,27 @@ class PanitiaController extends Controller
         $panitia->is_accepted = 0;
 
         $panitia->save();
+
+        $service = new GoogleSheetsServices();
+        $arr[] =
+            [
+                $panitia->nim,
+                $panitia->name,
+                $panitia->email,
+                $panitia->program_studi,
+                $panitia->vaccine_certificate,
+                $panitia->division_1,
+                $panitia->division_2,
+                $panitia->phone_number,
+                $panitia->reason,
+                $panitia->portofolio,
+                $panitia->id_line,
+                $panitia->instagram_account,
+                $panitia->city,
+                $panitia->is_accepted
+            ];
+
+        $service->appendSheet($arr);
 
         if ($panitia) {
             return new PanitiaResource($panitia, 201);
@@ -138,7 +160,10 @@ class PanitiaController extends Controller
             'is_accepted' => 'numeric:1'
         ]);
 
+
         $input = collect(request()->all())->filter()->all();
+
+
 
         if ($request->vaccine_certificate) {
             $imageFolder = Storage::disk('vaccine_image');
@@ -157,6 +182,10 @@ class PanitiaController extends Controller
         }
 
         $panitia->save();
+
+        $refresh = new GoogleSheetController();
+        $refresh->init();
+
         return new PanitiaResource($panitia);
     }
 
@@ -169,7 +198,14 @@ class PanitiaController extends Controller
     public function destroy($id)
     {
         $panitia = panitia::findOrFail($id);
+        $imageFolder = Storage::disk('vaccine_image');
+        if ($imageFolder->exists($panitia->vaccine_certificate)) {
+            $imageFolder->delete($panitia->vaccine_certificate);
+        }
         $panitia->forceDelete();
+
+        $refresh = new GoogleSheetController();
+        $refresh->init();
 
         return response()->json("Panitia " . $panitia->name . "has been deleted!");
     }

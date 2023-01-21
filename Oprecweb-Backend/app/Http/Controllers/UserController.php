@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Hash;
 

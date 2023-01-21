@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\GoogleSheetController;
 use App\Http\Controllers\PanitiaController;
 
 /*
@@ -38,3 +40,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::get('/test', [MahasiswaController::class, 'index']);
 Route::post('/login', [AuthenticationController::class, 'login']);
 Route::post('/register', [UserController::class, 'store']);
+Route::post('/forgot-password', [ForgotPasswordController::class, 'getToken']);
+Route::post('/reset-password/{token}', [ForgotPasswordController::class, 'reset'])->name("password.reset");
+
+Route::get('/spreadsheet', [GoogleSheetController::class, 'init']);
+Route::get('/spreadsheet/update', [GoogleSheetController::class, 'updateData']);
