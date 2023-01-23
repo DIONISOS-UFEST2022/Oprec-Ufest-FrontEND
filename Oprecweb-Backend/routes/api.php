@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\ReactController;
 use App\Http\Controllers\TestTableController;
 use App\Http\Controllers\MahasiswaController;
@@ -33,7 +34,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::apiResource('users', UserController::class)->middleware('admin');
     Route::apiResource('panitia', PanitiaController::class)->middleware('admin');
+    Route::apiResource('announcement', AnnouncementController::class)->middleware('admin');
 
+    Route::get('/announcement', [AnnouncementController::class, 'index']);
     Route::post('/panitia/insertData', [PanitiaController::class, 'store']);
 });
 

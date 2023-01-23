@@ -183,10 +183,16 @@ class PanitiaController extends Controller
 
         $panitia->save();
 
-        $refresh = new GoogleSheetController();
-        $refresh->init();
+        $service = new GoogleSheetController();
+        $service->init();
 
-        return new PanitiaResource($panitia);
+        if ($panitia) {
+            return new PanitiaResource($panitia, 201);
+        } else {
+            return response()->json([
+                'success' => false,
+            ], 404);
+        }
     }
 
     /**
@@ -204,9 +210,15 @@ class PanitiaController extends Controller
         }
         $panitia->forceDelete();
 
-        $refresh = new GoogleSheetController();
-        $refresh->init();
+        $service = new GoogleSheetController();
+        $service->init();
 
-        return response()->json("Panitia " . $panitia->name . "has been deleted!");
+        if ($panitia) {
+            return response()->json("Panitia " . $panitia->name . "has been deleted!");
+        } else {
+            return response()->json([
+                'success' => false,
+            ], 404);
+        }
     }
 }
