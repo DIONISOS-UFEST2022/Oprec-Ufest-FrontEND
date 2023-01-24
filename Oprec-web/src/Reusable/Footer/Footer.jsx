@@ -1,7 +1,6 @@
 import { Box, HStack, Center, Image, Text, Divider } from "@chakra-ui/react"; import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Unstable_Grid2';
-// import { Link } from "@material-ui/core";
+import Grid from '@mui/material/Unstable_Grid2'
 import { Link } from "@chakra-ui/react";
 import "./Footer.scss"
 import icon_youtube from "./../../Asset/Image/Other Icon/icon-youtube.png";
@@ -11,9 +10,12 @@ import icon_line from "./../../Asset/Image/Other Icon/icon-line.png";
 import icon_tiktok from "./../../Asset/Image/Other Icon/icon-tiktok.png";
 import icon_website from "./../../Asset/Image/Other Icon/icon-website.png";
 import logo from "./../../Asset/Image/Ufest Logo/logo.png";
-
-
-
+import { useSpring, animated } from "@react-spring/web";
+import { useEffect, useState, useRef } from "react";
+import { useIntersectionObserver } from "../Function/useIntersectionObserver";
+import { Button } from "@material-ui/core";
+import MapTwoToneIcon from '@mui/icons-material/MapTwoTone';
+import Sparkles from "../Animation/Sparkle/Sparkle";
 
 
 
@@ -39,9 +41,33 @@ function LinkCard(props) {
 }
 
 
+const AnimatedGrid = styled(animated(Grid))``;
+
+
+
 export function Footer() {
-    return (<Box className="Footer">
-        <Grid container>
+    const triggerRef = useRef();
+    const [visible, setVisible] = useState(false);
+    const dataRef = useIntersectionObserver(triggerRef, {
+        freezeOnceVisible: true
+    });
+    const headerStyle = useSpring({
+        config: { duration: 400 },
+        from: {
+            opacity: 0,
+            y: 50,
+        },
+        to: {
+            opacity: dataRef?.isIntersecting ? 1 : 0,
+            y: dataRef?.isIntersecting ? 0 : 50,
+        },
+    });
+
+
+
+    return (<div className="Footer" >
+        <AnimatedGrid style={{ ...headerStyle }}
+            container>
             <Grid md={3} sm={12}>
                 <Box className="footersection" area={'section1'} overflow={"visible"}>
                     <Center width={'100%'} height="100%" overflow={"visible"}>
@@ -63,6 +89,7 @@ export function Footer() {
                         <br />
                         Indonesia
                     </Text>
+                    {/* <Button startIcon={MapTwoToneIcon}>See on the MAP</Button> */}
                 </Box>
             </Grid>
             <Grid md={3} sm={12}>
@@ -82,12 +109,12 @@ export function Footer() {
                 </Box>
             </Grid>
             <Grid xs={12}>
-                <Box className="footerfoot" area={'foot'}>
-                    © UMN FESTIVAL 2022
+                <Box className="footerfoot" ref={triggerRef} area={'foot'}>
+                    © UMN FESTIVAL 2023
                     <br />
-                    This website is managed by Dionisos UFEST 2023
+                    This website is managed by <Sparkles><span className="purpleText">Dionisos</span></Sparkles> U-FEST 2023
                 </Box>
             </Grid>
-        </Grid>
-    </Box>)
+        </AnimatedGrid>
+    </div>)
 }

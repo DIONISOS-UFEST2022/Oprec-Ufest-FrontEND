@@ -1,38 +1,24 @@
+// Styling
 import { Box, Text, Link } from "@chakra-ui/react";
 import "./Register.scss";
+import { Button } from "@material-ui/core";
+// Form Control
 import { Formik } from "formik";
-import * as Yup from "yup";
+import { RegisterSchema } from "./RegisterSchema";
+// React
 import { useRef } from "react";
+// Redux
 import { useSelector, useDispatch } from "react-redux";
-import { selectPage } from "../../../Redux/features/page/pageSlice";
 import { pageChanged } from "../../../Redux/features/page/pageSlice";
-import { userLogin, userRegister } from "../../../Redux/features/users/userDataSlice";
-import axios from "axios";
 import { userRoleAdded } from "../../../Redux/features/users/userRoleSlice";
+// Axios
+import axios from "axios";
+// Module
+import { CustomTextField } from "../../../Reusable/TextField/CustomTextField";
 
 
 
-
-// Creating schema
-const schema = Yup.object().shape({
-    fullname: Yup.string()
-        .required("Full Name is a required field"),
-    nim: Yup.string()
-        .required("NIM is a required field")
-        .min(10, "Enter a valid NIM"),
-    email: Yup.string()
-        .required("Email is a required field")
-        .email("Invalid email format"),
-    password: Yup.string()
-        .required("Password is a required field")
-        .min(8, "Password must be at least 8 characters"),
-    repassword: Yup.string()
-        .required("Re-Enter Password is a required field")
-        .oneOf([Yup.ref('password'), null], 'Passwords must match')
-
-});
-
-export function Register(props) {
+export function Register() {
     // use dispatch to change page
     const dispatch = useDispatch();
     // next input when press enter
@@ -42,150 +28,139 @@ export function Register(props) {
             formInput.current.focus()
         }
     }
-    const userData = useSelector((state) => state);
+    // const userData = useSelector((state) => state);
     return (
-        <Box className="Login">
-            {/* Wrapping form inside formik tag and passing our schema to validationSchema prop */}
-            <Formik
-                validationSchema={schema}
-                initialValues={{ email: "", password: "", fullname: "", nim: "", repassword: "" }}
-                onSubmit={(values) => {
-                    // Alert the input values of the form that we filled
-                    // alert(JSON.stringify(values));
-                    axios.post('http://localhost:8000/api/register', {
-                        name: values.fullname,
-                        nim: values.nim,
-                        password: values.password,
-                        email: values.email,
+        <Formik
+            validationSchema={RegisterSchema}
+            initialValues={{ email: "", password: "", fullname: "", nim: "", repassword: "" }}
+            onSubmit={(values) => {
+                axios.post('http://localhost:8000/api/register', {
+                    name: values.fullname,
+                    nim: values.nim,
+                    password: values.password,
+                    email: values.email,
+                })
+                    .then(function (response) {
+                        if (response.data.success === true) {
+                            alert("Register Success");
+                            dispatch(pageChanged("home"));
+                            dispatch(userRoleAdded("user"));
+                        }
+                        console.log(response);
                     })
-                        .then(function (response) {
-                            if(response.data.success === true){
-                                alert("Register Success");
-                                dispatch(pageChanged("home"));
-                                dispatch(userRoleAdded("user"));
-                            }
-                            console.log(response);
-                        })
-                        .catch(function (error) {
-                            alert(error.response.data.message);
-                            if(error.response.data.success === false){
-                                alert("Register Failed");
-                            }
-                        });
-                    // dispatch(userRegister(
-                    //     {
-                    //         email: values.email,
-                    //     }
-                    // ));
-                    // console.log(userData);
-                }}
-            >
-                {({
-                    values,
-                    errors,
-                    touched,
-                    handleChange,
-                    handleBlur,
-                    handleSubmit,
-                }) => (
-                    <div className="login">
-                        <div className="form">
-                            {/* Passing handleSubmit parameter tohtml form onSubmit property */}
-                            <form noValidate onSubmit={handleSubmit}>
-                                <span>Register</span>
-                                {/* Our input html with passing formik parameters like handleChange, values, handleBlur to input properties */}
-                                <input
-                                    ref={formInput}
-                                    onKeyDownCapture={EnterHandleClick}
-                                    type="text"
-                                    name="fullname"
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    value={values.fullname}
-                                    placeholder="Enter Full Name"
-                                    className="form-control inp_text"
-                                    id="fullname"
-                                />
-                                <p className="error">
-                                    {errors.fullname && touched.fullname && errors.fullname}
-                                </p>
-                                <input
-                                    ref={formInput}
-                                    onKeyDownCapture={EnterHandleClick}
-                                    type="text"
-                                    name="nim"
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    value={values.nim}
-                                    placeholder="NIM (000000)"
-                                    className="form-control inp_text"
-                                    id="nim"
-                                />
-                                <p className="error">
-                                    {errors.nim && touched.nim && errors.nim}
-                                </p>
-                                <input
-                                    ref={formInput}
-                                    onKeyDownCapture={EnterHandleClick}
-                                    type="email"
-                                    name="email"
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    value={values.email}
-                                    placeholder="Enter email id / username"
-                                    className="form-control inp_text"
-                                    id="email"
-                                />
-                                {/* If validation is not passed show errors */}
-
-                                <p className="error">
-                                    {errors.email && touched.email && errors.email}
-                                </p>
-                                {/* Our input html with passing formik parameters like handleChange, values, handleBlur to input properties */}
-                                <input
-                                    ref={formInput}
-                                    onKeyDownCapture={EnterHandleClick}
-                                    type="password"
-                                    name="password"
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    value={values.password}
-                                    placeholder="Enter password"
-                                    className="form-control"
-                                />
-                                <p className="error">
-                                    {errors.password && touched.password && errors.password}
-                                </p>
-                                <input
-                                    ref={formInput}
-                                    onKeyDownCapture={EnterHandleClick}
-                                    type="password"
-                                    name="repassword"
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    value={values.repassword}
-                                    placeholder="Re-Enter password"
-                                    className="form-control"
-                                />
-                                <p className="error">
-                                    {errors.repassword && touched.repassword && errors.repassword}
-                                </p>
-                                {/* If validation is not passed show errors */}
-                                {/* Click on submit button to submit the form */}
-                                <button type="submit">Register</button>
-                            </form>
-                            <br />
-                            <Text fontSize={"15px"}>
-                                Already have account?{' '}
-                                <Link color='teal.500' onClick={() => { dispatch(pageChanged('login')) }}>
-                                    Login now!
-                                </Link>
-                            </Text>
-                        </div>
+                    .catch(function (error) {
+                        alert(error.response.data.message);
+                        if (error.response.data.success === false) {
+                            alert("Register Failed");
+                        }
+                    });
+            }}
+        >
+            {({
+                values,
+                errors,
+                touched,
+                handleChange,
+                handleBlur,
+                handleSubmit,
+            }) => (
+                <div id="Register">
+                    <div className="form">
+                        <form noValidate onSubmit={handleSubmit}>
+                            <span className="Title">Register</span>
+                            <CustomTextField
+                                id="fullname"
+                                ref={formInput}
+                                value={values.fullname}
+                                onKeyDownCapture={EnterHandleClick}
+                                type="text"
+                                name="fullname"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                label="Nama Lengkap"
+                                placeholder="Masukan Nama Lengkap"
+                            />
+                            <p className="error">
+                                {errors.fullname && touched.fullname && errors.fullname}
+                            </p>
+                            <CustomTextField
+                                id="nim"
+                                ref={formInput}
+                                value={values.nim}
+                                onKeyDownCapture={EnterHandleClick}
+                                type="text"
+                                name="nim"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                label="NIM"
+                                placeholder="E.g 00000012345"
+                            />
+                            <p className="error">
+                                {errors.nim && touched.nim && errors.nim}
+                            </p>
+                            <CustomTextField
+                                id="email"
+                                ref={formInput}
+                                value={values.email}
+                                onKeyDownCapture={EnterHandleClick}
+                                type="email"
+                                name="email"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                label="Email Student"
+                                placeholder="Masukan Email Student UMN"
+                            />
+                            <p className="error">
+                                {errors.email && touched.email && errors.email}
+                            </p>
+                            <CustomTextField
+                                id="password"
+                                ref={formInput}
+                                value={values.password}
+                                onKeyDownCapture={EnterHandleClick}
+                                type="password"
+                                name="password"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                label="Password"
+                                placeholder="Buat Password"
+                            />
+                            <p className="error">
+                                {errors.password && touched.password && errors.password}
+                            </p>
+                            <CustomTextField
+                                id="password"
+                                ref={formInput}
+                                value={values.repassword}
+                                onKeyDownCapture={EnterHandleClick}
+                                type="password"
+                                name="repassword"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                label="Re-Enter Password"
+                                placeholder="Masukan Ulang Password"
+                            />
+                            <p className="error">
+                                {errors.repassword && touched.repassword && errors.repassword}
+                            </p>
+                            <Button
+                                className="button"
+                                variant="contained"
+                                type="submit"
+                                onClick={() => {
+                                }}>Register</Button>
+                        </form>
+                        <br />
+                        <Text fontSize={"15px"} fontWeight="bold">
+                            Already have account?{' '}
+                            <Link className="Purple" onClick={() => { dispatch(pageChanged('login')) }}>
+                                Login now!
+                            </Link>
+                        </Text>
                     </div>
-                )}
-            </Formik>
-        </Box>
+                </div>
+            )}
+        </Formik>
 
     );
 }

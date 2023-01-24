@@ -1,0 +1,122 @@
+.HomeButton {
+    position: relative;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    outline-offset: 4px;
+    transition: filter 250ms;
+    z-index: 3;
+
+    .shadow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+        background: hsl(0deg 0% 0% / 0.25);
+        will-change: transform;
+        transform: translateY(2px);
+        transition:
+            transform 600ms cubic-bezier(.3, .7, .4, 1);
+    }
+
+    .edge {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+        background: linear-gradient(to left,
+                hsl(340deg 100% 16%) 0%,
+                hsl(340deg 100% 32%) 8%,
+                hsl(340deg 100% 32%) 92%,
+                rgb(0, 82, 45) 100%);
+    }
+
+    .front {
+        display: block;
+        position: relative;
+        padding: 12px 42px;
+        border-radius: 12px;
+        // font-family: 
+        font-size: 1.25rem;
+        color: white;
+        background: linear-gradient(-45deg, #7b0025, #ff33a3, #f03c3c);
+        will-change: transform;
+        transform: translateY(-4px);
+        transition:
+            transform 600ms cubic-bezier(.3, .7, .4, 1);
+        background-size: 600%;
+        -webkit-animation: anime 5s linear infinite;
+        animation: anime 5s linear infinite;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+    }
+
+
+    @-webkit-keyframes anime {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    @keyframes anime {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+
+}
+
+.HomeButton:hover {
+    filter: brightness(110%);
+}
+
+.HomeButton:hover .front {
+    transform: translateY(-6px);
+    transition:
+        transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.HomeButton:active .front {
+    transform: translateY(-2px);
+    transition: transform 34ms;
+}
+
+.HomeButton:hover .shadow {
+    transform: translateY(4px);
+    transition:
+        transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.HomeButton:active .shadow {
+    transform: translateY(1px);
+    transition: transform 34ms;
+}
+
+.HomeButton:focus:not(:focus-visible) {
+    outline: none;
+}

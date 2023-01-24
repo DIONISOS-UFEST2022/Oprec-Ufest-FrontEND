@@ -1,0 +1,68 @@
+import * as Yup from "yup";
+import { JurusanData } from "./AutoComplete/AutoComplete";
+
+export const JoinSchema = Yup.object().shape({
+    jurusan: Yup.string()
+        .required("Jurusan is a required field")
+        .oneOf(JurusanData.map((data) => data.label), "Jurusan is a required field"),
+    angkatan: Yup.string()
+        .required("Angkatan is a required field")
+        .oneOf(["2020", "2021", "2022"], "Angkatan is a required field"),
+    alamat: Yup.string()
+        .required("Alamat is a required field"),
+    vaksin: Yup.string()
+        .required("Vaksin is a required field"),
+    nohp: Yup.string()
+        .required("No HP is a required field")
+        .min(10, "Enter a valid phone number")
+        .max(16, "Enter a valid phone number")
+        .matches(/^(^\+62\s?)(\d{3,4}-?){2}\d{3,4}$/, "Enter a valid phone number"),
+    idline: Yup.string()
+        .required("ID Line is a required field"),
+    ig: Yup.string()
+        .required("Instagram is a required field"),
+    domisili: Yup.string()
+        .required("Domisili is a required field"),
+    pertanyaan: Yup.string()
+        .required("Pertanyaan is a required field"),
+    divisi: Yup.string()
+        .oneOf([
+            "Dekorasi",
+            "Publikasi",
+            "Keamanan",
+            "Fresh Money",
+            "Sponsor",
+            "Dokumentasi",
+            "Acara",
+            "Perlengkapan",
+            "Lomba",
+            "Konsumsi",
+            "Website",
+            "Visual"
+        ])
+        .required("Division is a required field"),
+    divisialt: Yup.string()
+        .required("Division is a required field"),
+    fullname: Yup.string()
+        .required("Full Name is a required field"),
+    nim: Yup.string()
+        .required("NIM is a required field")
+        .min(10, "Enter a valid NIM"),
+    email: Yup.string()
+        .required("Email is a required field")
+        .email("Invalid email format"),
+    password: Yup.string()
+        .required("Password is a required field")
+        .min(8, "Password must be at least 8 characters"),
+    repassword: Yup.string()
+        .oneOf([Yup.ref('password'), null], 'Passwords must match'),
+    jawaban: Yup.string()
+        .required("Answer is a required field"),
+    jawaban2: Yup.string()
+        .required("Answer is a required field"),
+    portofolio: Yup.string()
+        .required("Portofolio is a required field")
+        .matches(/^https:\/\/drive\.google\.com\/(file\/d\/|folderview\?id=|open\?id=|drive\/folders\/)([a-zA-Z0-9-_]+)/,
+            "Link must be from Google Drive"),
+
+});

@@ -1,17 +1,18 @@
-import { Box, Flex, HStack, Image } from "@chakra-ui/react";
+import { Box, Text, Flex, HStack, Image } from "@chakra-ui/react";
+import { Grid } from "@material-ui/core";
 import "./AboutCard.scss";
 
 export function AboutCard(props) {
-    return (<Box className="about-container" flexDirection={props.direction} transform="translateY(-130px)">
-        <HStack className="about-card" flexDirection={props.direction}>
-            <Box className="about-image"></Box>
-            {/* <Box className="about-title">Unveiling</Box> */}
-            <Box className="about-card-img">
-            </Box>
-            <Box className="about-card-text">
-                <h3>{props.title}</h3>
-                <p>{props.text}</p>
-            </Box>
-        </HStack>
-    </Box>);
+    return (
+        <Grid container className="aboutCard" flexDirection={props.direction} transform="translateY(-130px)">
+            <Grid item xs={2}>
+                <Box className="image"></Box>
+            </Grid>
+            <Grid item xs={10}>
+                <Text className="title">{props.title}</Text>
+                <Text className="desc">
+                    {props.data}
+                </Text>
+            </Grid>
+        </Grid>);
 }

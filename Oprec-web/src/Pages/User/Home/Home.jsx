@@ -1,54 +1,55 @@
-import { Box, Heading, Image } from "@chakra-ui/react"
-import { useEffect, useRef } from "react"
-import { Bird } from "./bird/bird";
-import "./Home.scss"
-import { BgBush, Bush } from "./testbush/bush";
-import { useDispatch, useSelector } from "react-redux";
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import { pageChanged } from "../../../Redux/features/page/pageSlice";
-import { selectuserRole } from "../../../Redux/features/users/userRoleSlice";
+// react
+import { useRef } from "react";
+// styling
+import { Box, Heading, Image } from "@chakra-ui/react";
+import "./Home.scss";
+// child component
+import { BgBush, Bush } from "./Bush/bush";
+import { Bird } from "./Bird/Bird";
+import { HomeButton } from "./HomeButton/HomeButton";
+// animation
+import { useSpring, animated } from '@react-spring/web';
+import { useEffect } from "react";
+import { Stepper } from "@material-ui/core";
+import styled from 'styled-components';
+import { CustomizedSteppersHome } from "./HomeStepper/HomeStepper";
+import { useMediaQuery } from "@chakra-ui/react";
 
-export default function Home(props) {
-    const dispatch = useDispatch();
-    const homeTitleRef = useRef();
-    useEffect(() => {
-        setTimeout(() => {
-            document.querySelectorAll('.circle').forEach(e => {
-                e.classList.add('loaded')
-            })
-        }, 500);
-        setTimeout(() => {
-            document.querySelectorAll('.circle').forEach(e => {
-                e.classList.add('faded')
-            })
-            document.querySelectorAll('.circle').forEach(e => {
-                e.classList.remove('loaded')
-            })
-            homeTitleRef.current.style.opacity = 1;
-        }, 1000);
+const AnimatedImg = styled(animated(Image))``;
+
+
+
+// start from here
+export default function Home() {
+    const [isMobile] = useMediaQuery("(max-width: 768px)")
+    // animation
+    const Logoanimate = useSpring({
+        from: { opacity: 0, transform: "translate3d(0, 70px, 0)" },
+        to: { opacity: 1, transform: "translate3d(0, 0px, 0)" },
+        willChange: "transform, opacity",
+
     })
+    const [pilarLeft, api] = useSpring(() => ({
+        from: { x: 0 }
+    }))
+    function handleClick() {
+        api.start({
+            from: { x: 0 },
+            to: { x: 100 },
+        })
+    }
 
-    const homeRef = useRef(null);
-    const userRole = useSelector(selectuserRole);
+    const homeTitleRef = useRef();
     return (
-        <Box ref={homeRef} className="home" height={"1000px"}>
-            <Bird />
-            <BgBush />
-            <div className="circle first"></div>
-            <Image className="pilar left" />
-            <Image className="pilar right" />
-            <Image height={["200px", "300px", "400px"]} width={["200px", "300px", "400px"]} className="home-image" />
+        <Box className="home" paddingTop={isMobile ? "20px" : "10vh"}>
+            <CustomizedSteppersHome />
+            {/* <Bird /> */}
+            {/* <BgBush /> */}
+            <animated.div onClick={handleClick} style={pilarLeft} className="pilar left"></animated.div>
+            <animated.div className="pilar right"></animated.div>
+            <AnimatedImg style={{ ...Logoanimate }} height={["100px", "300px", "300px"]} width={["100px", "300px", "300px"]} className="home-image" />
             <Heading className="heading" opacity={0} ref={homeTitleRef}>Welcome Sparta! </Heading>
-            <Button className="joinbtn"
-                onClick={() => {
-                    if (userRole === "guest") {
-                        dispatch(pageChanged("login"));
-                    } else {
-                        dispatch(pageChanged("join"));
-                    }
-                }}
-            >DAFTAR UFEST!</Button>
+            <HomeButton />
             <Bush />
         </Box>
     )

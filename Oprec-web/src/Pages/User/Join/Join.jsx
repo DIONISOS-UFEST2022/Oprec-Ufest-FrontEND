@@ -1,22 +1,29 @@
+// Styling
 import {
-    Box, Text, Link, Select, Checkbox, CheckboxGroup, Textarea, background, List,
-    ListItem,
-    ListIcon,
-    OrderedList,
-    UnorderedList,
+    Box, Text,
+    Textarea,
+    Radio,
+    RadioGroup,
+    Stack,
+    Flex,
+    Image
 } from "@chakra-ui/react";
 import "./Join.scss";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import { useRef, useState } from "react";
-import { CustomButton } from "../../../Reusable/CustomButton/CustomButton";
-import { Field } from "formik";
-import { Radio, RadioGroup, Stack } from '@chakra-ui/react'
-import { FileUploader } from "react-drag-drop-files";
-import Thankyou from "./Thankyou";
 import { Autocomplete } from "@mui/material";
-import TextField from '@mui/material/TextField';
-import { JurusanData } from "./AutoComplete";
+import { Button } from "@material-ui/core";
+import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
+import { styled } from '@mui/material/styles';
+// Form Control
+import { Formik } from "formik";
+// React
+import { useRef, useState } from "react";
+// Module
+import Thankyou from "./Thankyou/Thankyou";
+import { DivisiData, JurusanData } from "./AutoComplete/AutoComplete";
+import { JoinSchema } from "./JoinSchema";
+import { CustomTextField } from "../../../Reusable/TextField/CustomTextField";
+import { UploadImage } from "./UploadImage/UploadImage";
+import JoinPage0 from "./Page/JoinPage0";
 
 // Dekorasi
 // Publikasi
@@ -33,95 +40,22 @@ import { JurusanData } from "./AutoComplete";
 
 
 
-function DragDrop() {
-    const fileTypes = [
-        "JPEG",
-        "JPG",
-        "PNG",
-        "IMG",
-    ];
-    const [file, setFile] = useState(null);
-    const handleChange = (file) => {
-        setFile(file);
-    };
-    return (
-        <>
-            <FileUploader
-                child
-                handleChange={handleChange}
-                name="file"
-                types={fileTypes}
-            >
-                <Box classes="drop_area drop_zone" className="files">
-                    <Text>Drag and drop your file here</Text>
-                    <Text>JPG/PNG</Text>
-                </Box>
-            </FileUploader>
-            {/* <p>{file ? `File name: ${file[0].name}` : "no files uploaded yet"}</p> */}
-        </>
-    );
-}
 
 
-// Creating schema
-const schema = Yup.object().shape({
-    jurusan: Yup.string()
-        .required("Jurusan is a required field"),
-    angkatan: Yup.string()
-        .required("Angkatan is a required field"),
-    alamat: Yup.string()
-        .required("Alamat is a required field"),
-    vaksin: Yup.string()
-        .required("Vaksin is a required field"),
-    nohp: Yup.string()
-        .required("No HP is a required field"),
-    idline: Yup.string()
-        .required("ID Line is a required field"),
-    ig: Yup.string()
-        .required("Instagram is a required field"),
-    domisili: Yup.string()
-        .required("Domisili is a required field"),
-    pertanyaan: Yup.string()
-        .required("Pertanyaan is a required field"),
-    divisi: Yup.string()
-        .oneOf([
-            "Dekorasi",
-            "Publikasi",
-            "Keamanan",
-            "Fresh Money",
-            "Sponsor",
-            "Dokumentasi",
-            "Acara",
-            "Perlengkapan",
-            "Lomba",
-            "Konsumsi",
-            "Website",
-            "Visual"
-        ])
-        .required("Division is a required field"),
-    divisialt: Yup.string()
-        .required("Division is a required field"),
-    fullname: Yup.string()
-        .required("Full Name is a required field"),
-    nim: Yup.string()
-        .required("NIM is a required field")
-        .min(10, "Enter a valid NIM"),
-    email: Yup.string()
-        .required("Email is a required field")
-        .email("Invalid email format"),
-    password: Yup.string()
-        .required("Password is a required field")
-        .min(8, "Password must be at least 8 characters"),
-    repassword: Yup.string()
-        .oneOf([Yup.ref('password'), null], 'Passwords must match'),
-    jawaban: Yup.string()
-        .required("Answer is a required field"),
-    jawaban2: Yup.string()
-        .required("Answer is a required field"),
-    jawaban3: Yup.string()
-        .required("Answer is a required field"),
+const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+    height: 10,
+    borderRadius: 5,
+    [`&.${linearProgressClasses.colorPrimary}`]: {
+        backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+    },
+    [`& .${linearProgressClasses.bar}`]: {
+        borderRadius: 5,
+        backgroundColor: theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8',
+    },
+}));
 
-});
+
+
 
 export function Join(props) {
     // next input when press enter
@@ -133,13 +67,46 @@ export function Join(props) {
         }
     }
     const [joinpage, Setjoinpage] = useState(0);
+
+    function Prev(props) {
+        return (
+            <Button className="Button" variant="contained" type="button" onClick={() => {
+                Setjoinpage(props.page)
+                titleRef.current.scrollIntoView({ behavior: 'smooth' })
+            }}>PREV</Button>
+        )
+    }
+
+    function Next(props) {
+        return (
+            <Button className="Button" variant="contained" type="button" onClick={() => {
+                Setjoinpage(props.page);
+                titleRef.current.scrollIntoView({ behavior: 'smooth' });
+            }}>NEXT</Button>
+        )
+    }
+
+
     return (
         <Box className="Join" ref={titleRef}>
             <Formik
-                validationSchema={schema}
-                initialValues={{ input: "", password: "", fullname: "", nim: "", repassword: "", email: "", jurusan: "", angkatan: "", alamat: "", vaksin: "", pertanyaan: "", nohp: "", idline: "", ig: "", domisili: "", divisi: "", divisialt: "", jawaban: "", jawaban2: "", jawaban3: "" }}
+                validationSchema={JoinSchema}
+                initialValues={{
+                    jurusan: "",
+                    angkatan: "",
+                    alamat: "",
+                    vaksin: "",
+                    nohp: "",
+                    idline: "",
+                    ig: "",
+                    domisili: "",
+                    divisi: "",
+                    divisialt: "",
+                    jawaban: "",
+                    jawaban2: "",
+                    portofolio: ""
+                }}
                 onSubmit={(values) => {
-                    // Alert the input values of the form that we filled
                     alert(JSON.stringify(values));
                 }}
             >
@@ -150,155 +117,104 @@ export function Join(props) {
                     handleChange,
                     handleBlur,
                     handleSubmit,
+                    setFieldValue,
                 }) => (
-                    <div className="join" >
+                    <Box className="join" padding={"10px"}>
                         <div className="form">
-                            {/* Passing handleSubmit parameter tohtml form onSubmit property */}
                             <form noValidate onSubmit={handleSubmit}>
-                                <span className="JoinTitle">JOIN US!</span>
+
+                                {/* <BorderLinearProgress /> */}
+                                <BorderLinearProgress variant="determinate" value={(100 / 6) * joinpage} />
                                 <br />
                                 {(() => {
                                     switch (joinpage) {
                                         case 0:
-                                            return (<>
-                                                <Box className="wrapper">
-                                                    Hal hal yang perlu dipersiapkan:
-                                                    <ol>
-                                                        <li className="list">Sertifikat vaksin Covid-19 ketiga</li>
-                                                        <li className="list">Link Google Drive berisi Portofolio khusus Divisi Dokumentasi dan Visual</li>
-                                                    </ol>
-                                                </Box>
-                                                <button type="button" onClick={() => {
+                                            return (<Box className="page1">
+                                                <span className="JoinTitle">JOIN US!</span>
+                                                <JoinPage0 />
+                                                <Button className="Button" variant="contained" type="button" onClick={() => {
                                                     Setjoinpage(1)
                                                     titleRef.current.scrollIntoView({ behavior: 'smooth' })
-                                                }}>Next</button>
-                                            </>)
+                                                }}>Let's GO</Button>
+                                            </Box>)
                                         case 1:
                                             return (<>
                                                 {/* jurusan */}
-                                                <input
+                                                <Autocomplete
+                                                    options={JurusanData}
+                                                    // getOptionLabel={(option) => option.label ? option.label : ""}
                                                     ref={formInput}
                                                     onKeyDownCapture={EnterHandleClick}
-                                                    type="text"
-                                                    name="jurusan"
-                                                    onChange={handleChange}
                                                     onBlur={handleBlur}
-                                                    // value={values.jurusan}
-                                                    placeholder="Masukan Jurusan"
-                                                    className="form-control inp_text"
-                                                    id="jurusan"
-                                                />
-                                                <Autocomplete
-                                                    disablePortal
-                                                    id="combo-box-demo"
-                                                    options={JurusanData}
-                                                    sx={{ width: 300 }}
-                                                    renderInput={(params) => <TextField {...params} label="Jurusan" />}
+                                                    type="text"
+                                                    value={values.jurusan}
+                                                    renderInput={(params) =>
+                                                        <CustomTextField
+                                                            {...params}
+                                                            label="Jurusan"
+                                                            // ref={formInput}
+                                                            placeholder="Masukan Jurusan"
+                                                            name="jurusan"
+                                                            required
+                                                            fullWidth
+                                                        />}
+                                                    isOptionEqualToValue={(option, value) =>
+                                                        value === undefined || value === "" || option.id === value.id
+                                                    }
+                                                    onChange={(_, data) => setFieldValue("jurusan", data.label)}
                                                 />
                                                 <p className="error">
                                                     {errors.jurusan && touched.jurusan && errors.jurusan}
                                                 </p>
                                                 {/* angkatan */}
-                                                <select
+                                                <Autocomplete
+                                                    options={[
+                                                        { label: "2020" },
+                                                        { label: "2021" },
+                                                        { label: "2022" },
+                                                    ]}
+                                                    // getOptionLabel={(option) => option.label ? option.label : ""}
+                                                    value={values.angkatan}
                                                     id="angkatan"
-                                                    name="angkatan"
-                                                    placeholder="Pilih Angkatan"
-                                                    className="form-control inp_text inp_option"
-                                                    onChange={handleChange}
                                                     onBlur={handleBlur}
-                                                // value={values.angkatan}
-                                                >
-                                                    <option value='select' selected hidden>Plih Angkatan</option>
-                                                    <option value='2020'>2020</option>
-                                                    <option value='2021'>2021</option>
-                                                    <option value='2022'>2022</option>
-                                                </select>
+                                                    onKeyDownCapture={EnterHandleClick}
+                                                    renderInput={(params) =>
+                                                        <CustomTextField
+                                                            {...params}
+                                                            label="Angkatan"
+                                                            ref={formInput}
+                                                            type="text"
+                                                            name="angkatan"
+                                                            required
+                                                            fullWidth
+                                                        />}
+                                                    isOptionEqualToValue={(option, value) =>
+                                                        value === undefined || value === "" || option.id === value.id
+                                                    }
+                                                    onChange={(_, data) => setFieldValue("angkatan", data.label.valueOf())}
+                                                />
                                                 <p className="error">
                                                     {errors.angkatan && touched.angkatan && errors.angkatan}
                                                 </p>
                                                 {/* alamat */}
-                                                <input
+                                                <CustomTextField
+                                                    id="alamat"
                                                     ref={formInput}
+                                                    value={values.alamat}
                                                     onKeyDownCapture={EnterHandleClick}
                                                     type="text"
                                                     name="alamat"
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
-                                                    value={values.alamat}
-                                                    placeholder="Masukan alamat"
-                                                    className="form-control inp_text"
-                                                    id="alamat"
+                                                    label="Alamat"
+                                                    placeholder="Alamat Sekarang"
+                                                    required
                                                 />
                                                 <p className="error">
                                                     {errors.alamat && touched.alamat && errors.alamat}
                                                 </p>
-                                                {/* Sudah Vaksin ke-3 */}
-                                                <Box className="wrapper">
-                                                    <Text className="TextLabel">Sudah Vaksin ke 3</Text>
-                                                    <RadioGroup
-                                                        onChange={handleChange} onBlur={handleBlur} name="vaksin">
-                                                        <Stack spacing={3} direction='row'>
-                                                            <Radio className="form-control " value='sudah'>Sudah</Radio>
-                                                            <Radio className="form-control " value='belum'>Belum</Radio>
-                                                        </Stack>
-                                                    </RadioGroup>
-                                                    <DragDrop />
-
-                                                </Box>
-
-                                                <p className="error">
-                                                    {errors.fullname && touched.fullname && errors.fullname}
-                                                </p>
-                                                {/* No Handphone */}
-                                                <input
-                                                    ref={formInput}
-                                                    onKeyDownCapture={EnterHandleClick}
-                                                    type="text"
-                                                    name="nohp"
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                    value={values.nohp}
-                                                    placeholder="Nomor Handphone Aktif"
-                                                    className="form-control inp_text"
-                                                    id="nohp"
-                                                />
-                                                <p className="error">
-                                                    {errors.nohp && touched.nohp && errors.nohp}
-                                                </p>
-                                                {/* ID Line */}
-                                                <input
-                                                    ref={formInput}
-                                                    onKeyDownCapture={EnterHandleClick}
-                                                    type="text"
-                                                    name="idline"
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                    value={values.idline}
-                                                    placeholder="ID Line"
-                                                    className="form-control inp_text"
-                                                    id="idline"
-                                                />
-                                                <p className="error">
-                                                    {errors.idline && touched.idline && errors.idline}
-                                                </p>
-                                                {/* Instagram */}
-                                                <input
-                                                    ref={formInput}
-                                                    onKeyDownCapture={EnterHandleClick}
-                                                    type="text"
-                                                    name="ig"
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                    value={values.ig}
-                                                    placeholder="Akun Instagram Aktif"
-                                                    className="form-control inp_text"
-                                                    id="ig"
-                                                />
-                                                <p className="error">
-                                                    {errors.ig && touched.ig && errors.ig}
-                                                </p>
                                                 {/* Kota Domisili */}
-                                                <input
+                                                <CustomTextField
                                                     ref={formInput}
                                                     onKeyDownCapture={EnterHandleClick}
                                                     type="text"
@@ -309,72 +225,144 @@ export function Join(props) {
                                                     placeholder="Kota Domisili"
                                                     className="form-control inp_text"
                                                     id="domisili"
+                                                    label="Domisili"
+                                                    required
                                                 />
                                                 <p className="error">
                                                     {errors.domisili && touched.domisili && errors.domisili}
                                                 </p>
-                                                {/* divisi */}
-                                                <select id="divisi"
-                                                    name="divisi"
-                                                    placeholder="Pilih Divisi"
-                                                    className="form-control inp_text inp_option"
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                // value={values.divisi}
-                                                >
-                                                    <option value='select' selected hidden>Plih Divisi</option>
-                                                    <option value='Dekorasi'>Dekorasi</option>
-                                                    <option value='Publikasi'>Publikasi</option>
-                                                    <option value='Keamanan'>Keamanan</option>
-                                                    <option value='Fresh Money'>Fresh Money</option>
-                                                    <option value='Sponsor'>Sponsor</option>
-                                                    <option value='Dokumentasi'>Dokumentasi</option>
-                                                    <option value='Acara'>Acara</option>
-                                                    <option value='Perlengkapan'>Perlengkapan</option>
-                                                    <option value='Lomba'>Lomba</option>
-                                                    <option value='Konsumsi'>Konsumsi</option>
-                                                    <option value='Website'>Website</option>
-                                                    <option value='Visual'>Visual</option>
-                                                </select>
-                                                <p className="error">
-                                                    {errors.divisi && touched.divisi && errors.divisi}
-                                                </p>
-                                                <select id="divisi"
-                                                    name="divisi"
-                                                    placeholder="Pilih Divisi"
-                                                    className="form-control inp_text inp_option"
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-
-                                                >
-                                                    <option value='select' selected hidden>Plih Divisi Alternatif</option>
-                                                    <option value='Dekorasi'>Dekorasi</option>
-                                                    <option value='Publikasi'>Publikasi</option>
-                                                    <option value='Keamanan'>Keamanan</option>
-                                                    <option value='Fresh Money'>Fresh Money</option>
-                                                    <option value='Sponsor'>Sponsor</option>
-                                                    <option value='Dokumentasi'>Dokumentasi</option>
-                                                    <option value='Acara'>Acara</option>
-                                                    <option value='Perlengkapan'>Perlengkapan</option>
-                                                    <option value='Lomba'>Lomba</option>
-                                                    <option value='Konsumsi'>Konsumsi</option>
-                                                    <option value='Website'>Website</option>
-                                                    <option value='Visual'>Visual</option>
-                                                </select>
-                                                <p className="error">
-                                                    {errors.divisi && touched.divisi && errors.divisi}
-                                                </p>
-
-                                                <button type="button" onClick={() => {
-                                                    Setjoinpage(2);
-                                                    titleRef.current.scrollIntoView({ behavior: 'smooth' });
-                                                }}>Next</button>
+                                                <Flex justifyContent={"space-between"}>
+                                                    <Prev page={0} />
+                                                    <Next page={2} values={values} />
+                                                </Flex>
                                             </>);
                                         case 2:
+                                            return (<Box className="page2">
+                                                {/* Sudah Vaksin ke-3 */}
+                                                <Box>
+                                                    <Text className="TextLabel">
+                                                        Upload Sertifikat Vaksin Covid-19 ke-3
+                                                    </Text>
+                                                    <UploadImage onChange={handleChange} name={"vaksin"} />
+                                                </Box>
+                                                <p className="error">
+                                                    {errors.fullname && touched.fullname && errors.fullname}
+                                                </p>
+                                                {/* No Handphone */}
+                                                <CustomTextField
+                                                    ref={formInput}
+                                                    onKeyDownCapture={EnterHandleClick}
+                                                    type="text"
+                                                    name="nohp"
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    value={values.nohp}
+                                                    placeholder="E.g +628123456789"
+                                                    className="form-control inp_text"
+                                                    id="nohp"
+                                                    label="Nomor Telepon Aktif"
+                                                />
+                                                <p className="error">
+                                                    {errors.nohp && touched.nohp && errors.nohp}
+                                                </p>
+                                                {/* ID Line */}
+                                                <CustomTextField
+                                                    ref={formInput}
+                                                    onKeyDownCapture={EnterHandleClick}
+                                                    type="text"
+                                                    name="idline"
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    value={values.idline}
+                                                    placeholder="Masukan ID Line Aktif"
+                                                    className="form-control inp_text"
+                                                    id="idline"
+                                                    label="ID Line"
+                                                />
+                                                <p className="error">
+                                                    {errors.idline && touched.idline && errors.idline}
+                                                </p>
+                                                {/* Instagram */}
+                                                <CustomTextField
+                                                    ref={formInput}
+                                                    onKeyDownCapture={EnterHandleClick}
+                                                    type="text"
+                                                    name="ig"
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    value={values.ig}
+                                                    placeholder="E.g. @username"
+                                                    className="form-control inp_text"
+                                                    id="ig"
+                                                    label="Instagram Aktif"
+                                                    required
+                                                />
+                                                <p className="error">
+                                                    {errors.ig && touched.ig && errors.ig}
+                                                </p>
+
+                                                {/* divisi */}
+                                                <Autocomplete
+                                                    options={DivisiData}
+                                                    ref={formInput}
+                                                    onKeyDownCapture={EnterHandleClick}
+                                                    // getOptionLabel={(option) => option.label ? option.label : ""}
+                                                    onBlur={handleBlur}
+                                                    value={values.divisi}
+                                                    id="jurusan"
+                                                    renderInput={(params) =>
+                                                        <CustomTextField
+                                                            {...params}
+                                                            label="Divisi"
+                                                            type="text"
+                                                            name="divisi"
+                                                            placeholder="Masukan Divisi"
+                                                            required
+                                                            fullWidth
+                                                        />}
+                                                    isOptionEqualToValue={(option, value) =>
+                                                        value === undefined || value === "" || option.id === value.id
+                                                    }
+                                                    onChange={(_, data) => setFieldValue("divisi", data.label)}
+                                                />
+                                                <p className="error">
+                                                    {errors.divisi && touched.divisi && errors.divisi}
+                                                </p>
+                                                {/* Divisi Alternatif */}
+                                                <Autocomplete
+                                                    options={DivisiData}
+                                                    ref={formInput}
+                                                    onKeyDownCapture={EnterHandleClick}
+                                                    onBlur={handleBlur}
+                                                    type="text"
+                                                    value={values.divisialt}
+                                                    renderInput={(params) =>
+                                                        <CustomTextField
+                                                            {...params}
+                                                            label="Divisi Alternatif"
+                                                            placeholder="Masukan Divisi Alternatif"
+                                                            name="divisialt"
+                                                            required
+                                                            fullWidth
+                                                        />}
+                                                    isOptionEqualToValue={(option, value) =>
+                                                        value === undefined || value === "" || option.id === value.id
+                                                    }
+                                                    onChange={(_, data) => setFieldValue("divisialt", data.label)}
+                                                />
+                                                <p className="error">
+                                                    {errors.divisi_alternatif && touched.divisi_alternatif && errors.divisi_alternatif}
+                                                </p>
+                                                <Flex justifyContent={"space-between"}>
+                                                    <Prev page={1} />
+                                                    <Next page={3} />
+                                                </Flex>
+                                            </Box>)
+                                        case 3:
                                             return (<>
                                                 <Text className="Wrapper">Apa yang kamu ketahui tentang U-FEST?</Text>
-                                                <br />
-                                                <Textarea
+
+                                                <CustomTextField
                                                     ref={formInput}
                                                     onKeyDownCapture={EnterHandleClick}
                                                     type="text"
@@ -382,23 +370,26 @@ export function Join(props) {
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                     value={values.jawaban}
-                                                    placeholder="Jawaban"
-                                                    className="form-control inp_text"
+                                                    label="Jawaban"
+                                                    placeholder="Masukan Jawaban"
+                                                    className="textarea"
                                                     id="jawaban"
+                                                    multiline
+                                                    rows={4}
                                                 />
                                                 <p className="error">
                                                     {errors.jawaban && touched.jawaban && errors.jawaban}
                                                 </p>
-                                                <button type="button" onClick={() => {
-                                                    Setjoinpage(3);
-                                                    titleRef.current.scrollIntoView({ behavior: 'smooth' });
-                                                }}>Next</button>
+                                                <Flex justifyContent={"space-between"}>
+                                                    <Prev page={2} />
+                                                    <Next page={4} />
+                                                </Flex>
                                             </>);
-                                        case 3:
+                                        case 4:
                                             return (<>
                                                 <Text className="Wrapper">Berdasarkan Divisi yang kamu pilih, menurut kamu sifat apa saja yang diperlukan untuk menjadi bagian dari divisi tersebut?</Text>
                                                 <br />
-                                                <Textarea
+                                                <CustomTextField
                                                     ref={formInput}
                                                     onKeyDownCapture={EnterHandleClick}
                                                     type="text"
@@ -406,30 +397,57 @@ export function Join(props) {
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                     value={values.jawaban2}
-                                                    placeholder="Jawaban"
-                                                    className="form-control inp_text"
+                                                    className="textarea"
+                                                    label="Alasan"
+                                                    placeholder="Masukan Jawaban"
                                                     id="jawaban2"
+                                                    multiline
+                                                    rows={4}
                                                 />
                                                 <p className="error">
                                                     {errors.jawaban2 && touched.jawaban2 && errors.jawaban2}
                                                 </p>
-                                                <button type="button" onClick={() => {
-                                                    Setjoinpage(4)
-                                                    titleRef.current.scrollIntoView({ behavior: 'smooth' });
-                                                }}>Next</button>
+                                                <Flex justifyContent={"space-between"}>
+                                                    <Prev page={3} />
+                                                    <Next page={5} />
+                                                </Flex>
                                             </>)
-                                        case 4:
-                                            return (<>
-                                                <Text className="Wrapper">Upload Portofolio</Text>
-                                                <button type="button" onClick={() => {
-                                                    Setjoinpage(5)
-                                                    titleRef.current.scrollIntoView({ behavior: 'smooth' });
-                                                }}>Next</button>
-                                            </>)
-
                                         case 5:
                                             return (<>
+                                                <Text className="Wrapper">Upload Portofolio</Text>
+                                                <CustomTextField
+                                                    ref={formInput}
+                                                    onKeyDownCapture={EnterHandleClick}
+                                                    type="text"
+                                                    label="Portofolio"
+                                                    name="portofolio"
+                                                    placeholder="E.g https://drive.google.com/drive/folders/yourfolder"
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    value={values.portofolio}
+                                                    className="textarea"
+                                                    id="portofolio"
+                                                    multiline
+                                                    rows={3}
+                                                />
+                                                <p className="error">
+                                                    {errors.portofolio && touched.portofolio && errors.portofolio}
+                                                </p>
+                                                <Flex justifyContent={"space-between"}>
+                                                    <Prev page={4} />
+                                                    <Button className="Button" variant="contained" type="submit" onClick={() => {
+                                                        Setjoinpage(6);
+                                                        titleRef.current.scrollIntoView({ behavior: 'smooth' });
+                                                        console.log(values);
+                                                    }}>Submit</Button>
+                                                </Flex>
+                                            </>)
+                                        case 6:
+                                            return (<>
                                                 <Thankyou />
+                                                <Text className="textfillheart">
+                                                    Tap to fill heart!
+                                                </Text>
                                             </>)
                                         default:
                                             return null;
@@ -438,7 +456,7 @@ export function Join(props) {
 
                             </form>
                         </div>
-                    </div>
+                    </Box>
                 )}
             </Formik>
         </Box>

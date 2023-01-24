@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    page: "join",
+    page: null,
 };
 
 const pageSlice = createSlice({

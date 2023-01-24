@@ -7,14 +7,8 @@ import { NavbarAdmin } from "../../Reusable/NavbarAdmin/NavbarAdmin";
 import { Feature } from "./Feature/Feature";
 import { useSelector, useDispatch } from "react-redux";
 import { selectPage } from "../../Redux/features/page/pageSlice";
-import useCookie from 'react-use-cookie';
-
 
 export function Admin() {
-
-    useEffect(() => {
-        // document.title = "Admin";
-    }, []);
     const page = useSelector(selectPage);
     return <div className="admin">
         <NavbarAdmin />

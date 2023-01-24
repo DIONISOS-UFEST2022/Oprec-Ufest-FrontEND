@@ -1,15 +1,22 @@
 .Footer {
+    height: 100%;
     width: 100%;
     justify-content: space-between;
     overflow: hidden;
     padding-top: 70px;
     background-color: #000;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
 
     .title {
         margin: 10px;
         color: #fff;
         font-weight: bolder;
         font-size: 25px;
+        user-select: none;
 
     }
 
@@ -19,6 +26,11 @@
         color: #fff;
         padding: 20px;
         text-align: left;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -o-user-select: none;
+        user-select: none;
 
         .image {
             width: 200px;
@@ -40,7 +52,13 @@
         padding: 20px;
         text-align: center;
         background-color: #000;
-        color: rgb(255, 255, 255);
+        color: rgb(144, 144, 144);
+
+        .purpleText {
+            color: #a100ec !important;
+            // font-style: italic;
+            // text-shadow: 0 0 5px #fff, 0 100px 100px #fff;
+        }
     }
 }
 
@@ -48,7 +66,8 @@
 .LinkCard {
     display: block;
     color: rgb(255, 255, 255);
-    .LinkCardimg{
+
+    .LinkCardimg {
         transition: outline 250ms ease-in-out;
     }
 }

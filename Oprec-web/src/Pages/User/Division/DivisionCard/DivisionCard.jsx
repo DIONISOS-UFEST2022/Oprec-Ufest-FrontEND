@@ -1,8 +1,8 @@
 import { Box, Text, Image, Flex } from "@chakra-ui/react";
-import "./Division.scss"
+import "./DivisionCard.scss"
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { useEffect } from 'react';
+
 
 export function DivisionCard(Props) {
     return (
@@ -13,9 +13,7 @@ export function DivisionCard(Props) {
                 {
                     opacity: 0.8,
                 }
-            }
-
-        >
+            }>
             <Box className="DivisionCard">
                 <Flex>
                     <Image className="DivisionLogo" />

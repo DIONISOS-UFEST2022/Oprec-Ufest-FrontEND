@@ -2,7 +2,6 @@ import {
     Table,
     Thead,
     Tbody,
-    Tfoot,
     Tr,
     Th,
     Td,
@@ -19,6 +18,9 @@ import "./Database.scss";
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser, setUserToken, userRegister } from '../../../Redux/features/users/userDataSlice';
 import { selectuserToken } from '../../../Redux/features/users/userRoleSlice';
+import * as React from 'react';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+
 
 function DatabaseCard(props) {
     return (
@@ -39,58 +41,53 @@ function Analytic(props) {
     </Box>)
 }
 
+
+function getFullName(params) {
+    return `${params.row.firstName || ''} ${params.row.lastName || ''}`;
+}
+
+const columns = [
+    { field: 'id', headerName: 'ID', width: 70 },
+    { field: 'name', headerName: 'Nama', width: 130, editable: true },
+    { field: 'jurusan', headerName: 'Jurusan', width: 130, editable: true },
+    { field: 'angkatan', headerName: 'Angkatan', width: 130, editable: true },
+    { field: 'nim', headerName: 'NIM', width: 130, editable: true },
+    { field: 'email', headerName: 'Email', width: 130, editable: true },
+];
+
+
 export function Database(props) {
-    const dispatch = useDispatch();
-    const [MapData, setMapData] = useState([]);
     const token = useSelector(selectuserToken);
-    const user = useSelector(selectUser);
     const [userData, SetuserData] = useState([]);
-    const [query, setQuery] = useState([]);
     useEffect(() => {
         axios.get("http://127.0.0.1:8000/api/users", {
             headers:
                 { Authorization: `Bearer ${token}` }
         })
             .then((result) => {
-                // console.log(result.data.data[0].name);
                 SetuserData(result.data.data);
-                // setMapData(result.data[0].name);
             })
             .catch((err) => {
-                // alert("Verification failed");
                 console.log(err);
             })
-    }, [])
+    }, []);
+
     return (
         <Box className="database">
-            <Analytic lenght={userData.length} />
-            <br />
-            <Divider />
-            <br />
-            <Input className='input' type="text" placeholder='Enter Query' onChange={event => { setQuery(event.target.value) }} />
-            <TableContainer className='databaseTabel'>
-                <Heading overflow={"hidden"}>Database</Heading>
-                <Table variant='simple'>
-                    <TableCaption>End of Data</TableCaption>
-                    <Thead>
-                        <Tr>
-                            <Th>Nama</Th>
-                            <Th>Jurusan/Angkatan</Th>
-                            <Th>NIM</Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        {userData.filter(post => {
-                            if (query === '') {
-                                return post;
-                            } else if (post.name.toString().toLowerCase().includes(query.toString().toLowerCase()) || post.nim.includes(query)) {
-                                return post;
-                            }
-                        }).map((post, index) => (
-                            <DatabaseCard key={index} name={post.name} jurusan={post.jurusan} angkatan={post.angkatan} nim={post.nim} />
-                        ))}
-                    </Tbody>
-                </Table>
-            </TableContainer>
+            <Box sx={{ height: 400, width: '100%' }}>
+                <DataGrid
+                    rows={
+                        userData.map((post, index) => (
+                            { id: index, name: post.name, jurusan: post.jurusan, angkatan: post.angkatan, nim: post.nim, email: post.email }
+                        ))
+                    }
+                    columns={columns}
+                    components={{ Toolbar: GridToolbar }}
+                />
+            </Box>
+
         </Box>)
 }
+
+
+

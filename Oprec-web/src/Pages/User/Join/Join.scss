@@ -1,29 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
 
 
-.files {
-    border: 1px dashed rgb(107, 107, 107);
-    border-radius: 10px;
-    display: inline-block;
-    text-align: center;
-    padding: 10px;
-    cursor: pointer;
-    background-color: #c9c9c9;
-    font-size: 10px;
-    width: 100%;
-    height: 100%;
-}
-
 .Join {
     background: linear-gradient(90deg, #b74b7d 0%, #182848 100%);
     height: 100%;
+    min-height: 100vh;
 
     .join {
+        padding-top: 100px;
         height: 100%;
-        padding: 100px;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -o-user-select: none;
+        user-select: none;
     }
 
     .JoinTitle {
+        user-select: none;
         font-size: 40px;
         color: #395699;
         margin-bottom: 25px;
@@ -31,12 +25,14 @@
         font-weight: bold;
     }
 
+    .textarea {
+        margin-bottom: 80px;
+    }
+
     .wrapper {
         padding: 15px;
         background: #f2f2f2;
         border-radius: 5px;
-        text-align: left;
-        margin: 0 0 15px;
     }
 
     .list {
@@ -84,48 +80,37 @@
         text-align: center;
     }
 
-    .form input {
-        outline: 0;
-        background: #f2f2f2;
-        width: 100%;
-        border: 0;
-        border-radius: 5px;
-        margin: 0 0 15px;
-        padding: 15px;
-        box-sizing: border-box;
-        font-size: 14px;
-        font-family: 'Comfortaa', cursive;
-    }
-
-    .form input:focus {
-        background: #dbdbdb;
-    }
-
-    .form button {
+    .Button {
         font-family: 'Comfortaa', cursive;
         text-transform: uppercase;
         outline: 0;
         background: #4b6cb7;
-        width: 100%;
-        border: 0;
-        border-radius: 5px;
-        padding: 15px;
         color: #FFFFFF;
-        font-size: 14px;
         -webkit-transition: all 0.3 ease;
         transition: all 0.3 ease;
         cursor: pointer;
     }
 
-    .form button:active {
-        background: #395591;
+    .textfillheart {
+        animation: textfillheart 2s infinite ease-in-out alternate-reverse;
+        will-change: transfrom;
     }
 
+    @keyframes textfillheart {
+        from {
+            transform: scale(1);
+        }
 
-    .form p.error {
-        margin: 0 0 10px 10px;
+        to {
+            transform: scale(1.1);
+        }
+    }
+
+    p.error {
+        margin: 20px 10px 10px 10px;
         text-align: left;
         font-size: 10px;
         color: red;
+        user-select: none;
     }
 }

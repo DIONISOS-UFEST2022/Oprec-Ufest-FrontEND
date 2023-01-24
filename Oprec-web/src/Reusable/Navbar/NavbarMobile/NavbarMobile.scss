@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+
+.NavbarMobileButton {
+    background-color: rgb(192, 192, 192, 0.3);
+    position: fixed;
+    border-style: none;
+    width: 50px;
+    height: 50px;
+    top: 20px;
+    right: 15px;
+    border-radius: 50%;
+    z-index: 101;
+    pointer-events: all;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    padding: 10px;
+    font-family: 'Montserrat', sans-serif !important;
+
+    .bar {
+        height: 5px;
+        background-color: rgb(255, 255, 255);
+        border-radius: 2px;
+        margin: 2px;
+        position: absolute;
+
+        &.up {
+            // margin-bottom: 4px;
+            width: 27px;
+            // transform: translateY(-10px);
+        }
+
+        &.down {
+            width: 22px;
+        }
+    }
+}
+
+.NavbarMenu {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgb(10, 6, 76);
+    position: fixed;
+    top: -100vh;
+    z-index: 100;
+    overflow: hidden;
+}
+
+
+.NavbarMobileMenu {
+    justify-content: center;
+    padding-top: 20vh;
+}
+
+
+.NavbarMobileMenuCard {
+    .title {
+        color: white;
+        margin: 10px;
+        font-size: 30px;
+        font-weight: 700;
+        font-family: 'Montserrat', sans-serif !important;
+        pointer-events: all;
+    }
+}

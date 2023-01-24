@@ -2,7 +2,7 @@ import React from 'react'
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    userRole: 'guest',
+    userRole: null,
     userInfo: {},
     userToken: null,
     loading: false,

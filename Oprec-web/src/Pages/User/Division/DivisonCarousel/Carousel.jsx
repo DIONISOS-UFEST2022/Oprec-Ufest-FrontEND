@@ -1,78 +1,47 @@
 // import { Button } from '@mui/material';
-import { Button } from '@chakra-ui/react';
+import { Box, Button } from '@chakra-ui/react';
 import React from 'react';
 import { useSnapCarousel } from 'react-snap-carousel';
 import "./Carousel.scss";
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
 import { Center } from '@chakra-ui/react';
+import CarouselDetail from './CarouselDetail/CarouselDetail';
 
 
 export const AdvancedCarousel = () => {
     const { scrollRef, pages, activePageIndex, next, prev, goTo } =
         useSnapCarousel();
-    const horizontalScroll = (e) => {
-        console.log(e.target);
-        e.target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center',
-            inline: 'center'
-        });
-    }
 
     return (
         <>
-            <ul
+            <Box
+                className='CarouselContainer keep-scrolling'
                 ref={scrollRef}
-                style={{
-                    display: 'flex',
-                    overflow: 'auto',
-                    scrollSnapType: 'x mandatory'
-                }}
+            // onMouseOver={horizontalScroll}
             >
+                {/* <Box className='CarouselSpacing'></Box> */}
                 {Array.from({ length: 12 }).map((_, i) => (
-                    <li
-                    onMouseOver={horizontalScroll}
-                        style={{
-                            backgroundColor: 'aqua',
-                            fontSize: '50px',
-                            width: '400px',
-                            height: '400px',
-                            flexShrink: 0,
-                            color: '#fff',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            // border: '1px solid black',
-                            borderRadius: '50%',
-                            marginLeft: '10px',
-                            marginRight: '10px',
-                        }}
+                    <Box
+                        className='CarouselItem'
+
                     >
-                        Item {i}
-                    </li>
+                        {i + 1}
+                        <CarouselDetail />
+                    </Box>
 
                 ))}
-            </ul>
-            {/* <div>
-                {activePageIndex + 1} / {pages.length}
-            </div> */}
-            {/* 
-            <Button onClick={() => prev()}>Prev</Button>
-            <Button onClick={() => next()}>Next</Button> */}
+            </Box>
             <Center>
-                <div style={{ display: 'flex' }}>
+                <Box style={{ display: 'flex' }} >
                     {pages.map((_, i) => (
-                        <div key={i}>
+                        <Box key={i}>
                             <Button className='CarouselDotNav'
-                                style={i === activePageIndex ? { opacity: 0.5 } : {}}
+                                opacity={i === activePageIndex ? 0.5 : 1}
                                 onClick={() => goTo(i)}
                             >
-                                {/* {i + 1} */}
                             </Button>
-                        </div>
+                        </Box>
                     ))}
-                </div>
+                </Box>
             </Center>
         </>
     );
