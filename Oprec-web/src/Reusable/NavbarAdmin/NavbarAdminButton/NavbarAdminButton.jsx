@@ -1,23 +1,17 @@
 import { Box } from "@chakra-ui/react"
 import "./NavbarButtonAdmin.scss"
-import { Button } from "@material-ui/core"
+// import { Button } from "@material-ui/core"
+import { Button } from "@chakra-ui/react"
 
 export function NavbarButtonAdmin(props) {
     return (
-        <Button
+        <Box
             className="NavbarButtonAdmin"
             id={props.id}
             onClick={props.onClick}
-            sx={{
-                color: 'white',
-                backgroundColor: props.backgroundColor,
-                "&:hover": {
-                    backgroundColor: props.hoverBackgroundColor,
-                    color: props.hoverColor
-                }
-            }}
+            color={props.color}
         >
             {props.Title}
-        </Button>
+        </Box>
     )
 }

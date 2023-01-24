@@ -1,6 +1,5 @@
 import { Box } from "@chakra-ui/react";
-import "./Admin.scss"
-import { useEffect, useState } from "react";
+// import "./Admin.scss"
 import { Division } from "../Admin/Division/Division";
 import { Database } from "../Admin/Database/Database";
 import { NavbarAdmin } from "../../Reusable/NavbarAdmin/NavbarAdmin";

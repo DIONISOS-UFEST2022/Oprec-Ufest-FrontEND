@@ -1,49 +1,46 @@
-// import { Button } from '@mui/material';
-import { Box, Button } from '@chakra-ui/react';
-import React from 'react';
-import { useSnapCarousel } from 'react-snap-carousel';
-import "./Carousel.scss";
-import { Center } from '@chakra-ui/react';
-import CarouselDetail from './CarouselDetail/CarouselDetail';
+import React, { useRef, useState } from "react";
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Box } from "@material-ui/core";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+import "./Carousel.scss"
 
 
-export const AdvancedCarousel = () => {
-    const { scrollRef, pages, activePageIndex, next, prev, goTo } =
-        useSnapCarousel();
+// import "./styles.css";
 
+// import required modules
+import { Pagination } from "swiper";
+
+export function AdvancedCarousel() {
     return (
-        <>
-            <Box
-                className='CarouselContainer keep-scrolling'
-                ref={scrollRef}
-            // onMouseOver={horizontalScroll}
+        <Box id="Carousel">
+            <Swiper
+                direction="horizontal"
+                mousewheelcontrol={true}
+                keyboard={{
+                    enabled: true,
+                    onlyInViewport: false,
+                }}
+                slidesPerView={3}
+                spaceBetween={30}
+                pagination={{
+                    clickable: true,
+                }}
+                modules={[Pagination]}
+                className="mySwiper"
             >
-                {/* <Box className='CarouselSpacing'></Box> */}
-                {Array.from({ length: 12 }).map((_, i) => (
-                    <Box
-                        className='CarouselItem'
-
-                    >
-                        {i + 1}
-                        <CarouselDetail />
-                    </Box>
-
-                ))}
-            </Box>
-            <Center>
-                <Box style={{ display: 'flex' }} >
-                    {pages.map((_, i) => (
-                        <Box key={i}>
-                            <Button className='CarouselDotNav'
-                                opacity={i === activePageIndex ? 0.5 : 1}
-                                onClick={() => goTo(i)}
-                            >
-                            </Button>
-                        </Box>
-                    ))}
-                </Box>
-            </Center>
-        </>
+                <SwiperSlide>Slide 1</SwiperSlide>
+                <SwiperSlide>Slide 2</SwiperSlide>
+                <SwiperSlide>Slide 3</SwiperSlide>
+                <SwiperSlide>Slide 4</SwiperSlide>
+                <SwiperSlide>Slide 5</SwiperSlide>
+                <SwiperSlide>Slide 6</SwiperSlide>
+                <SwiperSlide>Slide 7</SwiperSlide>
+                <SwiperSlide>Slide 8</SwiperSlide>
+                <SwiperSlide>Slide 9</SwiperSlide>
+            </Swiper>
+        </Box>
     );
-};
-
+}

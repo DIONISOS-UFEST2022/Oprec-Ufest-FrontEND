@@ -1,11 +1,18 @@
-.DivisionMenuDetail{
+.DivisionMenuDetail {
     font-size: 30px;
     padding: 30px;
-    h1{
+
+    h1 {
         font-size: 40px;
         font-weight: bolder;
         color: #000;
         background-color: aqua;
-        
+
+    }
+}
+
+.DivisionMenu {
+    .TableRow {
+        background-color: aqua;
     }
 }

@@ -20,6 +20,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectuserRole } from "../../Redux/features/users/userRoleSlice";
 import { selectPage, setPage } from "../../Redux/features/page/pageSlice";
 import { pageChanged } from "../../Redux/features/page/pageSlice";
+import axios from "axios";
+import { userRoleAdded } from "../../Redux/features/users/userRoleSlice";
 
 function Profile() {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -68,6 +70,29 @@ export function NavbarAdmin(props) {
     const page = useSelector(selectPage);
     const user = useSelector(selectuserRole);
     const dispatch = useDispatch();
+
+    // logout
+    function logouthandler() {
+        const login = localStorage.getItem('LoginID');
+        axios.get("http://127.0.0.1:8000/api/logout", {
+            headers:
+                { Authorization: `Bearer ${login}` }
+        })
+            .then((res) => {
+                localStorage.removeItem('LoginID');
+                console.log(res.data);
+                dispatch(pageChanged('login'));
+                dispatch(userRoleAdded('guest'));
+
+            }
+            )
+            .catch((err) => {
+                console.log(login)
+                console.log(err);
+            }
+            );
+
+    }
     return (
         <>
             <Box className="NavbarAdminDesktop"
@@ -76,7 +101,8 @@ export function NavbarAdmin(props) {
                 <NavbarButtonAdmin color={page === "database" ? "red" : "white"} className="NavbarMenu" Title={"Database"} onClick={() => { dispatch(pageChanged('database')) }} />
                 <NavbarButtonAdmin color={page === "division" ? "red" : "white"} className="NavbarMenu" Title={"Division"} onClick={() => { dispatch(pageChanged('division')) }} />
                 <NavbarButtonAdmin color={page === "feature" ? "red" : "white"} className="NavbarMenu" Title={"Feature"} onClick={() => { dispatch(pageChanged('feature')) }} />
-                <Profile />
+                {/* <Profile /> */}
+                <Button color="black" onClick={logouthandler}>Log Out</Button>
 
             </Box>
         </>

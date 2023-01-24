@@ -9,6 +9,8 @@ import axios from "axios";
 import { userRoleAdded } from "./Redux/features/users/userRoleSlice";
 import { pageChanged } from "./Redux/features/page/pageSlice";
 import { setUserToken } from "./Redux/features/users/userDataSlice";
+import { BrowserRouter as Router, Switch, Route, Link, Routes } from "react-router-dom";
+import { userTokenAdded } from "./Redux/features/users/userRoleSlice";
 
 function App() {
   const token = getCookie('token');
@@ -24,21 +26,24 @@ function App() {
       })
         .then((result) => {
           if (result.data.data.role_id === 1) {
-            // dispatch(userRoleAdded("admin"));
+            console.log("berhasil");
             dispatch(userRoleAdded("admin"));
             dispatch(pageChanged("database"));
-            dispatch(setUserToken(login));
+            dispatch(userTokenAdded(login));
           } else if (result.data.data.role_id === 2) {
+            console.log("berhasil");
             dispatch(userRoleAdded("user"));
             dispatch(pageChanged("join"));
-            dispatch(setUserToken(login));
+            dispatch(userTokenAdded(login));
           } else {
+            console.log("berhasil");
             dispatch(userRoleAdded("guest"));
             dispatch(pageChanged("home"));
-            dispatch(setUserToken(login));
+            dispatch(userTokenAdded(login));
           }
         })
         .catch((error) => {
+          console.log("gagal");
           console.log(error);
           dispatch(userRoleAdded("guest"));
           dispatch(pageChanged("home"));
@@ -46,12 +51,17 @@ function App() {
         )
     }
     else {
+      console.log("gagal");
       dispatch(userRoleAdded("guest"));
       dispatch(pageChanged("home"));
     }
   }, [])
   // get admin or divison
   return (
+    // <Routes>
+    //   <Route path="/" element={<User />} />
+    //   <Route path="/admin" element={<Admin />} />
+    // </Routes>
     <div className="App">
       {(() => {
         switch (userRole) {

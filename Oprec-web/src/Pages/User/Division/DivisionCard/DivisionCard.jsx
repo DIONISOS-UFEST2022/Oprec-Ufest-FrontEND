@@ -1,8 +1,5 @@
 import { Box, Text, Image, Flex } from "@chakra-ui/react";
 import "./DivisionCard.scss"
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-
 
 export function DivisionCard(Props) {
     return (

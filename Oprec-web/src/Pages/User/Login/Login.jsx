@@ -51,9 +51,10 @@ export function Login() {
                         })
                             .then((result) => {
                                 if (result.data.data.role_id === 1) {
+                                    console.log(result.data.data);
                                     dispatch(userRoleAdded("admin"));
                                     dispatch(userRoleAdded("admin"));
-                                    dispatch(pageChanged("database"));
+                                    dispatch(pageChanged("division"));
                                     Setloading(false);
                                 } else if (result.data.data.role_id === 2) {
                                     dispatch(userRoleAdded("user"));

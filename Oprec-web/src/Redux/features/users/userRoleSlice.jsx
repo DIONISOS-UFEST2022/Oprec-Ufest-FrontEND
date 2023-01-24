@@ -5,6 +5,7 @@ const initialState = {
     userRole: null,
     userInfo: {},
     userToken: null,
+    userDivision: null,
     loading: false,
     error: null,
     success: false,
@@ -21,6 +22,9 @@ const userRoleSlice = createSlice({
         userTokenAdded(state, action) {
             state.userToken = action.payload;
         },
+        userDivisionAdded(state, action) {
+            state.userToken = action.payload;
+        }
     },
     extraReducers: {
         loginUser(state, action) {
@@ -45,6 +49,6 @@ export const selectuserRole = (state) => state.userRole.userRole;
 
 export const selectuserToken = (state) => state.userRole.userToken;
 
-export const { userRoleAdded, loginUser, loginUserSuccess, loginUserFail, userTokenAdded } = userRoleSlice.actions;
+export const { userRoleAdded, loginUser, loginUserSuccess, loginUserFail, userTokenAdded, userDivisionAdded } = userRoleSlice.actions;
 
 export default userRoleSlice.reducer;

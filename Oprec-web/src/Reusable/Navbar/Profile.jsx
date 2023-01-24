@@ -11,7 +11,20 @@ import Tooltip from '@mui/material/Tooltip';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
+import Modal from '@mui/material/Modal';
 
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
 
 export function Profile() {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -25,10 +38,17 @@ export function Profile() {
     return (
         <React.Fragment>
             <Box>
-                <Tooltip title="Account settings">
+                <Tooltip title="Account settings"
+                    sx={{
+                        background: 'transparent',
+                        '& .MuiTooltip-tooltip': {
+                            fontSize: 11,
+                        },
+                    }}
+                >
                     <IconButton
                         onClick={handleClick}
-                        size="small"
+                        size="medium"
                         aria-controls={open ? 'account-menu' : undefined}
                         aria-haspopup="true"
                         aria-expanded={open ? 'true' : undefined}
@@ -37,67 +57,29 @@ export function Profile() {
                     </IconButton>
                 </Tooltip>
             </Box>
-            <Menu
-                anchorEl={anchorEl}
-                id="account-menu"
+            <Modal
                 open={open}
                 onClose={handleClose}
-                onClick={handleClose}
-                PaperProps={{
-                    elevation: 0,
-                    sx: {
-                        overflow: 'visible',
-                        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                        mt: 1.5,
-                        '& .MuiAvatar-root': {
-                            width: 32,
-                            height: 32,
-                            ml: -0.5,
-                            mr: 1,
-                        },
-                        '&:before': {
-                            content: '""',
-                            display: 'block',
-                            position: 'absolute',
-                            top: 0,
-                            right: 14,
-                            width: 10,
-                            height: 10,
-                            bgcolor: 'background.paper',
-                            transform: 'translateY(-50%) rotate(45deg)',
-                            zIndex: 0,
-                        },
-                    },
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    position: 'absolute',
+                    height: '100vh',
+                    width: '100vw',
                 }}
-                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <MenuItem>
-                    <Avatar /> Profile
-                </MenuItem>
-                <MenuItem>
-                    <Avatar /> My account
-                </MenuItem>
-                <Divider />
-                <MenuItem>
-                    <ListItemIcon>
-                        <PersonAdd fontSize="small" />
-                    </ListItemIcon>
-                    Add another account
-                </MenuItem>
-                <MenuItem>
-                    <ListItemIcon>
-                        <Settings fontSize="small" />
-                    </ListItemIcon>
-                    Settings
-                </MenuItem>
-                <MenuItem>
-                    <ListItemIcon>
-                        <Logout fontSize="small" />
-                    </ListItemIcon>
-                    Logout
-                </MenuItem>
-            </Menu>
+                <Box sx={style}>
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                        Text in a modal
+                    </Typography>
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                    </Typography>
+                </Box>
+            </Modal>
         </React.Fragment>
     );
 }
