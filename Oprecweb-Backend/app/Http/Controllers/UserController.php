@@ -44,6 +44,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'nim' => 'required|digits:11|numeric|unique:users|regex:/^0+\d\d\d\d\d$/',
+            'division' => 'string',
             'password' => [
                 'required',
                 'string',
@@ -59,7 +60,8 @@ class UserController extends Controller
             'name'      => $request->name,
             'email'     => $request->email,
             'nim'       => $request->nim,
-            'password'  => $password
+            'password'  => $password,
+            'division'  => $request->division,
         ]);
 
         if ($user) {
@@ -112,6 +114,7 @@ class UserController extends Controller
             'email' => 'email|unique:users,email,' . $id . ',id',
             'nim' => 'digits:11|regex:/^0+\d\d\d\d\d$/|unique:users,nim,' . $id . ',id',
             'role_id' => 'digits:1',
+            'division' => 'string',
             'password' => [
                 'string',
                 Password::min(8)

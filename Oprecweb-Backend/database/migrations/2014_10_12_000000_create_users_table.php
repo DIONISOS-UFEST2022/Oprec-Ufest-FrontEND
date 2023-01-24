@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->boolean('role_id')->comment('1:admin, 2:member')->default(2);
+            $table->string('division')->nullable()->default('none');
             $table->timestamps();
             $table->SoftDeletes();
         });
