@@ -32,7 +32,9 @@ class AuthenticationController extends Controller
 
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
+        $request->user()->tokens()->each(function ($token) {
+            $token->delete();
+        });
 
         return response()->json([
             'success' => true,

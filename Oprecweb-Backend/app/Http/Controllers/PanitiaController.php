@@ -148,7 +148,7 @@ class PanitiaController extends Controller
             'name' => 'string',
             'email' => 'email|unique:panitia,email,' . $id . ',id',
             'program_studi' => 'string',
-            'vaccine_certificate' => 'image|file|max:1024',
+            'vaccine_certificate' => 'required|image|mimes:jpeg,jpg,png,bmp|size:20000',
             'division_1' => 'numeric',
             'division_2' => 'numeric',
             'phone_number' => 'numeric:11|unique:panitia,phone_number,' . $id . ',id',
@@ -163,8 +163,6 @@ class PanitiaController extends Controller
 
         $input = collect(request()->all())->filter()->all();
 
-
-
         if ($request->vaccine_certificate) {
             $imageFolder = Storage::disk('vaccine_image');
             if ($imageFolder->exists($panitia->vaccine_certificate)) {
@@ -172,8 +170,8 @@ class PanitiaController extends Controller
             }
             $filename = Str::random(25);
             $extension = $request->vaccine_certificate->extension();
-            Storage::putFileAs('vaccine_image', $request->vaccine_certificate, $filename . '.' . $extension);
 
+            Storage::putFileAs('vaccine_image', $request->vaccine_certificate, $filename . '.' . $extension);
             $panitia->update($input);
             $panitia->vaccine_certificate = $filename . '.' . $extension;
             $panitia->save();
