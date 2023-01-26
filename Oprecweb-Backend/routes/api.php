@@ -38,6 +38,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/announcement', [AnnouncementController::class, 'index']);
     Route::post('/panitia/insertData', [PanitiaController::class, 'store']);
+
+    Route::get('/spreadsheet', [GoogleSheetController::class, 'init'])->middleware('admin');
 });
 
 Route::get('/test', [MahasiswaController::class, 'index']);
@@ -46,6 +48,3 @@ Route::post('/register', [UserController::class, 'store']);
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendToken']);
 Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'getToken'])->name("password.reset");
 Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword']);
-
-Route::get('/spreadsheet', [GoogleSheetController::class, 'init']);
-Route::get('/spreadsheet/update', [GoogleSheetController::class, 'updateData']);

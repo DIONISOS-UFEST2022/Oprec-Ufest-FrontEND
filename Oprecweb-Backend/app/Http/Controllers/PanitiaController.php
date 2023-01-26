@@ -60,17 +60,19 @@ class PanitiaController extends Controller
 
         $panitia = panitia::create($request->all());
 
-        if ($request->vaccine_certificate) {
+        if ($request->vaccine_certificate != "") {
             $filename = Str::random(25);
             $extension = $request->vaccine_certificate->extension();
             Storage::putFileAs('vaccine_image', $request->vaccine_certificate, $filename . '.' . $extension);
             $panitia->vaccine_certificate = $filename . '.' . $extension;
+        } else {
+            $panitia->vaccine_certificate = "none";
         }
 
         $panitia->is_accepted = 0;
 
         $service = new GoogleSheetController();
-        $service->init();
+        $service->appendData($panitia);
 
         if ($panitia) {
             return new PanitiaResource($panitia, 201);

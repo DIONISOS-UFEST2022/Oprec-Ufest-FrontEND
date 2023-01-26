@@ -46,4 +46,35 @@ class GoogleSheetController extends Controller
         }
         return response()->json('success!');
     }
+
+    public function appendData($panitia)
+    {
+        $service = new GoogleSheetsServices();
+
+        $arr[] =
+            [
+                $panitia->nim,
+                $panitia->name,
+                $panitia->email,
+                $panitia->program_studi,
+                $panitia->vaccine_certificate,
+                $panitia->division_1,
+                $panitia->division_2,
+                $panitia->phone_number,
+                $panitia->reason_1,
+                $panitia->reason_2,
+                $panitia->portofolio,
+                $panitia->id_line,
+                $panitia->instagram_account,
+                $panitia->city,
+                $panitia->is_accepted
+            ];
+
+        $data =  $service->appendSheet($arr);
+
+        if (!$data) {
+            return response()->json('Something When Wrong... try again later');
+        }
+        return response()->json('success!');
+    }
 }
