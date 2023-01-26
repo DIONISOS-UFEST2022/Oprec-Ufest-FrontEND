@@ -167,7 +167,7 @@ const steps = ['Create an Account', 'Register in Join Form', 'Done and Dusted'];
 
 export function CustomizedSteppersHome() {
     return (
-        <Stack sx={{ width: '100%', marginBottom: '100px' }} spacing={4}>
+        <Stack sx={{ width: '100%', marginBottom: '30px' }} spacing={4}>
             <Stepper alternativeLabel activeStep={0} connector={<QontoConnector />}>
                 {steps.map((label) => (
                     <Step key={label}>

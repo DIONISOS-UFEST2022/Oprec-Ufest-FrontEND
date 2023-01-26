@@ -21,8 +21,12 @@ import { NavbarButton } from "./NavbarButton/NavbarButton";
 import { Grid } from "@mui/material";
 import styled from "styled-components";
 import { useSpring, animated } from "@react-spring/web";
-
-
+// icon
+import HomeIcon from "./../../Asset/Image/NavbarIcon/home.webp"
+import AboutIcon from "./../../Asset/Image/NavbarIcon/about.webp"
+import DivisionIcon from "./../../Asset/Image/NavbarIcon/division.webp"
+// import "./../../Asset/Image/NavbarIcon/welcome.webp"
+import { Image } from "@chakra-ui/react";
 
 const AnimatedGrid = styled(animated(Grid))``;
 
@@ -37,10 +41,8 @@ export function Navbar(props) {
     const user = useSelector(selectuserRole);
     const page = useSelector(selectPage);
     const dispatch = useDispatch();
-    const btnRef = React.useRef()
     return (
         <>
-            {/* This is desktop navbar */}
             <AnimatedGrid style={{ ...navanimate }} container className="NavbarUser">
                 <Grid item xs={1}>
                     <Box className="GradientText" color={'white'} position="absolute" left={"20px"} top="20px" fontWeight={"bold"} fontSize="20px">
@@ -55,19 +57,19 @@ export function Navbar(props) {
                     </Grid>
                     : ""}
                 <Grid item xs={1}>
-                    <NavbarButton color={page === "home" ? "red" : "white"} Title={"Home"} onClick={() => { dispatch(pageChanged("home")) }} />
+                    <NavbarButton color={page === "home" ? "red" : "white"} src={HomeIcon} Title={"Home"} onClick={() => { dispatch(pageChanged("home")) }} />
                 </Grid>
                 <Grid item xs={1}>
-                    <NavbarButton color={page === "about" ? "red" : "white"} Title={"About"} onClick={() => { dispatch(pageChanged("about")) }} />
+                    <NavbarButton color={page === "about" ? "red" : "white"} src={AboutIcon} Title={"About"} onClick={() => { dispatch(pageChanged("about")) }} />
                 </Grid>
                 <Grid item xs={1}>
-                    <NavbarButton color={page === "division" ? "red" : "white"} Title={"Division"} onClick={() => { dispatch(pageChanged("division")) }} />
+                    <NavbarButton color={page === "division" ? "red" : "white"} src={DivisionIcon} Title={"Division"} onClick={() => { dispatch(pageChanged("division")) }} />
                 </Grid>
-                {user === "user" ? "" :
+                {/* {user === "user" ? "" :
                     <Grid item xs={1}>
                         <NavbarButton color={page === "login" ? "red" : "white"} Title={"Login"} onClick={() => { dispatch(pageChanged("login")) }} />
                     </Grid>
-                }
+                } */}
                 {user === "user" ?
                     <Grid item xs={1}>
                         <Profile />

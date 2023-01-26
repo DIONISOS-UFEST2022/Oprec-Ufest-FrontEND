@@ -9,15 +9,12 @@ import icon_instagram from "./../../Asset/Image/Other Icon/icon-instagram.png";
 import icon_line from "./../../Asset/Image/Other Icon/icon-line.png";
 import icon_tiktok from "./../../Asset/Image/Other Icon/icon-tiktok.png";
 import icon_website from "./../../Asset/Image/Other Icon/icon-website.png";
-import logo from "./../../Asset/Image/Ufest Logo/logo.png";
 import { useSpring, animated } from "@react-spring/web";
 import { useEffect, useState, useRef } from "react";
 import { useIntersectionObserver } from "../Function/useIntersectionObserver";
-import { Button } from "@material-ui/core";
-import MapTwoToneIcon from '@mui/icons-material/MapTwoTone';
 import Sparkles from "../Animation/Sparkle/Sparkle";
-
-
+import Logo from "./../../Asset/Image/Ufest Logo/ufestlogowhite.webp"
+import Homeicon from "./../../Asset/Image/NavbarIcon/home.webp"
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -71,7 +68,7 @@ export function Footer() {
             <Grid md={3} sm={12}>
                 <Box className="footersection" area={'section1'} overflow={"visible"}>
                     <Center width={'100%'} height="100%" overflow={"visible"}>
-                        <Image className="image" src={logo} />
+                        <Image className="image" src={Logo} />
                     </Center>
                 </Box>
             </Grid>

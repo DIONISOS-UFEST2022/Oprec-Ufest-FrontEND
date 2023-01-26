@@ -1,6 +1,8 @@
 import "./bush.scss"
+import { motion, useScroll } from "framer-motion"
 
 export function Bush() {
+    const { scrollYProgress } = useScroll();
     return (
         <div className="bushContainer">
             <div className="bush">
@@ -15,18 +17,6 @@ export function Bush() {
                 <div className="bushcircle i"></div>
                 <div className="bushcircle j"></div>
             </div>
-        </div>)
-}
-
-
-export function BgBush() {
-    return (<div className="bushbgContainer">
-        <Bush />
-        {/* <div className="bush">
-            <div className="bushcircle a"></div>
-            <div className="bushcircle b"></div>
-            <div className="bushcircle c"></div>
-            <div className="bushcircle d"></div>
-        </div> */}
-    </div>)
+        </div>
+    )
 }

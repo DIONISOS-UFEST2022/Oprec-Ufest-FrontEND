@@ -9,7 +9,7 @@ import {
     Image
 } from "@chakra-ui/react";
 import "./Join.scss";
-import { Autocomplete } from "@mui/material";
+import { Autocomplete, Divider } from "@mui/material";
 import { Button } from "@material-ui/core";
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
@@ -24,6 +24,15 @@ import { JoinSchema } from "./JoinSchema";
 import { CustomTextField } from "../../../Reusable/TextField/CustomTextField";
 import { UploadImage } from "./UploadImage/UploadImage";
 import JoinPage0 from "./Page/JoinPage0";
+import Sparkles from "../../../Reusable/Animation/Sparkle/Sparkle";
+import { MotionConfig } from "framer-motion";
+import { motion } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
+import { selectuserFile } from "../../../Redux/features/users/userRoleSlice";
+import axios from "axios";
+import { CircularProgress } from "@material-ui/core";
+import { selectuserName, selectuserEmail, selectuserNim } from "../../../Redux/features/users/userRoleSlice";
+
 
 // Dekorasi
 // Publikasi
@@ -58,6 +67,16 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 
 export function Join(props) {
+    // for image
+    const dispatch = useDispatch();
+    // const userFile = useSelector(selectuserFile);
+    // file state
+    const [file, setFile] = useState(null);
+    const [loading, Setloading] = useState(false);
+    const name = useSelector(selectuserName);
+    const nim = useSelector(selectuserNim);
+    const email = useSelector(selectuserEmail);
+    // const UserData = useSelector(userRoleSlice);
     // next input when press enter
     const formInput = useRef(null);
     const titleRef = useRef(null);
@@ -76,13 +95,17 @@ export function Join(props) {
             }}>PREV</Button>
         )
     }
-
     function Next(props) {
         return (
-            <Button className="Button" variant="contained" type="button" onClick={() => {
-                Setjoinpage(props.page);
-                titleRef.current.scrollIntoView({ behavior: 'smooth' });
-            }}>NEXT</Button>
+            <Button
+                className="Button"
+                variant="contained"
+                type="submit"
+                disabled={props.disabled}
+                onClick={() => {
+                    Setjoinpage(props.page);
+                    titleRef.current.scrollIntoView({ behavior: 'smooth' });
+                }}>NEXT</Button>
         )
     }
 
@@ -107,10 +130,53 @@ export function Join(props) {
                     portofolio: ""
                 }}
                 onSubmit={(values) => {
-                    alert(JSON.stringify(values));
+                    // alert(JSON.stringify(values));
+                    // console.log(values);
+                    Setloading(true);
+                    // console.log(UserData);
+                    console.log(name);
+                    console.log(nim);
+                    console.log(email);
+                    const login = localStorage.getItem('LoginID');
+                    console.log(login)
+                    axios.post("http://127.0.0.1:8000/api/panitia/insertData", {
+                        nim: nim,
+                        name: name,
+                        email: email,
+                        program_studi: values.jurusan,
+                        division_1: values.divisi,
+                        division_2: values.divisialt,
+                        phone_number: values.nohp,
+                        reason: values.jawaban,
+                        portofolio: values.portofolio,
+                        vaccine_certificate: file,
+                        id_line: values.idline,
+                        instagram_account: values.ig,
+                        city: values.domisili,
+                    }, {
+                        headers:
+                            { Authorization: `Bearer ${login}` },
+                    })
+                        .then((res) => {
+                            Setjoinpage(6);
+                            console.log(res);
+                            Setloading(false);
+                        }
+                        )
+                        .catch((err) => {
+                            alert("error");
+                            console.log(err);
+                            Setloading(false);
+                        }
+                        )
+
                 }}
             >
                 {({
+                    isSubmitting,
+                    submitForm,
+                    isValid,
+                    dirty,
                     values,
                     errors,
                     touched,
@@ -129,20 +195,42 @@ export function Join(props) {
                                 {(() => {
                                     switch (joinpage) {
                                         case 0:
-                                            return (<Box className="page1">
-                                                <span className="JoinTitle">JOIN US!</span>
-                                                <JoinPage0 />
-                                                <Button className="Button" variant="contained" type="button" onClick={() => {
-                                                    Setjoinpage(1)
-                                                    titleRef.current.scrollIntoView({ behavior: 'smooth' })
-                                                }}>Let's GO</Button>
-                                            </Box>)
+                                            return (
+                                                <motion.div
+                                                    initial={{
+                                                        opacity: 0,
+                                                        x: -100
+                                                    }}
+                                                    animate={{
+                                                        opacity: 1,
+                                                        x: 0
+                                                    }}
+                                                    transition={{
+                                                        type: "spring",
+                                                        stiffness: 260,
+                                                        damping: 20
+                                                    }}
+
+                                                >
+                                                    <Box className="page1">
+                                                        <Sparkles>
+                                                            <span className="JoinTitle">JOIN US!</span>
+                                                        </Sparkles>
+                                                        <Divider />
+                                                        <JoinPage0 />
+                                                        <Button className="Button" variant="contained" type="button" onClick={() => {
+                                                            Setjoinpage(1)
+                                                            titleRef.current.scrollIntoView({ behavior: 'smooth' })
+                                                        }}>Let's GO</Button>
+                                                    </Box>
+                                                </motion.div>
+
+                                            )
                                         case 1:
                                             return (<>
                                                 {/* jurusan */}
                                                 <Autocomplete
                                                     options={JurusanData}
-                                                    // getOptionLabel={(option) => option.label ? option.label : ""}
                                                     ref={formInput}
                                                     onKeyDownCapture={EnterHandleClick}
                                                     onBlur={handleBlur}
@@ -152,10 +240,8 @@ export function Join(props) {
                                                         <CustomTextField
                                                             {...params}
                                                             label="Jurusan"
-                                                            // ref={formInput}
                                                             placeholder="Masukan Jurusan"
                                                             name="jurusan"
-                                                            required
                                                             fullWidth
                                                         />}
                                                     isOptionEqualToValue={(option, value) =>
@@ -185,7 +271,7 @@ export function Join(props) {
                                                             ref={formInput}
                                                             type="text"
                                                             name="angkatan"
-                                                            required
+
                                                             fullWidth
                                                         />}
                                                     isOptionEqualToValue={(option, value) =>
@@ -208,7 +294,7 @@ export function Join(props) {
                                                     onBlur={handleBlur}
                                                     label="Alamat"
                                                     placeholder="Alamat Sekarang"
-                                                    required
+
                                                 />
                                                 <p className="error">
                                                     {errors.alamat && touched.alamat && errors.alamat}
@@ -226,14 +312,22 @@ export function Join(props) {
                                                     className="form-control inp_text"
                                                     id="domisili"
                                                     label="Domisili"
-                                                    required
+
                                                 />
                                                 <p className="error">
                                                     {errors.domisili && touched.domisili && errors.domisili}
                                                 </p>
                                                 <Flex justifyContent={"space-between"}>
                                                     <Prev page={0} />
-                                                    <Next page={2} values={values} />
+                                                    <Button
+                                                        className="Button"
+                                                        variant="contained"
+                                                        // type="submit"
+                                                        disabled={!(values.jurusan && values.angkatan && values.alamat && values.domisili)}
+                                                        onClick={() => {
+                                                            Setjoinpage(2);
+                                                            titleRef.current.scrollIntoView({ behavior: 'smooth' });
+                                                        }}>NEXT</Button>
                                                 </Flex>
                                             </>);
                                         case 2:
@@ -243,7 +337,7 @@ export function Join(props) {
                                                     <Text className="TextLabel">
                                                         Upload Sertifikat Vaksin Covid-19 ke-3
                                                     </Text>
-                                                    <UploadImage onChange={handleChange} name={"vaksin"} />
+                                                    <UploadImage file={file} setFile={setFile} />
                                                 </Box>
                                                 <p className="error">
                                                     {errors.fullname && touched.fullname && errors.fullname}
@@ -295,7 +389,7 @@ export function Join(props) {
                                                     className="form-control inp_text"
                                                     id="ig"
                                                     label="Instagram Aktif"
-                                                    required
+
                                                 />
                                                 <p className="error">
                                                     {errors.ig && touched.ig && errors.ig}
@@ -306,7 +400,6 @@ export function Join(props) {
                                                     options={DivisiData}
                                                     ref={formInput}
                                                     onKeyDownCapture={EnterHandleClick}
-                                                    // getOptionLabel={(option) => option.label ? option.label : ""}
                                                     onBlur={handleBlur}
                                                     value={values.divisi}
                                                     id="jurusan"
@@ -317,7 +410,7 @@ export function Join(props) {
                                                             type="text"
                                                             name="divisi"
                                                             placeholder="Masukan Divisi"
-                                                            required
+
                                                             fullWidth
                                                         />}
                                                     isOptionEqualToValue={(option, value) =>
@@ -342,7 +435,7 @@ export function Join(props) {
                                                             label="Divisi Alternatif"
                                                             placeholder="Masukan Divisi Alternatif"
                                                             name="divisialt"
-                                                            required
+
                                                             fullWidth
                                                         />}
                                                     isOptionEqualToValue={(option, value) =>
@@ -355,7 +448,9 @@ export function Join(props) {
                                                 </p>
                                                 <Flex justifyContent={"space-between"}>
                                                     <Prev page={1} />
-                                                    <Next page={3} />
+                                                    <Next page={3}
+                                                        disabled={!(values.nohp && values.idline && values.ig && values.divisi && values.divisialt)}
+                                                    />
                                                 </Flex>
                                             </Box>)
                                         case 3:
@@ -382,7 +477,9 @@ export function Join(props) {
                                                 </p>
                                                 <Flex justifyContent={"space-between"}>
                                                     <Prev page={2} />
-                                                    <Next page={4} />
+                                                    <Next page={4}
+                                                        disabled={!(values.jawaban)}
+                                                    />
                                                 </Flex>
                                             </>);
                                         case 4:
@@ -409,7 +506,9 @@ export function Join(props) {
                                                 </p>
                                                 <Flex justifyContent={"space-between"}>
                                                     <Prev page={3} />
-                                                    <Next page={5} />
+                                                    <Next page={5}
+                                                        disabled={!(values.jawaban && values.jawaban2)}
+                                                    />
                                                 </Flex>
                                             </>)
                                         case 5:
@@ -435,11 +534,13 @@ export function Join(props) {
                                                 </p>
                                                 <Flex justifyContent={"space-between"}>
                                                     <Prev page={4} />
-                                                    <Button className="Button" variant="contained" type="submit" onClick={() => {
-                                                        Setjoinpage(6);
-                                                        titleRef.current.scrollIntoView({ behavior: 'smooth' });
-                                                        console.log(values);
-                                                    }}>Submit</Button>
+                                                    <Button
+                                                        className="button"
+                                                        variant="contained"
+                                                        type="submit"
+                                                    >
+                                                        {loading ? (<CircularProgress />) : "Submit"}
+                                                    </Button>
                                                 </Flex>
                                             </>)
                                         case 6:
@@ -457,9 +558,10 @@ export function Join(props) {
                             </form>
                         </div>
                     </Box>
-                )}
-            </Formik>
-        </Box>
+                )
+                }
+            </Formik >
+        </Box >
 
     );
 }

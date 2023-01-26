@@ -6,6 +6,7 @@
     min-height: 100vh;
     padding-top: 15vh;
     padding-bottom: 5vh;
+    padding-inline: 10px;
 
     .form {
         position: relative;
@@ -14,30 +15,40 @@
         border-radius: 10px;
         max-width: 360px;
         margin: 10px auto 100px;
-        // margin: 10px;
         padding-top: 20px;
         padding-bottom: 20px;
-        padding-inline: 45px;
+        // padding-inline: 45px;
         text-align: center;
 
-
         .Title {
-            font-family: 'Comfortaa', cursive;
             font-weight: bold;
-            font-size: 40px;
+            // font-size: 40px;
             color: #4b6cb7;
             display: block;
             margin: 0;
             margin-top: 20px;
+            // prevent select
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
         .Subtitle {
-            font-family: 'Comfortaa', cursive;
-            font-size: 15px;
+            // font-family: 'Comfortaa', cursive;
+            // font-size: 15px;
             color: #4b6cb7;
             margin: 10px;
-            margin-bottom: 40px;
+            margin-bottom: 10px;
             display: block;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
 
@@ -49,6 +60,12 @@
             border: 1px solid rgb(24, 40, 72, 0.5);
             border-radius: 40px;
             font-weight: bold;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
 
             .googleicon {
                 width: 20px;
@@ -57,37 +74,51 @@
         }
 
 
-        .Or {
-            font-family: 'Comfortaa', cursive;
-            font-size: 15px;
-            color: rgb(24, 40, 72, 0.7);
-            background-color: #ffffff;
-            width: 100%;
-            z-index: 2;
-            display: block;
+
+
+        .Divider {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
-        .Or::before {
-            content: "";
-            height: 40px;
-            width: 100%;
-            background-color: rgb(24, 40, 72, 0.5);
-            transform: translateY(24px);
-        }
-
-        .forgotpass {
+        .ForgotPass {
+            cursor: pointer;
+            font-weight: bold;
             display: flex;
             justify-content: flex-end;
             align-items: center;
             color: #122758;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
+
+
+        .RememberMe {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
 
         input:focus {
             background: #dbdbdb;
         }
 
         button {
-            font-family: 'Comfortaa', cursive;
+            // font-family: 'Comfortaa', cursive;
             text-transform: uppercase;
             outline: 0;
             background: #122758;
@@ -100,6 +131,12 @@
             -webkit-transition: all 0.3 ease;
             transition: all 0.3 ease;
             cursor: pointer;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
 
         }
 
@@ -113,6 +150,12 @@
             text-align: left;
             font-size: 10px;
             color: red;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
     }
 

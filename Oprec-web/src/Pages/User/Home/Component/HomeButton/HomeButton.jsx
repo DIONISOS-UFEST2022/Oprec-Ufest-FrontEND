@@ -1,12 +1,13 @@
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectuserRole } from '../../../../Redux/features/users/userRoleSlice';
-import { pageChanged } from '../../../../Redux/features/page/pageSlice';
+import { selectuserRole } from '../../../../../Redux/features/users/userRoleSlice';
+import { pageChanged } from '../../../../../Redux/features/page/pageSlice';
 import React from 'react';
 import './HomeButton.scss';
 import { Box } from '@chakra-ui/react';
 import useSound from 'use-sound';
-import clickclock from "./../../../../Asset/Sound/clickclock.mp3"
+import clickclock from "./../../../../../Asset/Sound/clickclock.mp3"
+
 
 export function HomeButton() {
     const [play] = useSound(clickclock, {
@@ -30,9 +31,9 @@ export function HomeButton() {
     }
     return (
         <button className="HomeButton" onMouseDown={() => play({ id: 'click' })} onTouchEnd={handler} onMouseUp={handler}>
-            <span class="shadow"></span>
-            <span class="edge"></span>
-            <span class="front">
+            <span className="shadow"></span>
+            <span className="edge"></span>
+            <span className="front">
                 LET'S GO SPARTA!
             </span>
         </button>

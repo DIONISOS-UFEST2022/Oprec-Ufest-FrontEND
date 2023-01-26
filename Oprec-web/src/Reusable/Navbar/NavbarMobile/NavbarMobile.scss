@@ -35,6 +35,8 @@
             width: 22px;
         }
     }
+
+
 }
 
 .NavbarMenu {
@@ -42,7 +44,7 @@
     width: 100vw;
     background-color: rgb(10, 6, 76);
     position: fixed;
-    top: -100vh;
+    top: 0;
     z-index: 100;
     overflow: hidden;
 }
@@ -63,4 +65,21 @@
         font-family: 'Montserrat', sans-serif !important;
         pointer-events: all;
     }
+
+
+
+}
+
+.LogoMobile {
+    z-index: 1000;
+    background-color: #f3ec78;
+    background-image: linear-gradient(45deg, dodgerblue, purple, red);
+    background-size: 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+    margin: 0;
+
 }

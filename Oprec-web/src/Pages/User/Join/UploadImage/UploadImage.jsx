@@ -1,28 +1,30 @@
 // Styling
 import { Box, Text, Image } from "@chakra-ui/react";
 import { FileUploader } from "react-drag-drop-files";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./UploadImage.scss"
+import { useDispatch, useSelector } from "react-redux";
+import { userfileAdded } from "../../../../Redux/features/users/userRoleSlice";
+import { selectuserFile } from "../../../../Redux/features/users/userRoleSlice";
 
-
-export function UploadImage(props) {
+export function UploadImage({ file, setFile }) {
+    const dispatch = useDispatch();
+    const userFile = useSelector(selectuserFile);
     const fileTypes = [
         "JPEG",
         "JPG",
         "PNG",
         "IMG",
     ];
-    const [file, setFile] = useState(null);
     const handleChange = (file) => {
         setFile(file);
-        props.onChange(file);
     };
     return (
         <>
             <FileUploader
                 child
                 handleChange={handleChange}
-                name={props.name}
+                // name={props.name}
                 types={fileTypes}
                 multiple={false}
                 maxFileSize={1000000}

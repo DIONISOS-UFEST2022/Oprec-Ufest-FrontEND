@@ -10,8 +10,6 @@ export const JoinSchema = Yup.object().shape({
         .oneOf(["2020", "2021", "2022"], "Angkatan is a required field"),
     alamat: Yup.string()
         .required("Alamat is a required field"),
-    vaksin: Yup.string()
-        .required("Vaksin is a required field"),
     nohp: Yup.string()
         .required("No HP is a required field")
         .min(10, "Enter a valid phone number")
@@ -23,8 +21,6 @@ export const JoinSchema = Yup.object().shape({
         .required("Instagram is a required field"),
     domisili: Yup.string()
         .required("Domisili is a required field"),
-    pertanyaan: Yup.string()
-        .required("Pertanyaan is a required field"),
     divisi: Yup.string()
         .oneOf([
             "Dekorasi",
@@ -43,19 +39,6 @@ export const JoinSchema = Yup.object().shape({
         .required("Division is a required field"),
     divisialt: Yup.string()
         .required("Division is a required field"),
-    fullname: Yup.string()
-        .required("Full Name is a required field"),
-    nim: Yup.string()
-        .required("NIM is a required field")
-        .min(10, "Enter a valid NIM"),
-    email: Yup.string()
-        .required("Email is a required field")
-        .email("Invalid email format"),
-    password: Yup.string()
-        .required("Password is a required field")
-        .min(8, "Password must be at least 8 characters"),
-    repassword: Yup.string()
-        .oneOf([Yup.ref('password'), null], 'Passwords must match'),
     jawaban: Yup.string()
         .required("Answer is a required field"),
     jawaban2: Yup.string()

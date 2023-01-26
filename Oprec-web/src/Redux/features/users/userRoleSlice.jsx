@@ -6,9 +6,15 @@ const initialState = {
     userInfo: {},
     userToken: null,
     userDivision: null,
-    loading: false,
+    userName: null,
+    userNim: null,
+    userEmail: null,
+    loading: true,
     error: null,
     success: false,
+    isLogin: false,
+    isJoin: false,
+    file: null,
 };
 
 
@@ -24,31 +30,40 @@ const userRoleSlice = createSlice({
         },
         userDivisionAdded(state, action) {
             state.userToken = action.payload;
+        },
+        userDataAdded(state, action) {
+            state.userName = action.payload.name;
+            state.userNim = action.payload.nim;
+            state.userEmail = action.payload.email;
+        },
+        userLoadingAdded(state, action) {
+            state.loading = action.payload;
+        },
+        userfileAdded(state, action) {
+            state.file = action.payload;
         }
     },
-    extraReducers: {
-        loginUser(state, action) {
-            state.loading = true
-            state.error = null
-        },
-        loginUserSuccess(state, action) {
-            state.loading = false
-            state.error = null
-            state.success = true
-            state.userToken = action.payload
-        },
-        loginUserFail(state, action) {
-            state.loading = false
-            state.error = action.payload
-            state.success = false
-        },
-    }
+
 })
+
+
 
 export const selectuserRole = (state) => state.userRole.userRole;
 
+export const selectuserName = (state) => state.userRole.userName;
+
+export const selectuserNim = (state) => state.userRole.userNim;
+
+export const selectuserEmail = (state) => state.userRole.userEmail;
+
 export const selectuserToken = (state) => state.userRole.userToken;
 
-export const { userRoleAdded, loginUser, loginUserSuccess, loginUserFail, userTokenAdded, userDivisionAdded } = userRoleSlice.actions;
+export const selectuserDivision = (state) => state.userRole.userDivision;
+
+export const selectLoading = (state) => state.userRole.loading;
+
+export const selectuserFile = (state) => state.userRole.file;
+
+export const { userDataAdded, userRoleAdded, userLoadingAdded, userTokenAdded, userDivisionAdded, userfileAdded } = userRoleSlice.actions;
 
 export default userRoleSlice.reducer;

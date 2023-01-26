@@ -2,156 +2,185 @@ import React, { useEffect, useState } from 'react'
 import { Button } from '@chakra-ui/react'
 import "./NavbarMobile.scss"
 import { Box } from '@chakra-ui/react'
-import { animated, useSpring } from '@react-spring/web'
+// import { animated, useSpring } from '@react-spring/web'
 import NavbarMobileMenu from './NavbarMobileMenu'
 import { useSelector } from 'react-redux'
 import { pageChanged } from '../../../Redux/features/page/pageSlice'
 import { useDispatch } from 'react-redux'
 import { selectPage } from '../../../Redux/features/page/pageSlice'
+import { motion, useAnimation } from 'framer-motion'
+
+
+
+
+// menu
+const Menu = [
+    {
+        name: 'Home',
+        link: '/',
+        state: 'home',
+    },
+    {
+        name: 'About',
+        link: '/about',
+        state: 'about',
+    },
+    {
+        name: 'Division',
+        link: '/division',
+        state: 'division',
+    },
+    {
+        name: 'Join',
+        link: '/join',
+        state: 'join',
+    },
+    {
+        name: 'Login',
+        link: '/login',
+        state: 'login',
+    },
+    {
+        name: 'Register',
+        link: '/register',
+        state: 'register',
+    },
+]
+
 
 export function NavbarMobile() {
     // redux
     const page = useSelector(selectPage);
-    const [open, setopen] = useState(false);
+    const [open, setopen] = useState(true);
     // animation
-    const [springs, api] = useSpring(() => ({
-        from: {
-            transform: 'translateY(0%)',
-        },
-    }))
 
-    const [bar, setbar] = useSpring(() => ({
-        from: {
-            transform: 'translateY(5px)',
-        },
-    }))
-    const [bar2, setbar2] = useSpring(() => ({
-        from: {
-            transform: 'translateY(-5px)',
-        },
-    }))
-
-    const openclick = () => {
-        api.start({
-            from: {
-                transform: 'translateY(0%)',
-
-            },
-            to: {
-                transform: 'translateY(100%)',
-            }
-        })
-    }
-    const openbar = () => {
-        setbar.start({
-            config: {
-                duration: 100,
-                delay: 0,
-            },
-            from: {
-                transform: 'translateY(5px)',
-            },
-            to: {
-                transform: 'translateY(0px)',
-            },
-        })
-        setbar2.start({
-            config: {
-                duration: 100,
-                delay: 0,
-            },
-            from: {
-                transform: 'translateY(-5px)',
-            },
-            to: {
-                transform: 'translateY(0px)',
-            },
-        })
-    }
-
-    const closebar = () => {
-        setbar.start({
-            config: {
-                duration: 100,
-                delay: 0,
-            },
-            from: {
-                transform: 'translateY(0)',
-            },
-            to: {
-                transform: 'translateY(5px)',
-            },
-        })
-        setbar2.start({
-            config: {
-                duration: 100,
-                delay: 0,
-            },
-            from: {
-                transform: 'translateY(0)',
-            },
-            to: {
-                transform: 'translateY(-5px)',
-            },
-        })
-    }
-    const closeclick = () => {
-        api.start({
-            from: {
-                transform: 'translateY(100%)',
-            },
-            to: {
-                transform: 'translateY(0%)',
-            },
-        })
-        setbar.start({
-            from: {
-                transform: 'translateY(10px)',
-            },
-            to: {
-                transform: 'translateY(0)',
-            },
-        })
-    }
-
-    function handler() {
-        setopen(!open);
-        if (open === true) {
-            openclick();
-            openbar();
-        }
-        else {
-            closeclick()
-            closebar();
-        }
-    }
+    const control = useAnimation();
+    const bar1 = useAnimation();
+    const bar2 = useAnimation();
+    const navanimate = useAnimation();
 
     useEffect(() => {
-        if (open === true) {
-            openclick();
-            openbar();
-        }
-        else {
-            closeclick()
-            closebar();
-        }
-    }, [open])
+        if (open === false) {
 
-    useEffect(() => {
-        console.log(page);
+            control.start({
+                opacity: 0,
+                y: "-100vh",
+                transition: {
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 20,
+                    when: "afterChildren",
+
+                },
+            })
+            bar1.start({
+                y: -5,
+            })
+            bar2.start({
+                y: 5,
+            })
+            navanimate.start({
+                // y: "0vh",
+                transition: {
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 20,
+                },
+            })
+
+        }
+        setopen(true);
         console.log(open);
-        setopen(false);
     }, [page])
-
-    // redux
     return (<>
-        <animated.div style={{ ...springs }} className='NavbarMenu'>
-            <NavbarMobileMenu />
-        </animated.div>
-        <button onClick={() => setopen(!open)} className='NavbarMobileButton'>
-            <animated.div style={{ ...bar2 }} className='bar up'></animated.div>
-            <animated.div style={{ ...bar }} className='bar down'></animated.div>
-        </button>
+        <motion.div
+            initial={{
+                opacity: 0,
+                y: "-100vh",
+            }}
+            animate={control}
+            className='NavbarMenu'>
+
+            <NavbarMobileMenu animate={navanimate} />
+        </motion.div>
+        <motion.button onClick={() => {
+            setopen(!open);
+            console.log(open);
+            if (open) {
+                control.start({
+                    opacity: 1,
+                    y: "0vh",
+                    transition: {
+                        type: "spring",
+                        stiffness: 100,
+                        damping: 20,
+                        when: "beforeChildren",
+                    },
+                })
+                bar1.start({
+                    y: 0,
+                })
+                bar2.start({
+                    y: 0,
+                })
+                navanimate.start({
+                    // y: "100vh",
+                    transition: {
+                        type: "spring",
+                        stiffness: 100,
+                        damping: 20,
+                    },
+                })
+            } else {
+                control.start({
+                    opacity: 0,
+                    y: "-100vh",
+                    transition: {
+                        type: "spring",
+                        stiffness: 100,
+                        damping: 20,
+                        when: "afterChildren",
+
+                    },
+                })
+                bar1.start({
+                    y: -5,
+                })
+                bar2.start({
+                    y: 5,
+                })
+                navanimate.start({
+                    // y: "0vh",
+                    transition: {
+                        type: "spring",
+                        stiffness: 100,
+                        damping: 20,
+                    },
+                })
+            }
+
+        }
+
+        }
+            className='NavbarMobileButton'>
+            <motion.div
+                className='bar up'
+                animate={bar1}
+                initial={{
+                    y: -5,
+                }}
+            ></motion.div>
+            <motion.div
+                animate={bar2}
+                className='bar down'
+                initial={{
+                    y: 5,
+                }}
+            ></motion.div>
+        </motion.button>
+        {/* <Box className="LogoMobile" color={'white'} position="fixed" left={"16px"} top="30px" fontWeight={"bold"} fontSize="30px">
+            UFEST
+        </Box> */}
     </>
     )
 }
