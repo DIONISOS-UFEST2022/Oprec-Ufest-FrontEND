@@ -47,10 +47,11 @@ class PanitiaController extends Controller
             'email' => 'required|email|unique:panitia',
             'program_studi' => 'required',
             'vaccine_certificate' => 'image|file|max:1024',
-            'division_1' => 'required|numeric',
-            'division_2' => 'required|numeric',
+            'division_1' => 'required|string',
+            'division_2' => 'required|string',
             'phone_number' => 'required|numeric:11|unique:panitia',
-            'reason' => 'required|max:500',
+            'reason_1' => 'required|max:1000|string',
+            'reason_2' => 'required|max:1000|string',
             'portofolio' => 'required|url',
             'id_line' => 'required',
             'instagram_account' => 'required|url',
@@ -59,39 +60,17 @@ class PanitiaController extends Controller
 
         $panitia = panitia::create($request->all());
 
-
         if ($request->vaccine_certificate) {
             $filename = Str::random(25);
             $extension = $request->vaccine_certificate->extension();
             Storage::putFileAs('vaccine_image', $request->vaccine_certificate, $filename . '.' . $extension);
+            $panitia->vaccine_certificate = $filename . '.' . $extension;
         }
-
-        $panitia->vaccine_certificate = $filename . '.' . $extension;
 
         $panitia->is_accepted = 0;
 
-        $panitia->save();
-
-        $service = new GoogleSheetsServices();
-        $arr[] =
-            [
-                $panitia->nim,
-                $panitia->name,
-                $panitia->email,
-                $panitia->program_studi,
-                $panitia->vaccine_certificate,
-                $panitia->division_1,
-                $panitia->division_2,
-                $panitia->phone_number,
-                $panitia->reason,
-                $panitia->portofolio,
-                $panitia->id_line,
-                $panitia->instagram_account,
-                $panitia->city,
-                $panitia->is_accepted
-            ];
-
-        $service->appendSheet($arr);
+        $service = new GoogleSheetController();
+        $service->init();
 
         if ($panitia) {
             return new PanitiaResource($panitia, 201);
@@ -149,10 +128,11 @@ class PanitiaController extends Controller
             'email' => 'email|unique:panitia,email,' . $id . ',id',
             'program_studi' => 'string',
             'vaccine_certificate' => 'required|image|mimes:jpeg,jpg,png,bmp|size:20000',
-            'division_1' => 'numeric',
-            'division_2' => 'numeric',
+            'division_1' => 'string',
+            'division_2' => 'string',
             'phone_number' => 'numeric:11|unique:panitia,phone_number,' . $id . ',id',
-            'reason' => 'max:500',
+            'reason_1' => 'required|max:500',
+            'reason_2' => 'required|max:500',
             'portofolio' => 'url',
             'id_line' => 'required',
             'instagram_account' => 'url',

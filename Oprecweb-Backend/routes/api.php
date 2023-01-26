@@ -43,8 +43,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::get('/test', [MahasiswaController::class, 'index']);
 Route::post('/login', [AuthenticationController::class, 'login']);
 Route::post('/register', [UserController::class, 'store']);
-Route::post('/forgot-password', [ForgotPasswordController::class, 'getToken']);
-Route::post('/reset-password/{token}', [ForgotPasswordController::class, 'reset'])->name("password.reset");
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendToken']);
+Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'getToken'])->name("password.reset");
+Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword']);
 
 Route::get('/spreadsheet', [GoogleSheetController::class, 'init']);
 Route::get('/spreadsheet/update', [GoogleSheetController::class, 'updateData']);

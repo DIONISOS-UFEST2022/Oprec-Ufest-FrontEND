@@ -7,15 +7,15 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 
 
 
+
 class ForgotPasswordController extends Controller
 {
-    public function getToken(Request $request)
+    public function sendToken(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
@@ -34,23 +34,17 @@ class ForgotPasswordController extends Controller
         ]);
     }
 
-    public function reset(Request $request)
+    public function resetPassword(Request $request)
     {
-        $credential = request()->validate([
+        $credential = $request->validate([
             'email' => 'required|email',
             'token' => 'required|string',
             'password' => [
-                'string',
-                Password::min(8)
-                    ->mixedCase()
-                    ->numbers(),
-                'confirmed'
+                'string:8|confirmed|required',
             ],
         ]);
-
-
         $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
+            $credential,
             function ($user, $password) {
                 $user->forceFill([
                     'password' => Hash::make($password)
@@ -61,5 +55,21 @@ class ForgotPasswordController extends Controller
                 event(new PasswordReset($user));
             }
         );
+        return response()->json([
+            'status' => __($status)
+        ]);
+    }
+
+    public function getToken($token)
+    {
+        if (!$token) {
+            return response()->json([
+                'success' => false,
+            ]);
+        }
+        return response()->json([
+            'success' => true,
+            'token' => $token,
+        ]);
     }
 }
