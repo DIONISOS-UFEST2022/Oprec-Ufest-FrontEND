@@ -1,24 +1,26 @@
-import { Box } from "@chakra-ui/react";
-// import "./Admin.scss"
-import { Division } from "../Admin/Division/Division";
-import { Database } from "../Admin/Database/Database";
-import { NavbarAdmin } from "../../Reusable/NavbarAdmin/NavbarAdmin";
-import { Feature } from "./Feature/Feature";
-import { useSelector, useDispatch } from "react-redux";
+import { lazy, Suspense } from "react";
+import { useSelector } from "react-redux";
 import { selectPage } from "../../Redux/features/page/pageSlice";
+const NavbarAdmin = lazy(() => import("../../Reusable/NavbarAdmin/NavbarAdmin"));
+const Division = lazy(() => import("./Division/Division"));
+const Database = lazy(() => import("./Database/Database"));
+const Feature = lazy(() => import("./Feature/Feature"));
 
-export function Admin() {
+
+export default function Admin() {
     const page = useSelector(selectPage);
     return <div className="admin">
-        <NavbarAdmin />
+        <Suspense fallback={<div>Loading...</div>}>
+            <NavbarAdmin />
+        </Suspense>
         {(() => {
             switch (page) {
                 case 'database':
-                    return <Database />;
+                    return <Suspense fallback="Loading..."><Database /></Suspense>;
                 case 'division':
-                    return <Division />;
+                    return <Suspense fallback="Loading..."><Division /></Suspense>;
                 case 'feature':
-                    return <Feature />;
+                    return <Suspense fallback="Loading..."><Feature /></Suspense>;
                 default:
                     return null;
             }

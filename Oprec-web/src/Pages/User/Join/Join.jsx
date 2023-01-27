@@ -1,13 +1,4 @@
 // Styling
-import {
-    Box, Text,
-    Textarea,
-    Radio,
-    RadioGroup,
-    Stack,
-    Flex,
-    Image
-} from "@chakra-ui/react";
 import "./Join.scss";
 import { Autocomplete, Divider } from "@mui/material";
 import { Button } from "@material-ui/core";
@@ -25,10 +16,8 @@ import { CustomTextField } from "../../../Reusable/TextField/CustomTextField";
 import { UploadImage } from "./UploadImage/UploadImage";
 import JoinPage0 from "./Page/JoinPage0";
 import Sparkles from "../../../Reusable/Animation/Sparkle/Sparkle";
-import { MotionConfig } from "framer-motion";
 import { motion } from "framer-motion";
-import { useDispatch, useSelector } from "react-redux";
-import { selectuserFile } from "../../../Redux/features/users/userRoleSlice";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import { CircularProgress } from "@material-ui/core";
 import { selectuserName, selectuserEmail, selectuserNim } from "../../../Redux/features/users/userRoleSlice";
@@ -66,18 +55,13 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 
 
-export function Join(props) {
-    // for image
-    const dispatch = useDispatch();
-    // const userFile = useSelector(selectuserFile);
-    // file state
+export default function Join(props) {
+
     const [file, setFile] = useState(null);
     const [loading, Setloading] = useState(false);
     const name = useSelector(selectuserName);
     const nim = useSelector(selectuserNim);
     const email = useSelector(selectuserEmail);
-    // const UserData = useSelector(userRoleSlice);
-    // next input when press enter
     const formInput = useRef(null);
     const titleRef = useRef(null);
     const EnterHandleClick = (e) => {
@@ -111,7 +95,7 @@ export function Join(props) {
 
 
     return (
-        <Box className="Join" ref={titleRef}>
+        <div className="Join" ref={titleRef}>
             <Formik
                 validationSchema={JoinSchema}
                 initialValues={{
@@ -185,7 +169,7 @@ export function Join(props) {
                     handleSubmit,
                     setFieldValue,
                 }) => (
-                    <Box className="join" padding={"10px"}>
+                    <div className="join" padding={"10px"}>
                         <div className="form">
                             <form noValidate onSubmit={handleSubmit}>
 
@@ -212,7 +196,7 @@ export function Join(props) {
                                                     }}
 
                                                 >
-                                                    <Box className="page1">
+                                                    <div className="page1">
                                                         <Sparkles>
                                                             <span className="JoinTitle">JOIN US!</span>
                                                         </Sparkles>
@@ -222,7 +206,7 @@ export function Join(props) {
                                                             Setjoinpage(1)
                                                             titleRef.current.scrollIntoView({ behavior: 'smooth' })
                                                         }}>Let's GO</Button>
-                                                    </Box>
+                                                    </div>
                                                 </motion.div>
 
                                             )
@@ -259,7 +243,6 @@ export function Join(props) {
                                                         { label: "2021" },
                                                         { label: "2022" },
                                                     ]}
-                                                    // getOptionLabel={(option) => option.label ? option.label : ""}
                                                     value={values.angkatan}
                                                     id="angkatan"
                                                     onBlur={handleBlur}
@@ -317,7 +300,7 @@ export function Join(props) {
                                                 <p className="error">
                                                     {errors.domisili && touched.domisili && errors.domisili}
                                                 </p>
-                                                <Flex justifyContent={"space-between"}>
+                                                <div justifyContent={"space-between"}>
                                                     <Prev page={0} />
                                                     <Button
                                                         className="Button"
@@ -328,17 +311,17 @@ export function Join(props) {
                                                             Setjoinpage(2);
                                                             titleRef.current.scrollIntoView({ behavior: 'smooth' });
                                                         }}>NEXT</Button>
-                                                </Flex>
+                                                </div>
                                             </>);
                                         case 2:
-                                            return (<Box className="page2">
+                                            return (<div className="page2">
                                                 {/* Sudah Vaksin ke-3 */}
-                                                <Box>
-                                                    <Text className="TextLabel">
+                                                <div>
+                                                    <p className="TextLabel">
                                                         Upload Sertifikat Vaksin Covid-19 ke-3
-                                                    </Text>
+                                                    </p>
                                                     <UploadImage file={file} setFile={setFile} />
-                                                </Box>
+                                                </div>
                                                 <p className="error">
                                                     {errors.fullname && touched.fullname && errors.fullname}
                                                 </p>
@@ -446,16 +429,16 @@ export function Join(props) {
                                                 <p className="error">
                                                     {errors.divisi_alternatif && touched.divisi_alternatif && errors.divisi_alternatif}
                                                 </p>
-                                                <Flex justifyContent={"space-between"}>
+                                                <div justifyContent={"space-between"}>
                                                     <Prev page={1} />
                                                     <Next page={3}
                                                         disabled={!(values.nohp && values.idline && values.ig && values.divisi && values.divisialt)}
                                                     />
-                                                </Flex>
-                                            </Box>)
+                                                </div>
+                                            </div>)
                                         case 3:
                                             return (<>
-                                                <Text className="Wrapper">Apa yang kamu ketahui tentang U-FEST?</Text>
+                                                <p className="Wrapper">Apa yang kamu ketahui tentang U-FEST?</p>
 
                                                 <CustomTextField
                                                     ref={formInput}
@@ -475,16 +458,16 @@ export function Join(props) {
                                                 <p className="error">
                                                     {errors.jawaban && touched.jawaban && errors.jawaban}
                                                 </p>
-                                                <Flex justifyContent={"space-between"}>
+                                                <div justifyContent={"space-between"}>
                                                     <Prev page={2} />
                                                     <Next page={4}
                                                         disabled={!(values.jawaban)}
                                                     />
-                                                </Flex>
+                                                </div>
                                             </>);
                                         case 4:
                                             return (<>
-                                                <Text className="Wrapper">Berdasarkan Divisi yang kamu pilih, menurut kamu sifat apa saja yang diperlukan untuk menjadi bagian dari divisi tersebut?</Text>
+                                                <p className="Wrapper">Berdasarkan Divisi yang kamu pilih, menurut kamu sifat apa saja yang diperlukan untuk menjadi bagian dari divisi tersebut?</p>
                                                 <br />
                                                 <CustomTextField
                                                     ref={formInput}
@@ -504,16 +487,16 @@ export function Join(props) {
                                                 <p className="error">
                                                     {errors.jawaban2 && touched.jawaban2 && errors.jawaban2}
                                                 </p>
-                                                <Flex justifyContent={"space-between"}>
+                                                <div justifyContent={"space-between"}>
                                                     <Prev page={3} />
                                                     <Next page={5}
                                                         disabled={!(values.jawaban && values.jawaban2)}
                                                     />
-                                                </Flex>
+                                                </div>
                                             </>)
                                         case 5:
                                             return (<>
-                                                <Text className="Wrapper">Upload Portofolio</Text>
+                                                <p className="Wrapper">Upload Portofolio</p>
                                                 <CustomTextField
                                                     ref={formInput}
                                                     onKeyDownCapture={EnterHandleClick}
@@ -532,7 +515,7 @@ export function Join(props) {
                                                 <p className="error">
                                                     {errors.portofolio && touched.portofolio && errors.portofolio}
                                                 </p>
-                                                <Flex justifyContent={"space-between"}>
+                                                <div justifyContent={"space-between"}>
                                                     <Prev page={4} />
                                                     <Button
                                                         className="button"
@@ -541,14 +524,14 @@ export function Join(props) {
                                                     >
                                                         {loading ? (<CircularProgress />) : "Submit"}
                                                     </Button>
-                                                </Flex>
+                                                </div>
                                             </>)
                                         case 6:
                                             return (<>
                                                 <Thankyou />
-                                                <Text className="textfillheart">
+                                                <p className="textfillheart">
                                                     Tap to fill heart!
-                                                </Text>
+                                                </p>
                                             </>)
                                         default:
                                             return null;
@@ -557,11 +540,11 @@ export function Join(props) {
 
                             </form>
                         </div>
-                    </Box>
+                    </div>
                 )
                 }
             </Formik >
-        </Box >
+        </div >
 
     );
 }

@@ -1,52 +1,49 @@
-import { Box, Heading } from "@chakra-ui/react";
-import { useState } from "react";
-import { Database } from "../Database/Database";
-import { DivisonMenu } from "./DivisonDetail/DivisionMenuDetail";
-import { DivisionNav } from "./DivisionNav/DivisionNav";
+import { useState, lazy } from "react";
+const DivisionMenu = lazy(() => import("./DivisionDetail/DivisionMenuDetail"));
+const DivisionNav = lazy(() => import("./DivisionNav/DivisionNav"));
 
-
-export function Division(props) {
-    const [division, setdivision] = useState('divison');
+export default function Division() {
+    const [division, setdivision] = useState('Division');
     const handleClick = pagestate => {
         setdivision(pagestate);
     };
     return (
-        <Box className="Divison">
+        <div className="Division">
             {(() => {
                 switch (division) {
-                    case 'divison':
+                    case 'Division':
                         return <DivisionNav handleClick={handleClick} />;
                     case 'BPH':
-                        return <DivisonMenu name={"BPH"} handleClick={handleClick} />;
+                        return <DivisionMenu name={"BPH"} handleClick={handleClick} />;
                     case 'Dekorasi':
-                        return <DivisonMenu name={"Dekorasi"} handleClick={handleClick} />;
+                        return <DivisionMenu name={"Dekorasi"} handleClick={handleClick} />;
                     case 'Publikasi':
-                        return <DivisonMenu name={"Publikasi"} handleClick={handleClick} />;
+                        return <DivisionMenu name={"Publikasi"} handleClick={handleClick} />;
                     case 'Keamanan':
-                        return <DivisonMenu name={"Keamanan"} handleClick={handleClick} />;
+                        return <DivisionMenu name={"Keamanan"} handleClick={handleClick} />;
                     case 'Fresh Money':
-                        return <DivisonMenu name={"Fresh Money"} handleClick={handleClick} />;
+                        return <DivisionMenu name={"Fresh Money"} handleClick={handleClick} />;
                     case 'Sponsor':
-                        return <DivisonMenu name={"Sponsor"} handleClick={handleClick} />;
+                        return <DivisionMenu name={"Sponsor"} handleClick={handleClick} />;
                     case 'Dokumentasi':
-                        return <DivisonMenu name={"Dokumentasi"} handleClick={handleClick} />;
+                        return <DivisionMenu name={"Dokumentasi"} handleClick={handleClick} />;
                     case 'Acara':
-                        return <DivisonMenu name={"Acara"} handleClick={handleClick} />;
+                        return <DivisionMenu name={"Acara"} handleClick={handleClick} />;
                     case 'Perlengkapan':
-                        return <DivisonMenu name={"Perlengkapan"} handleClick={handleClick} />;
+                        return <DivisionMenu name={"Perlengkapan"} handleClick={handleClick} />;
                     case 'Lomba':
-                        return <DivisonMenu name={"Lomba"} handleClick={handleClick} />;
+                        return <DivisionMenu name={"Lomba"} handleClick={handleClick} />;
                     case 'Konsumsi':
-                        return <DivisonMenu name={"Konsumsi"} handleClick={handleClick} />;
+                        return <DivisionMenu name={"Konsumsi"} handleClick={handleClick} />;
                     case 'Website':
-                        return <DivisonMenu name={"Website"} handleClick={handleClick} />;
+                        return <DivisionMenu name={"Website"} handleClick={handleClick} />;
                     case 'Visual':
-                        return <DivisonMenu name={"Visual"} handleClick={handleClick} />;
+                        return <DivisionMenu name={"Visual"} handleClick={handleClick} />;
                     default:
                         return null;
                 }
             })()}
-        </Box>)
+        </div>)
 }
 
 

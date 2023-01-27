@@ -1,22 +1,32 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
 import { store } from './Redux/store';
 import { Provider } from 'react-redux';
-// import { fetchUsers } from './Redux/features/users/usersSlice';
 import './index.scss';
-import { BrowserRouter } from 'react-router-dom';
+import WebFont from 'webfontloader';
+import LoadingScreen from './Reusable/LoadingScreen/LoadingScreen';
 
-// store.dispatch(fetchUsers());
+const App = lazy(() => import('./App'));
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-    <React.StrictMode>
-      <Provider store={store}>
+  <React.StrictMode>
+    <Provider store={store}>
+      <Suspense fallback={<LoadingScreen />}>
         <App />
-      </Provider >
-    </React.StrictMode>
-  </BrowserRouter>
+      </Suspense>
+    </Provider >
+  </React.StrictMode>
 );
 
+const webFontConfig = {
+  custom: {
+    families: ['Rocket-Vintage'],
+    urls: ['./Asset/Font/Rocket Vintage.ttf'],
+  },
+  classes: false,
+  timeout: 1000,
+  active: root, // invoked when fonts are active
+};
+WebFont.load(webFontConfig);

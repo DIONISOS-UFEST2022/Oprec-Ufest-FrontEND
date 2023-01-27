@@ -1,36 +1,20 @@
-import { useEffect } from "react"
-import { motion } from "framer-motion"
+import { m, LazyMotion } from "framer-motion"
 import "./LoadingScreen.scss"
-import { border, Box } from "@chakra-ui/react"
 
-export function LoadingScreen() {
+const loadFeatures = () => import("./LoadingFeature.jsx").then(res => res.default)
+
+
+export default function LoadingScreen() {
     return (
-        <Box
-            className="loading-screen"
-        >
-            <motion.div
-                className="content"
-                animate={{
-                    scale: [1, 1.4, 1.4, 1, 1],
-                    borderRadius: ["20%", "20%", "50%", "50%", "20%"],
-                    rotate: [0, 0, 270, 270, 0],
-                }}
-                // initial={{ opacity: 0 }}
-                transition={{ duration: 2 }}
+        <LazyMotion features={loadFeatures}>
+            <m.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="loading-screen"
             >
-
-            </motion.div>
-            <Box
-                className="innercontent"
-            >
-                Is
-                <br />
-                Loading...
-                <br />
-                Please
-                <br />
-                Wait
-            </Box>
-        </Box>
+                loading...
+            </m.div>
+        </LazyMotion>
     )
 }

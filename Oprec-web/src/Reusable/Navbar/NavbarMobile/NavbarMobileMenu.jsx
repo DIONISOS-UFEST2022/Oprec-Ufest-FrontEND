@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
 import { Grid } from '@material-ui/core'
-import { Center } from '@chakra-ui/react'
+// import { div } from '@chakra-ui/react'
 import "./NavbarMobile.scss"
-// import { animated, useSpring } from '@react-spring/web'
 // ref
 import { useRef } from "react";
 import { useInView } from "framer-motion";
@@ -59,28 +58,20 @@ function Card(props) {
             className="NavbarMobileMenuCard"
             ref={ref}
         >
-            <Center onClick={props.onClick} onTouchEnd={props.onTouch} className='title'>
+            <div onClick={props.onClick} onTouchEnd={props.onTouch} className='title'>
                 {props.name}
-            </Center>
+            </div>
         </Grid >
     )
 }
 
 export function NavbarMobileMenu(props) {
-    // const navanimate = useSpring({
-    //     from: { opacity: 0, transform: "translate3d(0, -40px, 0)" },
-    //     to: { opacity: 1, transform: "translate3d(0, 0px, 0)" },
-    //     delay: 1700,
-    // })
-
-    // const navanimate = useAnimation();
 
     // redux
     const dispatch = useDispatch();
     return (
         <motion.div
             animate={props.animate}
-        // style={{ ...navanimate }}
         >
             <Grid container className='NavbarMobileMenu'>
                 {Menu.map((item, index) => {

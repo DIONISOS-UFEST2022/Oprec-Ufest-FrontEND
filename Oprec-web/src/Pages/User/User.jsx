@@ -1,30 +1,27 @@
-import React, { useContext, useState } from 'react';
-import { Box } from "@chakra-ui/react"
-import { Login } from './Login/Login';
-import { About } from './About Us/About';
-import { Division } from './Division/Division';
-import Home from './Home/Home';
-import { Navbar } from '../../Reusable/Navbar/Navbar';
-import { Footer } from '../../Reusable/Footer/Footer';
-import {
-    Transition, SwitchTransition, CSSTransition,
-
-} from 'react-transition-group';
-import "./User.scss"
-import { Register } from './Register/Register';
-import { Join } from './Join/Join';
-import { useSelector, useDispatch } from 'react-redux';
+import "./User.scss";
+import { useSelector } from 'react-redux';
 import { selectPage } from '../../Redux/features/page/pageSlice';
-import { useMediaQuery } from '@chakra-ui/react';
-import { NavbarMobile } from '../../Reusable/Navbar/NavbarMobile/NavbarMobile';
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { Suspense, lazy } from "react";
+const Navbar = lazy(() => import("../../Reusable/Navbar/Navbar"));
+const NavbarMobile = lazy(() => import("../../Reusable/Navbar/NavbarMobile/NavbarMobile"));
+const Footer = lazy(() => import("../../Reusable/Footer/Footer"));
+const Home = lazy(() => import("./Home/Home"));
+const About = lazy(() => import("./About Us/About"));
+const Division = lazy(() => import("./Division/Division"));
+const Login = lazy(() => import("./Login/Login"));
+const Register = lazy(() => import("./Register/Register"));
+const Join = lazy(() => import("./Join/Join"));
 
 
-export function User() {
-    const [isMobile] = useMediaQuery("(max-width: 768px)")
+export default function User() {
+    const isMobile = useMediaQuery("(max-width: 768px)")
     const page = useSelector(selectPage);
     return (
-        <Box position={'relative'} className="user">
-            {isMobile ? <NavbarMobile /> : <Navbar />}
+        <div className="user">
+            <Suspense fallback="Loading...">
+                {isMobile ? <NavbarMobile /> : <Navbar />}
+            </Suspense>
             {(() => {
                 switch (page) {
                     case 'home':
@@ -43,7 +40,9 @@ export function User() {
                         return null;
                 }
             })()}
-            <Footer />
-        </Box>
+            <Suspense fallback="Loading...">
+                <Footer />
+            </Suspense>
+        </div>
     )
 }

@@ -1,15 +1,15 @@
 // Styling
-import { Text, Image, Flex } from "@chakra-ui/react";
+// import { Text, Image, Flex } from "@chakra-ui/react";
 import { Link, CircularProgress, Button, Grid } from "@material-ui/core";
 import Alert from '@mui/material/Alert';
 import { Box } from "@mui/system";
-import FormGroup from '@mui/material/FormGroup';
+// import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import "./Login.scss";
 import TextField from '@mui/material/TextField';
 import { Divider } from "@mui/material";
-import { extendTheme } from "@chakra-ui/react";
+// import { extendTheme } from "@chakra-ui/react";
 // Form Control
 import { Formik } from "formik";
 import { Loginschema } from "./LoginSchema";
@@ -28,19 +28,8 @@ import Google from "./../../../Asset/OtherLogo/google.png";
 import { motion } from "framer-motion";
 
 
-export function Login() {
+export default function Login() {
     // theme
-    const customeTheme = extendTheme({
-        colors: {},
-        fonts: {},
-        fontSizes: {},
-        breakpoints: {
-            sm: "320px",
-            md: "768px",
-            lg: "960px",
-            xl: "1200px",
-        },
-    });
     // state
     const [loading, Setloading] = useState(false);
     const [error, Seterror] = useState(false);
@@ -116,7 +105,7 @@ export function Login() {
                                 <Divider />
                                 <Box className="Subtitle" fontSize={["10px", "10px", "15px"]}> Let's grow together with UFEST!</Box>
                                 <Button className="Google">
-                                    <Image className="googleicon" src={Google} alt="Google" />
+                                    <image className="googleicon" src={Google} alt="Google" />
                                     Sign in with Google
                                 </Button>
                                 <Divider className="Divider">or</Divider>
@@ -153,7 +142,7 @@ export function Login() {
                                 <p className="error">
                                     {errors.password && touched.password && errors.password}
                                 </p>
-                                <Flex marginTop={"20px"} marginBottom="10px" justifyContent={"space-between"} paddingInline="10px" alignItems={"center"}>
+                                <div marginTop={"20px"} marginBottom="10px" justifyContent={"space-between"} paddingInline="10px" alignItems={"center"}>
                                     <FormControlLabel
                                         className="RememberMe"
                                         control={<Checkbox defaultChecked />} label="Remember Me" />
@@ -162,7 +151,7 @@ export function Login() {
                                         onClick={() => { dispatch(pageChanged("register")) }}>
                                         Forgot Password?
                                     </Link>
-                                </Flex>
+                                </div>
                                 <Button
                                     className="button"
                                     variant="contained"

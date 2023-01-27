@@ -2,46 +2,36 @@
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import React, { useState } from 'react'
+import React from 'react'
 import "./Thankyou.scss"
-import Heart from "./../../../../Asset/Image/heart.png"
-import { Image } from '@chakra-ui/react'
-import { useSpring, animated } from '@react-spring/web';
-import styled from 'styled-components';
 import Sparkles from '../../../../Reusable/Animation/Sparkle/Sparkle';
-import { Box } from '@chakra-ui/react';
 import Heartface from './Heartface';
 // React
 // Sound
-import useSound from 'use-sound';
-import PopSound from "./../../../../Asset/Sound/pop.mp3"
 
 
 function Thankyou() {
     // for sound
-    const [play] = useSound(PopSound);
-    const HeartEnter = useSpring({
-        from: { y: 40, opacity: 0 },
-        to: { y: 0, opacity: 1 },
-        delay: 500,
-    })
+    // const [play] = useSound(PopSound);
+    // const HeartEnter = useSpring({
+    //     from: { y: 40, opacity: 0 },
+    //     to: { y: 0, opacity: 1 },
+    //     delay: 500,
+    // })
 
-    const [mouseClick, setMouseClick] = useSpring(() => ({
-        scale: 1.1
-    }));
+    // const [mouseClick, setMouseClick] = useSpring(() => ({
+    //     scale: 1.1
+    // }));
 
-    const [fill, setFill] = useState(100);
-    function handleMouseClick() {
-        setFill(fill - 10);
-        console.log(100 - fill);
-        setMouseClick.start({
-            from: { scale: 1.3 },
-            to: { scale: 1.1 },
-        })
-    }
-    const AnimatedImg = styled(animated(Image))``;
-    const AnimatedBox = styled(animated(Box))``;
+    // const [fill, setFill] = useState(100);
+    // function handleMouseClick() {
+    //     setFill(fill - 10);
+    //     console.log(100 - fill);
+    //     setMouseClick.start({
+    //         from: { scale: 1.3 },
+    //         to: { scale: 1.1 },
+    //     })
+    // }
     return (
         <>
             <Sparkles>
@@ -59,15 +49,18 @@ function Thankyou() {
                     />
                 </ListItem>
             </Sparkles>
-            <animated.div onClick={() => {
-                handleMouseClick();
-                play();
-            }} style={{ ...HeartEnter, ...mouseClick }} className="thankyou">
+            <div
+                // onClick={() => {
+                //     handleMouseClick();
+                //     play();
+                // }}
+                // style={{ ...HeartEnter, ...mouseClick }} 
+                className="thankyou">
                 <Sparkles>
                     <svg className='svgheart' width="100px" height="100px" viewBox="0 0 24 24" fill='grey'>
                         <defs>
                             <linearGradient id="grad" gradientTransform="rotate(90)">
-                                <stop offset={`${fill}%`} stopColor="grey" />
+                                {/* <stop offset={`${fill}%`} stopColor="grey" /> */}
                                 <stop offset={`0%`} stopColor="#ff6647" />
                             </linearGradient>
                             <clipPath id="cut-off-bottom" gradientTransform='rotate(90)'>
@@ -77,15 +70,12 @@ function Thankyou() {
 
 
                         <path d="M7 2C3.31333 2 1 5.21475 1 8.5C1 11.8412 2.67415 14.6994 4.77151 16.9297C6.8721 19.1634 9.47698 20.8565 11.5528 21.8944C11.8343 22.0352 12.1657 22.0352 12.4472 21.8944C14.523 20.8565 17.1279 19.1634 19.2285 16.9297C21.3259 14.6994 23 11.8412 23 8.5C23 5.22013 20.7289 2 17 2C15.275 2 14.0531 2.47979 13.1186 3.20977C12.6785 3.55357 12.311 3.95011 11.9974 4.33639C11.6802 3.94929 11.3091 3.55266 10.8649 3.2079C9.92877 2.48125 8.70883 2 7 2Z"
-                            fill='url(#grad)'
-                        // clipPath='url(#cut-off-bottom)'
-                        // stroke='grey'
-                        // strokeWidth='0.2'
+                        // fill='url(#grad)'
                         />
                     </svg>
                     <Heartface />
                 </Sparkles>
-            </animated.div>
+            </div>
         </>
     )
 }

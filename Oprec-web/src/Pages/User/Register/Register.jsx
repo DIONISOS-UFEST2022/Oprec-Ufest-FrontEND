@@ -1,5 +1,5 @@
 // Styling
-import { Box, Text, Link } from "@chakra-ui/react";
+// import { Box, Text, Link } from "@chakra-ui/react";
 import "./Register.scss";
 import { Button } from "@material-ui/core";
 import { CircularProgress } from "@mui/material";
@@ -21,7 +21,7 @@ import { CustomTextField } from "../../../Reusable/TextField/CustomTextField";
 import { motion } from "framer-motion";
 import { userDataAdded } from "../../../Redux/features/users/userRoleSlice";
 
-export function Register() {
+export default function Register() {
     // use dispatch to change page
     const dispatch = useDispatch();
     // next input when press enter
@@ -201,12 +201,12 @@ export function Register() {
 
                             </form>
                             <br />
-                            <Text fontSize={"15px"} fontWeight="bold">
+                            <p fontSize={"15px"} fontWeight="bold">
                                 Already have account?{' '}
-                                <Link className="Purple" onClick={() => { dispatch(pageChanged('login')) }}>
+                                <a className="Purple" onClick={() => { dispatch(pageChanged('login')) }}>
                                     Login now!
-                                </Link>
-                            </Text>
+                                </a>
+                            </p>
                         </motion.div>
                     </div>
                 </div>

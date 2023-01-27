@@ -1,15 +1,10 @@
-import {
-    Box,
-} from '@chakra-ui/react'
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "./Database.scss";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectuserToken } from '../../../Redux/features/users/userRoleSlice';
-import * as React from 'react';
 import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
 import { alpha, styled } from '@mui/material/styles';
-import { GlobalStyles } from '@mui/material';
 
 
 
@@ -57,7 +52,7 @@ const columns = [
     { field: 'email', headerName: 'Email', width: 130, editable: true },
 ];
 
-export function Database(props) {
+export default function Database(props) {
     const token = useSelector(selectuserToken);
     const [userData, SetuserData] = useState([]);
     useEffect(() => {
@@ -74,7 +69,7 @@ export function Database(props) {
     }, []);
 
     return (
-        <Box className="database">
+        <div className="database">
             <CustomGrid
                 rowHeight={30}
                 rows={
@@ -113,7 +108,7 @@ export function Database(props) {
                     }
                 }}
             />
-        </Box>)
+        </div>)
 }
 
 

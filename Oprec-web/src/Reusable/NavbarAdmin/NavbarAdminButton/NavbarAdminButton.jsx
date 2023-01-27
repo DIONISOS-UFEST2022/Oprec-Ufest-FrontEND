@@ -1,17 +1,14 @@
-import { Box } from "@chakra-ui/react"
 import "./NavbarButtonAdmin.scss"
-// import { Button } from "@material-ui/core"
-import { Button } from "@chakra-ui/react"
 
-export function NavbarButtonAdmin(props) {
+export default function NavbarButtonAdmin(props) {
     return (
-        <Box
+        <div
             className="NavbarButtonAdmin"
             id={props.id}
             onClick={props.onClick}
-            color={props.color}
+            style={{ color: props.color }}
         >
             {props.Title}
-        </Box>
+        </div>
     )
 }

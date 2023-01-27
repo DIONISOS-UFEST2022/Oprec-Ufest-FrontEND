@@ -1,74 +1,16 @@
-import { Box, Button } from "@chakra-ui/react";
-import {
-    Flex,
-    Avatar,
-    Text,
-    Badge,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-    useDisclosure
-} from "@chakra-ui/react";
-import { useContext, useEffect, useState } from "react";
-import { NavbarButtonAdmin } from "./NavbarAdminButton/NavbarAdminButton";
+import React from "react";
 import "./NavbarAdmin.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { selectuserRole } from "../../Redux/features/users/userRoleSlice";
-import { selectPage, setPage } from "../../Redux/features/page/pageSlice";
+// import { selectuserRole } from "../../Redux/features/users/userRoleSlice";
+import { selectPage } from "../../Redux/features/page/pageSlice";
 import { pageChanged } from "../../Redux/features/page/pageSlice";
 import axios from "axios";
 import { userRoleAdded } from "../../Redux/features/users/userRoleSlice";
-
-function Profile() {
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    const user = useSelector(selectuserRole);
-
-    return (<>
-        <Button onClick={onOpen} className="NavbarMenu">Profile</Button>
-
-        <Modal isOpen={isOpen} onClose={onClose}>
-            <ModalOverlay />
-            <ModalContent>
-                <ModalHeader>Your Profile <Badge colorScheme='purple'>Admin</Badge></ModalHeader>
-                <ModalCloseButton />
-                <ModalBody>
-                    <Flex>
-                        <Avatar src='https://bit.ly/sage-adebayo' />
-                        <Box ml='3'>
-                            <Text fontWeight='bold'>
-                                Segun Adebayo
-                                <Badge ml='1' colorScheme='green'>
-                                    New
-                                </Badge>
-                            </Text>
-                            <Text fontSize='sm'>UI Engineer</Text>
-                        </Box>
-                    </Flex>
-                </ModalBody>
-                <ModalFooter>
-                    <Button colorScheme='blue' mr={3}
-                    >
-                        LOG OUT
-                    </Button>
-                </ModalFooter>
-            </ModalContent>
-        </Modal>
-    </>)
-}
-
-
-
-
-
-
+const NavbarButtonAdmin = React.lazy(() => import("./NavbarAdminButton/NavbarAdminButton"));
 
 export function NavbarAdmin(props) {
     const page = useSelector(selectPage);
-    const user = useSelector(selectuserRole);
+    // const user = useSelector(selectuserRole);
     const dispatch = useDispatch();
 
     // logout
@@ -80,32 +22,27 @@ export function NavbarAdmin(props) {
         })
             .then((res) => {
                 localStorage.removeItem('LoginID');
-                console.log(res.data);
+                // console.log(res.data);
                 dispatch(pageChanged('login'));
                 dispatch(userRoleAdded('guest'));
 
             }
             )
             .catch((err) => {
-                console.log(login)
-                console.log(err);
+                // console.log(login)
+                console.error(err);
             }
             );
 
     }
     return (
-        <>
-            <Box className="NavbarAdminDesktop"
-                width={"100%"}
-            >
-                <NavbarButtonAdmin color={page === "database" ? "red" : "white"} className="NavbarMenu" Title={"Database"} onClick={() => { dispatch(pageChanged('database')) }} />
-                <NavbarButtonAdmin color={page === "division" ? "red" : "white"} className="NavbarMenu" Title={"Division"} onClick={() => { dispatch(pageChanged('division')) }} />
-                <NavbarButtonAdmin color={page === "feature" ? "red" : "white"} className="NavbarMenu" Title={"Feature"} onClick={() => { dispatch(pageChanged('feature')) }} />
-                {/* <Profile /> */}
-                <Button color="black" onClick={logouthandler}>Log Out</Button>
+        <div className="NavbarAdminDesktop">
+            <NavbarButtonAdmin color={page === "database" ? "red" : "white"} className="NavbarMenu" Title={"Database"} onClick={() => { dispatch(pageChanged('database')) }} />
+            <NavbarButtonAdmin color={page === "division" ? "red" : "white"} className="NavbarMenu" Title={"Division"} onClick={() => { dispatch(pageChanged('division')) }} />
+            <NavbarButtonAdmin color={page === "feature" ? "red" : "white"} className="NavbarMenu" Title={"Feature"} onClick={() => { dispatch(pageChanged('feature')) }} />
+            {/* <Profile /> */}
+            <button className="buttonLogout" color="black" onClick={logouthandler}>Log Out</button>
 
-            </Box>
-        </>
-
+        </div>
     )
 }

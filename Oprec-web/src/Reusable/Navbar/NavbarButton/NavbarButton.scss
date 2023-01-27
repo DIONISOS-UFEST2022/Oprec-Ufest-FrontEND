@@ -1,8 +1,16 @@
+// @font-face {
+//     font-family: 'Rocket-Vintage';
+//     src: local('Rocket-Vintage'), url(./../../../Asset/Font/Rocket\ Vintage.ttf) format('truetype');
+// }
+
 .NavbarButton {
-    border: 1px solid red;
+    font-family: Rocket-Vintage !important;
+    font-size: 30px !important;
+    color: rgb(245, 214, 63) !important;
+    text-shadow: 2px 0px 9px rgba(0, 0, 0, 1);
     width: 120px;
     height: 40px;
-    background-color: hsl(0deg, 10%, 10%);
+    text-transform: capitalize;
 }
 
 .NavImg {

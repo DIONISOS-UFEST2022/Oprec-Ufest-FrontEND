@@ -1,24 +1,9 @@
-import { Box, Image, Heading } from "@chakra-ui/react"
-import "./About.scss"
-import axios from "axios"
 import { AboutCard } from "./AboutCard/AboutCard"
-import Timeline from '@mui/lab/Timeline';
-import TimelineItem from '@mui/lab/TimelineItem';
-import TimelineSeparator from '@mui/lab/TimelineSeparator';
-import TimelineConnector from '@mui/lab/TimelineConnector';
-import TimelineContent from '@mui/lab/TimelineContent';
-import TimelineDot from '@mui/lab/TimelineDot';
 import { Grid } from "@material-ui/core";
 import { AboutData } from "./AboutData";
-import { MasonryWithVariableHeightItems } from "./AboutCard/Mansory";
-import WhatIs from "./Section/WhatIS/WhatIs";
-// import { motion, useScroll, useSpring, Variants } from "framer-motion"
-import { useEffect } from "react";
-import { animated } from "@react-spring/web";
-import { motion, useSpring } from "framer-motion";
-import { VisiMisi } from "./Section/VisiMisi/VisiMisi";
+import { useSpring, useInView } from "framer-motion";
 import { useRef } from "react";
-import { useInView } from "framer-motion";
+import "./About.scss"
 
 function Section({ children }) {
   const ref = useRef(null);
@@ -38,14 +23,14 @@ function Section({ children }) {
   );
 }
 
-export function About() {
+export default function About() {
   const { scrollYProgress } = useSpring({
     from: { opacity: 0, transform: "translate3d(0, -40px, 0)" },
     to: { opacity: 1, transform: "translate3d(0, 0px, 0)" },
   })
   return (<>
-    <Box className="about">
-      <Heading className="heading" fontSize={['20px', '30px', '40px']}>TENTANG</Heading>
+    <div className="about">
+      <div className="heading" >TENTANG</div>
       <Grid container>
         {AboutData.map((item, index) => {
           return (
@@ -62,7 +47,7 @@ export function About() {
         })
         }
       </Grid>
-    </Box>
+    </div>
   </>
   )
 }

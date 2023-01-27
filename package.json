@@ -10,7 +10,8 @@
     "redux": "^4.2.0",
     "redux-devtools-extension": "^2.13.9",
     "styled-components": "^5.3.6",
-    "swiper": "^8.4.6"
+    "swiper": "^8.4.6",
+    "webfontloader": "^1.6.28"
   },
   "devDependencies": {
     "@redux-devtools/core": "^3.13.1"

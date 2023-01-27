@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Button } from '@chakra-ui/react'
 import "./NavbarMobile.scss"
-import { Box } from '@chakra-ui/react'
 // import { animated, useSpring } from '@react-spring/web'
 import NavbarMobileMenu from './NavbarMobileMenu'
 import { useSelector } from 'react-redux'
-import { pageChanged } from '../../../Redux/features/page/pageSlice'
-import { useDispatch } from 'react-redux'
 import { selectPage } from '../../../Redux/features/page/pageSlice'
 import { motion, useAnimation } from 'framer-motion'
 
@@ -48,7 +44,7 @@ const Menu = [
 ]
 
 
-export function NavbarMobile() {
+export default function NavbarMobile() {
     // redux
     const page = useSelector(selectPage);
     const [open, setopen] = useState(true);
@@ -103,65 +99,68 @@ export function NavbarMobile() {
 
             <NavbarMobileMenu animate={navanimate} />
         </motion.div>
-        <motion.button onClick={() => {
-            setopen(!open);
-            console.log(open);
-            if (open) {
-                control.start({
-                    opacity: 1,
-                    y: "0vh",
-                    transition: {
-                        type: "spring",
-                        stiffness: 100,
-                        damping: 20,
-                        when: "beforeChildren",
-                    },
-                })
-                bar1.start({
-                    y: 0,
-                })
-                bar2.start({
-                    y: 0,
-                })
-                navanimate.start({
-                    // y: "100vh",
-                    transition: {
-                        type: "spring",
-                        stiffness: 100,
-                        damping: 20,
-                    },
-                })
-            } else {
-                control.start({
-                    opacity: 0,
-                    y: "-100vh",
-                    transition: {
-                        type: "spring",
-                        stiffness: 100,
-                        damping: 20,
-                        when: "afterChildren",
+        <motion.button
+            id="navbar-mobile-menu-button"
+            aria-label='menu-button'
+            onClick={() => {
+                setopen(!open);
+                console.log(open);
+                if (open) {
+                    control.start({
+                        opacity: 1,
+                        y: "0vh",
+                        transition: {
+                            type: "spring",
+                            stiffness: 100,
+                            damping: 20,
+                            when: "beforeChildren",
+                        },
+                    })
+                    bar1.start({
+                        y: 0,
+                    })
+                    bar2.start({
+                        y: 0,
+                    })
+                    navanimate.start({
+                        // y: "100vh",
+                        transition: {
+                            type: "spring",
+                            stiffness: 100,
+                            damping: 20,
+                        },
+                    })
+                } else {
+                    control.start({
+                        opacity: 0,
+                        y: "-100vh",
+                        transition: {
+                            type: "spring",
+                            stiffness: 100,
+                            damping: 20,
+                            when: "afterChildren",
 
-                    },
-                })
-                bar1.start({
-                    y: -5,
-                })
-                bar2.start({
-                    y: 5,
-                })
-                navanimate.start({
-                    // y: "0vh",
-                    transition: {
-                        type: "spring",
-                        stiffness: 100,
-                        damping: 20,
-                    },
-                })
+                        },
+                    })
+                    bar1.start({
+                        y: -5,
+                    })
+                    bar2.start({
+                        y: 5,
+                    })
+                    navanimate.start({
+                        // y: "0vh",
+                        transition: {
+                            type: "spring",
+                            stiffness: 100,
+                            damping: 20,
+                        },
+                    })
+                }
+
             }
 
-        }
-
-        }
+            }
             className='NavbarMobileButton'>
             <motion.div
                 className='bar up'

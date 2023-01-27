@@ -5,13 +5,11 @@ import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
-import { Text } from '@chakra-ui/react';
 
 export default function JoinPage0() {
     return (
         <>
-            <Text>Yang harus dipersiapkan :</Text>
+            <p>Yang harus dipersiapkan :</p>
             <Divider />
             <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
                 <ListItem alignItems="flex-start">

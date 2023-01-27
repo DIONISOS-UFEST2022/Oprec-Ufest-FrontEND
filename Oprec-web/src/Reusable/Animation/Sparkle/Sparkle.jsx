@@ -3,7 +3,6 @@ import { random } from '../../Function/Random';
 import styled from 'styled-components';
 import { usePrefersReducedMotion } from '../../Function/usePrefersReducedMotion';
 import { useRandomInterval } from '../../Function/useRandomInterval';
-import { animated } from '@react-spring/web';
 import { keyframes } from 'styled-components';
 import { range } from '../../Function/Range';
 
