@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { selectPage } from '../../Redux/features/page/pageSlice';
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Suspense, lazy } from "react";
+import LoadingScreen from "../../Reusable/LoadingScreen/LoadingScreen";
 const Navbar = lazy(() => import("../../Reusable/Navbar/Navbar"));
 const NavbarMobile = lazy(() => import("../../Reusable/Navbar/NavbarMobile/NavbarMobile"));
 const Footer = lazy(() => import("../../Reusable/Footer/Footer"));
@@ -19,23 +20,23 @@ export default function User() {
     const page = useSelector(selectPage);
     return (
         <div className="user">
-            <Suspense fallback="Loading...">
+            <Suspense fallback={<LoadingScreen />}>
                 {isMobile ? <NavbarMobile /> : <Navbar />}
             </Suspense>
             {(() => {
                 switch (page) {
                     case 'home':
-                        return <Home />;
+                        return <Suspense fallback={<LoadingScreen />}><Home /></Suspense>;
                     case 'about':
-                        return <About />;
+                        return <Suspense fallback={<LoadingScreen />}><About /></Suspense>;
                     case 'division':
-                        return <Division />
+                        return <Suspense fallback={<LoadingScreen />}><Division /></Suspense>
                     case 'login':
-                        return <Login />
+                        return <Suspense fallback={<LoadingScreen />}><Login /></Suspense>
                     case 'register':
-                        return <Register />
+                        return <Suspense fallback={<LoadingScreen />}><Register /></Suspense>
                     case 'join':
-                        return <Join />
+                        return <Suspense fallback={<LoadingScreen />}><Join /></Suspense>
                     default:
                         return null;
                 }

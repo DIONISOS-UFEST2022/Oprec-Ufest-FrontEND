@@ -1,37 +1,28 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import { Table } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
+import { TableBody } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
+import { TableCell } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
+import { TableContainer } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
+import { TableHead } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
+import { TableRow } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
+import { Paper } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
+import { Button } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
+import { Typography } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { selectuserToken } from '../../../../Redux/features/users/userRoleSlice';
-import Button from '@mui/joy/Button';
 import Modal from '@mui/joy/Modal';
 import ModalClose from '@mui/joy/ModalClose';
 import ModalDialog from '@mui/joy/ModalDialog';
-import Typography from '@mui/joy/Typography';
 
 function DetailModal() {
     const [open, setOpen] = useState('');
     return (
         <>
-            {/* <Stack direction="row" spacing={1}> */}
             <Button variant="outlined" color="neutral" onClick={() => setOpen('center')}>
                 More Detail
             </Button>
-            {/* <Button
-                variant="outlined"
-                color="neutral"
-                onClick={() => setOpen('fullscreen')}
-            >
-                Full screen
-            </Button> */}
-            {/* </Stack> */}
             <Modal open={!!open} onClose={() => setOpen('')}>
                 <ModalDialog
                     aria-labelledby="layout-modal-title"

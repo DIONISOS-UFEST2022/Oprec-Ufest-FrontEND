@@ -3,7 +3,6 @@ import "./LoadingScreen.scss"
 
 const loadFeatures = () => import("./LoadingFeature.jsx").then(res => res.default)
 
-
 export default function LoadingScreen() {
     return (
         <LazyMotion features={loadFeatures}>
@@ -11,9 +10,9 @@ export default function LoadingScreen() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="loading-screen"
+                className="Loading-Screen"
             >
-                loading...
+                UFEST 2023 now loading...
             </m.div>
         </LazyMotion>
     )

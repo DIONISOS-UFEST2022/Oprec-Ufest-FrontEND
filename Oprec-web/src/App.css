@@ -5,6 +5,11 @@
     src: local('Rocket-Vintage'), url(./Asset/Font/Rocket\ Vintage.ttf) format('truetype');
 }
 
+@font-face {
+    font-family: 'Louis-George-Cafe';
+    src: url(./Asset/Font/Louis\ George\ Cafe.ttf);
+}
+
 
 * {
     /* font-family: Rocket-Vintage; */

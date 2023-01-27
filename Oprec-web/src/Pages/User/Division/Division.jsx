@@ -1,10 +1,12 @@
 import "./Division.scss"
-import { AdvancedCarousel } from './DivisonCarousel/Carousel'
+import { lazy, Suspense } from "react"
+// const DivisonCarousel = lazy(() => import('./DivisonCarousel/Carousel'))
+import DivisonCarousel from "./DivisonCarousel/Carousel"
 
 export default function Division(props) {
     return (<>
         <div className="Division">
-            <AdvancedCarousel />
+            <DivisonCarousel />
         </div>
     </>)
 }

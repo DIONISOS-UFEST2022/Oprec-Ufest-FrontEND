@@ -1,79 +1,17 @@
 .Division {
     height: 80vh;
     padding-top: 20vh;
-    // padding-inline: 10vw;
-    background: rgb(75, 209, 255);
-    background: -moz-linear-gradient(90deg, rgba(75, 209, 255, 1) 0%, rgba(219, 165, 255, 1) 79%, rgba(189, 70, 177, 1) 100%);
-    background: -webkit-linear-gradient(90deg, rgba(75, 209, 255, 1) 0%, rgba(219, 165, 255, 1) 79%, rgba(189, 70, 177, 1) 100%);
-    background: linear-gradient(90deg, rgba(75, 209, 255, 1) 0%, rgba(219, 165, 255, 1) 79%, rgba(189, 70, 177, 1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#4bd1ff", endColorstr="#bd46b1", GradientType=1);
+    background-image: url('/Asset/Image/Background/Homebg.webp');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 100% 100%;
+
 
     h1 {
         font-size: 100px;
         font-weight: bolder;
         color: #000;
-    }
-}
-
-.DivisionCard {
-    text-align: left;
-    border: 1px solid black;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 10px;
-    color: white;
-    background-color: black;
-    height: 200px;
-
-    .DivisionLogo {
-        width: 100px;
-        height: 100px;
-        margin-right: 10px;
-        border-radius: 50%;
-        border: 1px solid white;
-    }
-
-    .DivisionCardTitle {
-        color: white;
-        font-weight: bolder;
-        font-size: 20px;
-    }
-
-    .namedesc {
-        color: rgb(131, 131, 131);
-        font-size: 15px;
-        font-weight: bold;
-        font-style: italic;
-    }
-}
-
-
-
-
-
-.Gallery {
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-
-    .gallery {
-        background: #EEE;
-    }
-
-    .gallery-cell {
-        width: 66%;
-        height: 200px;
-        margin-right: 10px;
-        background: #8C8;
-        counter-increment: gallery-cell;
-    }
-
-    /* cell number */
-    .gallery-cell:before {
-        display: block;
-        text-align: center;
-        content: counter(gallery-cell);
-        line-height: 200px;
-        font-size: 80px;
-        color: white;
     }
 }

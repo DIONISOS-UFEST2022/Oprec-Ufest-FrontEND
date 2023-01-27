@@ -1,15 +1,13 @@
 // Styling
-// import { Text, Image, Flex } from "@chakra-ui/react";
-import { Link, CircularProgress, Button, Grid } from "@material-ui/core";
-import Alert from '@mui/material/Alert';
-import { Box } from "@mui/system";
-// import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import "./Login.scss";
-import TextField from '@mui/material/TextField';
+// Material UI
+import { Link, CircularProgress, Button } from "@material-ui/core";
+import Alert from '@mui/material/Alert';
+import { Box } from "../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy";
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from "@material-ui/core/Checkbox";
+import { TextField } from "../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy";
 import { Divider } from "@mui/material";
-// import { extendTheme } from "@chakra-ui/react";
 // Form Control
 import { Formik } from "formik";
 import { Loginschema } from "./LoginSchema";
@@ -25,7 +23,7 @@ import axios from "axios";
 // Asset
 import Google from "./../../../Asset/OtherLogo/google.png";
 // animation
-import { motion } from "framer-motion";
+import { m, domAnimation, LazyMotion } from "framer-motion";
 
 
 export default function Login() {
@@ -94,80 +92,84 @@ export default function Login() {
                 <Box id="Login">
                     {error ? <Alert severity="error">Login error, email or password incorrect!</Alert> : ""}
                     <Box className="form" paddingX={["20px", "30px", "45px"]}>
-                        <motion.div
-                            initial={{ opacity: 0, x: 100 }}
-                            animate={{ opacity: 1, x: 0 }}
-                        >
-                            <form noValidate onSubmit={handleSubmit}>
-                                {/* Title */}
-                                <Box className="Title" fontSize={["25px", "35px", "40px"]}>Welcome Back!</Box>
-                                {/* Sub Title */}
-                                <Divider />
-                                <Box className="Subtitle" fontSize={["10px", "10px", "15px"]}> Let's grow together with UFEST!</Box>
-                                <Button className="Google">
-                                    <image className="googleicon" src={Google} alt="Google" />
-                                    Sign in with Google
-                                </Button>
-                                <Divider className="Divider">or</Divider>
-                                <TextField
-                                    helperText=""
-                                    id="email"
-                                    name="email"
-                                    label="Email Student UMN"
-                                    placeholder="Masukan email student UMN"
-                                    className="form-control inp_text"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    onKeyDown={EnterHandleClick}
-                                    ref={formInput}
-                                    fullWidth
-                                />
-                                <p className="error">
-                                    {errors.email && touched.email && errors.email}
-                                </p>
-                                <TextField
-                                    helperText=""
-                                    type={"password"}
-                                    id="password"
-                                    name="password"
-                                    label="Enter your password"
-                                    placeholder="Masukan password"
-                                    className="form-control"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    onKeyDown={EnterHandleClick}
-                                    ref={formInput}
-                                    fullWidth
-                                />
-                                <p className="error">
-                                    {errors.password && touched.password && errors.password}
-                                </p>
-                                <div marginTop={"20px"} marginBottom="10px" justifyContent={"space-between"} paddingInline="10px" alignItems={"center"}>
-                                    <FormControlLabel
-                                        className="RememberMe"
-                                        control={<Checkbox defaultChecked />} label="Remember Me" />
-                                    <Link
-                                        className="ForgotPass"
-                                        onClick={() => { dispatch(pageChanged("register")) }}>
-                                        Forgot Password?
+                        <LazyMotion features={domAnimation}>
+                            <m.div
+                                initial={{ opacity: 0, x: 100 }}
+                                animate={{ opacity: 1, x: 0 }}
+                            >
+                                <form noValidate onSubmit={handleSubmit}>
+                                    {/* Title */}
+                                    <Box className="Title" fontSize={["35px", "40px", "45px"]}>WELCOME BACK!</Box>
+                                    {/* Sub Title */}
+                                    <Divider />
+                                    <Box className="Subtitle" fontSize={["10px", "10px", "15px"]}> Let's grow together with UFEST!</Box>
+                                    <Button className="Google">
+                                        <image className="googleicon" src={Google} alt="Google" />
+                                        Sign in with Google
+                                    </Button>
+                                    <Divider className="Divider">or</Divider>
+                                    <TextField
+                                        helperText=""
+                                        id="email"
+                                        name="email"
+                                        label="Email Student UMN"
+                                        placeholder="Masukan email student UMN"
+                                        className="form-control inp_text"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        onKeyDown={EnterHandleClick}
+                                        ref={formInput}
+                                        fullWidth
+                                    />
+                                    <p className="error">
+                                        {errors.email && touched.email && errors.email}
+                                    </p>
+                                    <TextField
+                                        helperText=""
+                                        type={"password"}
+                                        id="password"
+                                        name="password"
+                                        label="Enter your password"
+                                        placeholder="Masukan password"
+                                        className="form-control"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        onKeyDown={EnterHandleClick}
+                                        ref={formInput}
+                                        fullWidth
+                                    />
+                                    <p className="error">
+                                        {errors.password && touched.password && errors.password}
+                                    </p>
+                                    <div
+                                        className="Checkbox-Section"
+                                    >
+                                        <FormControlLabel
+                                            className="RememberMe"
+                                            control={<Checkbox defaultChecked />} label="Remember Me" />
+                                        <Link
+                                            className="ForgotPass"
+                                            onClick={() => { dispatch(pageChanged("register")) }}>
+                                            Forgot Password?
+                                        </Link>
+                                    </div>
+                                    <Button
+                                        className="button"
+                                        variant="contained"
+                                        type="submit"
+                                    >
+                                        {loading ? (<CircularProgress />) : "Login"}
+                                    </Button>
+                                </form>
+                                <br />
+                                <Box fontSize={["13px", "14px", "15px"]}>
+                                    Belum punya akun?{' '}
+                                    <Link onClick={() => { dispatch(pageChanged("register")) }}>
+                                        Daftar Sekarang!
                                     </Link>
-                                </div>
-                                <Button
-                                    className="button"
-                                    variant="contained"
-                                    type="submit"
-                                >
-                                    {loading ? (<CircularProgress />) : "Login"}
-                                </Button>
-                            </form>
-                            <br />
-                            <Box fontSize={["13px", "14px", "15px"]}>
-                                Belum punya akun?{' '}
-                                <Link onClick={() => { dispatch(pageChanged("register")) }}>
-                                    Daftar Sekarang!
-                                </Link>
-                            </Box>
-                        </motion.div>
+                                </Box>
+                            </m.div>
+                        </LazyMotion>
                     </Box>
                 </Box>
             )}

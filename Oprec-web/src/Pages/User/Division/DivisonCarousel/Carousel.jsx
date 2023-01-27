@@ -1,21 +1,18 @@
-import React, { useRef, useState } from "react";
+import React, { lazy, Suspense } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Box } from "@material-ui/core";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "./Carousel.scss"
-
-
-// import "./styles.css";
-
-// import required modules
 import { Pagination } from "swiper";
 
-export function AdvancedCarousel() {
+
+
+export default function DivisonCarousel() {
     return (
-        <Box id="Carousel">
+        <div id="Carousel">
+            {/* <Suspense fallback={<div>Loading...</div>}> */}
             <Swiper
                 direction="horizontal"
                 mousewheelcontrol={true}
@@ -29,18 +26,21 @@ export function AdvancedCarousel() {
                     clickable: true,
                 }}
                 modules={[Pagination]}
-                className="mySwiper"
+                className="Carousel-Swiper"
             >
                 <SwiperSlide>Slide 1</SwiperSlide>
-                <SwiperSlide>Slide 2</SwiperSlide>
-                <SwiperSlide>Slide 3</SwiperSlide>
-                <SwiperSlide>Slide 4</SwiperSlide>
-                <SwiperSlide>Slide 5</SwiperSlide>
-                <SwiperSlide>Slide 6</SwiperSlide>
-                <SwiperSlide>Slide 7</SwiperSlide>
-                <SwiperSlide>Slide 8</SwiperSlide>
-                <SwiperSlide>Slide 9</SwiperSlide>
+                <SwiperSlide>Slide 1</SwiperSlide>
+                <SwiperSlide>Slide 1</SwiperSlide>
+                <SwiperSlide>Slide 1</SwiperSlide>
+                <SwiperSlide>Slide 1</SwiperSlide>
+                <SwiperSlide>Slide 1</SwiperSlide>
+                <SwiperSlide>Slide 1</SwiperSlide>
+                <SwiperSlide>Slide 1</SwiperSlide>
+                <SwiperSlide>Slide 1</SwiperSlide>
+                <SwiperSlide>Slide 1</SwiperSlide>
+                <SwiperSlide>Slide 1</SwiperSlide>
             </Swiper>
-        </Box>
+            {/* </Suspense> */}
+        </div>
     );
 }

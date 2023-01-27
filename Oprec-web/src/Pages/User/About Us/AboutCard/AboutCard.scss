@@ -1,29 +1,68 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
 
-.aboutCard {
-    width: 100vw;
-    height: 50vh;
-    padding: 30px;
-    margin-bottom: 20px;
-    background-color: rgba(255, 0, 0, 0.5);
-    margin: 10px;
+.About-Card {
+    background-color: rgb(50 52 67 / 0.5);
+    margin-bottom: 10vh;
+    margin-inline: 20vw;
+    width: 60vw;
+    border-radius: 20px;
+    padding-top: 3vh;
+    padding-bottom: 3vh;
+    transform: scale(1);
 
-    .image {
-        height: 200px;
-        width: 200px;
-        background-color: rgb(4, 114, 157);
-        border-radius: 30px;
-        margin-left: 10px;
-        border-radius: 20px;
-        object-fit: cover;
-        display: inline-block;
+
+    &.left {
+        flex-direction: row-reverse;
+
     }
 
-    .desc {
+    &.right {
+        flex-direction: row;
+    }
+
+
+    .gridItem {
+        position: relative;
+
+    }
+
+    .About-Image {
+        height: 300px;
+        width: 300px;
+        background-color: rgb(4, 114, 157);
+        border-radius: 20px;
+        // margin-left: 3vw
+        &.left {
+            margin-left: 0;
+            margin-right: 3vw;
+        }
+
+        &.right {
+            margin-left: 3vw;
+            margin-right: 0;
+        }
+    }
+
+    .About-Title {
+        position: absolute;
+        top: -55px;
+        font-family: Rocket-Vintage !important;
+        font-size: 70px !important;
+        color: rgb(245, 214, 63) !important;
+        text-shadow: 2px 0px 9px rgba(0, 0, 0, 1);
+
+    }
+
+    .About-Desc {
+        position: absolute;
+        top: 80px;
+        padding: 10px;
+        width: 90%;
         color: white;
-        font-family: 'Montserrat', sans-serif !important;
-        // font-size: 20px;
+        font-family: 'Louis-George-Cafe' !important;
         text-align: left;
     }
+
+
 
 }

@@ -6,9 +6,7 @@ import { selectPage } from "../../../../Redux/features/page/pageSlice";
 function DivisionNavCard(props) {
     return (<>
         <div className="DivisionNavCard"
-     
-            onClick={props.onClick}
-        >
+            onClick={props.onClick}>
             <p>{props.Title} - {props.subTitle}</p>
         </div>
     </>)

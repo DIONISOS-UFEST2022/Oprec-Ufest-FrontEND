@@ -2,7 +2,8 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
+// import Modal from '@mui/material/Modal';
+import { Modal } from '@material-ui/core/Modal';
 
 const style = {
     position: 'absolute',
@@ -11,7 +12,6 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: 400,
     bgcolor: 'background.paper',
-    // border: '2px solid #000',
     borderRadius: "30px",
     boxShadow: 24,
     p: 4,

@@ -1,12 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
 
 #Login {
-    background: linear-gradient(90deg, #b74b7d 0%, #182848 100%);
+    background-image: url('/Asset/Image/Background/Homebg.webp');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     height: 100%;
     min-height: 100vh;
     padding-top: 15vh;
     padding-bottom: 5vh;
     padding-inline: 10px;
+
 
     .form {
         position: relative;
@@ -17,17 +22,17 @@
         margin: 10px auto 100px;
         padding-top: 20px;
         padding-bottom: 20px;
-        // padding-inline: 45px;
         text-align: center;
+        padding-inline: 40px;
 
         .Title {
             font-weight: bold;
-            // font-size: 40px;
+            font-size: 50px;
             color: #4b6cb7;
             display: block;
             margin: 0;
             margin-top: 20px;
-            // prevent select
+            font-family: 'Rocket-Vintage';
             -webkit-touch-callout: none;
             -webkit-user-select: none;
             -khtml-user-select: none;
@@ -37,8 +42,6 @@
         }
 
         .Subtitle {
-            // font-family: 'Comfortaa', cursive;
-            // font-size: 15px;
             color: #4b6cb7;
             margin: 10px;
             margin-bottom: 10px;
@@ -75,6 +78,14 @@
 
 
 
+        .Checkbox-Section {
+            margin-top: 20px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-inline: 10px;
+        }
 
         .Divider {
             margin-top: 10px;

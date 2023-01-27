@@ -1,14 +1,11 @@
-import React, { useEffect } from 'react'
-import { Grid } from '@material-ui/core'
-// import { div } from '@chakra-ui/react'
+import React, { useEffect, useRef } from 'react'
+import Grid from '@material-ui/core/Grid'
 import "./NavbarMobile.scss"
 // ref
-import { useRef } from "react";
-import { useInView } from "framer-motion";
 // redux
 import { useSelector, useDispatch } from 'react-redux'
 import { pageChanged } from '../../../Redux/features/page/pageSlice'
-import { motion, useAnimation } from 'framer-motion';
+import { m, useInView } from 'framer-motion';
 
 const Menu = [
     {
@@ -65,12 +62,10 @@ function Card(props) {
     )
 }
 
-export function NavbarMobileMenu(props) {
-
-    // redux
+export default function NavbarMobileMenu(props) {
     const dispatch = useDispatch();
     return (
-        <motion.div
+        <m.div
             animate={props.animate}
         >
             <Grid container className='NavbarMobileMenu'>
@@ -83,8 +78,8 @@ export function NavbarMobileMenu(props) {
                     )
                 })}
             </Grid>
-        </motion.div>
+        </m.div>
     )
 }
 
-export default NavbarMobileMenu
+// export default NavbarMobileMenu

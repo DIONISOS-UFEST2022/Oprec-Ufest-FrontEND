@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import "./Database.scss";
 import { useSelector } from 'react-redux';
 import { selectuserToken } from '../../../Redux/features/users/userRoleSlice';
-import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid/';
 import { alpha, styled } from '@mui/material/styles';
 
 

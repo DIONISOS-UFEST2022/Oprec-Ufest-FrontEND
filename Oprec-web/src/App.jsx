@@ -1,17 +1,23 @@
+// react
 import { useEffect, Suspense, lazy, useState } from "react";
+// styling
 import "./App.css";
-import { useSelector, useDispatch } from "react-redux";
-import { selectuserRole } from "./Redux/features/users/userRoleSlice";
-import axios from "axios";
+// redux
 import { userRoleAdded } from "./Redux/features/users/userRoleSlice";
 import { pageChanged } from "./Redux/features/page/pageSlice";
 import { userTokenAdded } from "./Redux/features/users/userRoleSlice";
-// import { userLoadingAdded } from "./Redux/features/users/userRoleSlice";
-import LoadingScreen from "./Reusable/LoadingScreen/LoadingScreen";
+import { useSelector, useDispatch } from "react-redux";
+import { selectuserRole } from "./Redux/features/users/userRoleSlice";
 import { userDataAdded } from "./Redux/features/users/userRoleSlice";
+// axios
+import axios from "axios";
+// Loading Screen
+import LoadingScreen from "./Reusable/LoadingScreen/LoadingScreen";
+
 
 const User = lazy(() => import("./Pages/User/User"));
 const Admin = lazy(() => import("./Pages/Admin/Admin"));
+
 
 
 function App() {
@@ -75,19 +81,20 @@ function App() {
   return (
     <Suspense fallback={<LoadingScreen />}>
       {loading ? <LoadingScreen /> :
-        (() => {
-          switch (userRole) {
-            case 'guest':
-              return <Suspense fallback={<LoadingScreen />}><User /></Suspense>
-            case 'user':
-              return <Suspense fallback={<LoadingScreen />}><User /></Suspense>
-            case 'admin':
-              return <Suspense fallback={<LoadingScreen />}><Admin /></Suspense>;
-            default:
-              return null;
-          }
-        })()
-
+        ""
+      }
+      {(() => {
+        switch (userRole) {
+          case 'guest':
+            return <Suspense fallback={<LoadingScreen />}><User /></Suspense>
+          case 'user':
+            return <Suspense fallback={<LoadingScreen />}><User /></Suspense>
+          case 'admin':
+            return <Suspense fallback={<LoadingScreen />}><Admin /></Suspense>;
+          default:
+            return null;
+        }
+      })()
       }
     </Suspense>
   );

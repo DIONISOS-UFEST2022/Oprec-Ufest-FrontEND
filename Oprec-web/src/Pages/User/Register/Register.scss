@@ -1,7 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
-
 #Register {
-    background: linear-gradient(90deg, #b74b7d 0%, #182848 100%);
+    background-image: url('/Asset/Image/Background/Homebg.webp');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     height: 100%;
     min-height: 100vh;
     padding-top: 10vh;
@@ -22,6 +24,8 @@
             color: #4b6cb7;
             margin-bottom: 25px;
             display: block;
+            font-family: 'Rocket-Vintage';
+
         }
 
         .error {

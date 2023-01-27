@@ -1,7 +1,8 @@
 // Styling
 import "./Join.scss";
-import { Autocomplete, Divider } from "@mui/material";
-import { Button } from "@material-ui/core";
+import Autocomplete from "@mui/material/Autocomplete";
+import Divider from "@mui/material/Divider";
+import Button from "@material-ui/core/Button";
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
 // Form Control
@@ -114,15 +115,8 @@ export default function Join(props) {
                     portofolio: ""
                 }}
                 onSubmit={(values) => {
-                    // alert(JSON.stringify(values));
-                    // console.log(values);
                     Setloading(true);
-                    // console.log(UserData);
-                    console.log(name);
-                    console.log(nim);
-                    console.log(email);
                     const login = localStorage.getItem('LoginID');
-                    console.log(login)
                     axios.post("http://127.0.0.1:8000/api/panitia/insertData", {
                         nim: nim,
                         name: name,
@@ -157,10 +151,6 @@ export default function Join(props) {
                 }}
             >
                 {({
-                    isSubmitting,
-                    submitForm,
-                    isValid,
-                    dirty,
                     values,
                     errors,
                     touched,

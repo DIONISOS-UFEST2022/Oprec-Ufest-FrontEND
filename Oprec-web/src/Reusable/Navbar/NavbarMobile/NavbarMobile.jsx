@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Suspense, lazy } from 'react'
 import "./NavbarMobile.scss"
-// import { animated, useSpring } from '@react-spring/web'
-import NavbarMobileMenu from './NavbarMobileMenu'
 import { useSelector } from 'react-redux'
 import { selectPage } from '../../../Redux/features/page/pageSlice'
-import { motion, useAnimation } from 'framer-motion'
+import { LazyMotion, m, domAnimation, useAnimation } from "framer-motion"
+const NavbarMobileMenu = lazy(() => import('./NavbarMobileMenu.jsx'))
 
-
-
-
-// menu
+// Menu
 const Menu = [
     {
         name: 'Home',
@@ -89,17 +85,22 @@ export default function NavbarMobile() {
         console.log(open);
     }, [page])
     return (<>
-        <motion.div
-            initial={{
-                opacity: 0,
-                y: "-100vh",
-            }}
-            animate={control}
-            className='NavbarMenu'>
+        <LazyMotion features={domAnimation}>
+            <m.div
+                initial={{
+                    opacity: 0,
+                    y: "-100vh",
+                }}
+                animate={control}
+                className='NavbarMenu'
 
-            <NavbarMobileMenu animate={navanimate} />
-        </motion.div>
-        <motion.button
+            >
+                <Suspense fallback={""}>
+                    <NavbarMobileMenu animate={navanimate} />
+                </Suspense>
+            </m.div>
+        </LazyMotion>
+        <m.button
             id="navbar-mobile-menu-button"
             aria-label='menu-button'
             onClick={() => {
@@ -162,21 +163,21 @@ export default function NavbarMobile() {
 
             }
             className='NavbarMobileButton'>
-            <motion.div
+            <m.div
                 className='bar up'
                 animate={bar1}
                 initial={{
                     y: -5,
                 }}
-            ></motion.div>
-            <motion.div
+            ></m.div>
+            <m.div
                 animate={bar2}
                 className='bar down'
                 initial={{
                     y: 5,
                 }}
-            ></motion.div>
-        </motion.button>
+            ></m.div>
+        </m.button>
         {/* <Box className="LogoMobile" color={'white'} position="fixed" left={"16px"} top="30px" fontWeight={"bold"} fontSize="30px">
             UFEST
         </Box> */}
