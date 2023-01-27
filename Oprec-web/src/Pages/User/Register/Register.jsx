@@ -1,15 +1,13 @@
 // Styling
-// import { Box, Text, Link } from "@chakra-ui/react";
 import "./Register.scss";
-import { Button } from "@material-ui/core";
-import { CircularProgress } from "@mui/material";
+import { Button, CircularProgress } from "../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy";
 // Form Control
 import { Formik } from "formik";
 import { RegisterSchema } from "./RegisterSchema";
 // React
 import { useState, useRef } from "react";
 // Redux
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { pageChanged } from "../../../Redux/features/page/pageSlice";
 import { userRoleAdded } from "../../../Redux/features/users/userRoleSlice";
 import { userTokenAdded } from "../../../Redux/features/users/userRoleSlice";

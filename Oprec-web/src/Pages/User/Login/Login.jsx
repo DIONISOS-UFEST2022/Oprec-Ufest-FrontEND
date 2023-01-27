@@ -1,13 +1,16 @@
 // Styling
 import "./Login.scss";
 // Material UI
-import { Link, CircularProgress, Button } from "@material-ui/core";
-import Alert from '@mui/material/Alert';
-import { Box } from "../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy";
+import {
+    Box,
+    CircularProgress,
+    Button,
+    TextField,
+    Checkbox,
+} from "../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy";
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from "@material-ui/core/Checkbox";
-import { TextField } from "../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy";
 import { Divider } from "@mui/material";
+import Alert from "@mui/material/Alert";
 // Form Control
 import { Formik } from "formik";
 import { Loginschema } from "./LoginSchema";
@@ -27,7 +30,6 @@ import { m, domAnimation, LazyMotion } from "framer-motion";
 
 
 export default function Login() {
-    // theme
     // state
     const [loading, Setloading] = useState(false);
     const [error, Seterror] = useState(false);
@@ -147,11 +149,11 @@ export default function Login() {
                                         <FormControlLabel
                                             className="RememberMe"
                                             control={<Checkbox defaultChecked />} label="Remember Me" />
-                                        <Link
+                                        <a
                                             className="ForgotPass"
                                             onClick={() => { dispatch(pageChanged("register")) }}>
                                             Forgot Password?
-                                        </Link>
+                                        </a>
                                     </div>
                                     <Button
                                         className="button"
@@ -164,9 +166,9 @@ export default function Login() {
                                 <br />
                                 <Box fontSize={["13px", "14px", "15px"]}>
                                     Belum punya akun?{' '}
-                                    <Link onClick={() => { dispatch(pageChanged("register")) }}>
+                                    <a onClick={() => { dispatch(pageChanged("register")) }}>
                                         Daftar Sekarang!
-                                    </Link>
+                                    </a>
                                 </Box>
                             </m.div>
                         </LazyMotion>

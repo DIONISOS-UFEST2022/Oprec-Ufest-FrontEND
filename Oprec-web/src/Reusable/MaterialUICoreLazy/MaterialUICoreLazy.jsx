@@ -160,3 +160,27 @@ export function CardContent(props) {
         </Suspense>
     );
 }   
+
+// CircularProgress
+
+const LazyCircularProgress = lazy(() => import("@material-ui/core/CircularProgress"));
+
+export function CircularProgress(props) {
+    return (
+        <Suspense fallback={""}>
+            <LazyCircularProgress {...props} />
+        </Suspense>
+    );
+}
+
+// Checkbox
+
+const LazyCheckbox = lazy(() => import("@material-ui/core/Checkbox"));
+
+export function Checkbox(props) {
+    return (
+        <Suspense fallback={""}>
+            <LazyCheckbox {...props} />
+        </Suspense>
+    );
+}
