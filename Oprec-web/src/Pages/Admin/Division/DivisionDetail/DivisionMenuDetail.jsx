@@ -12,9 +12,9 @@ import { Typography } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICo
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { selectuserToken } from '../../../../Redux/features/users/userRoleSlice';
-import Modal from '@mui/joy/Modal';
-import ModalClose from '@mui/joy/ModalClose';
-import ModalDialog from '@mui/joy/ModalDialog';
+// import Modal from '@mui/joy/Modal';
+// import ModalClose from '@mui/joy/ModalClose';
+// import ModalDialog from '@mui/joy/ModalDialog';
 
 function DetailModal() {
     const [open, setOpen] = useState('');

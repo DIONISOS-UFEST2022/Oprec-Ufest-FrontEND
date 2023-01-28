@@ -79,24 +79,26 @@ function App() {
     }
   }, [])
   return (
-    <Suspense fallback={<LoadingScreen />}>
-      {loading ? <LoadingScreen /> :
-        ""
-      }
-      {(() => {
-        switch (userRole) {
-          case 'guest':
-            return <Suspense fallback={<LoadingScreen />}><User /></Suspense>
-          case 'user':
-            return <Suspense fallback={<LoadingScreen />}><User /></Suspense>
-          case 'admin':
-            return <Suspense fallback={<LoadingScreen />}><Admin /></Suspense>;
-          default:
-            return null;
+    <div id="App">
+      <Suspense fallback={<LoadingScreen />}>
+        {loading ? <LoadingScreen /> :
+          ""
         }
-      })()
-      }
-    </Suspense>
+        {(() => {
+          switch (userRole) {
+            case 'guest':
+              return <Suspense fallback={<LoadingScreen />}><User /></Suspense>
+            case 'user':
+              return <Suspense fallback={<LoadingScreen />}><User /></Suspense>
+            case 'admin':
+              return <Suspense fallback={<LoadingScreen />}><Admin /></Suspense>;
+            default:
+              return null;
+          }
+        })()
+        }
+      </Suspense>
+    </div>
   );
 }
 

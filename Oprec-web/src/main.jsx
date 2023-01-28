@@ -3,31 +3,27 @@ import ReactDOM from 'react-dom/client';
 import { store } from './Redux/store';
 import { Provider } from 'react-redux';
 import './index.scss';
-// import WebFont from 'webfontloader';
+import { createGlobalStyle } from 'styled-components';
 import LoadingScreen from './Reusable/LoadingScreen/LoadingScreen';
 
 
 const App = lazy(() => import('./App'));
 
+const GlobalStyles = createGlobalStyle`
+  body {
+    @import url(${"./Asset/Font/Louis\ George\ Cafe.ttf"});
+    font-family: 'Louis-George-Cafe';
+  }
+`
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
       <Suspense fallback={<LoadingScreen />}>
-        <App />
+        <div className="index">
+          <App />
+        </div>
       </Suspense>
     </Provider >
-  </React.StrictMode>
-);
-
-// const webFontConfig = {
-//   custom: {
-//     families: ['Rocket-Vintage'],
-//     urls: ["./Asset/Font/Rocket Vintage.ttf"],
-//   },
-//   classes: false,
-//   timeout: 1000,
-//   active: root, // invoked when fonts are active
-// };
-// WebFont.load(webFontConfig);
+  </React.StrictMode>,
+)
