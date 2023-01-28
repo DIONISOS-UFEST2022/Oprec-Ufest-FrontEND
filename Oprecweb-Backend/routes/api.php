@@ -31,14 +31,12 @@ use App\Http\Controllers\PanitiaController;
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/logout', [AuthenticationController::class, 'logout']);
     Route::get('/me', [AuthenticationController::class, 'me']);
-
     Route::apiResource('users', UserController::class)->middleware('admin');
+    Route::post('/panitia/insertData', [PanitiaController::class, 'store']);
+    Route::delete('/panitia/deleteAll', [PanitiaController::class, 'delete_all'])->middleware('admin');
     Route::apiResource('panitia', PanitiaController::class)->middleware('admin');
     Route::apiResource('announcement', AnnouncementController::class)->middleware('admin');
-
     Route::get('/announcement', [AnnouncementController::class, 'index']);
-    Route::post('/panitia/insertData', [PanitiaController::class, 'store']);
-
     Route::get('/spreadsheet', [GoogleSheetController::class, 'init'])->middleware('admin');
 });
 

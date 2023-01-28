@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Http\Controllers\GoogleSheetController;
 use App\Http\Services\GoogleSheetsServices;
+use Carbon\Carbon;
 
 class PanitiaController extends Controller
 {
@@ -41,12 +42,14 @@ class PanitiaController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'nim' => 'required|digits:11|numeric|unique:panitia|regex:/^0+\d\d\d\d\d$/',
             'name' => 'required',
             'email' => 'required|email|unique:panitia',
             'program_studi' => 'required',
             'vaccine_certificate' => 'image|file|max:1024',
+            'angkatan' => 'required|string:4|regex:/^[0-9]*$/',
             'division_1' => 'required|string',
             'division_2' => 'required|string',
             'phone_number' => 'required|numeric:11|unique:panitia',
@@ -129,14 +132,15 @@ class PanitiaController extends Controller
             'name' => 'string',
             'email' => 'email|unique:panitia,email,' . $id . ',id',
             'program_studi' => 'string',
-            'vaccine_certificate' => 'required|image|mimes:jpeg,jpg,png,bmp|size:20000',
+            'angkatan' => 'required|string:4|regex:/^[0-9]*$/',
+            'vaccine_certificate' => 'image|mimes:jpeg,jpg,png,bmp|max:200000',
             'division_1' => 'string',
             'division_2' => 'string',
             'phone_number' => 'numeric:11|unique:panitia,phone_number,' . $id . ',id',
-            'reason_1' => 'required|max:500',
-            'reason_2' => 'required|max:500',
+            'reason_1' => 'max:500',
+            'reason_2' => 'max:500',
             'portofolio' => 'url',
-            'id_line' => 'required',
+            'id_line' => 'string',
             'instagram_account' => 'url',
             'city' => 'string',
             'is_accepted' => 'numeric:1'
@@ -195,6 +199,30 @@ class PanitiaController extends Controller
 
         if ($panitia) {
             return response()->json("Panitia " . $panitia->name . "has been deleted!");
+        } else {
+            return response()->json([
+                'success' => false,
+            ], 404);
+        }
+    }
+
+    public function delete_all()
+    {
+        $panitia = panitia::All();
+
+        foreach ($panitia as $p) {
+            $imageFolder = Storage::disk('vaccine_image');
+            if ($imageFolder->exists($p->vaccine_certificate)) {
+                $imageFolder->delete($p->vaccine_certificate);
+            }
+            $p->forceDelete();
+        }
+
+        $service = new GoogleSheetController();
+        $service->init();
+
+        if ($panitia) {
+            return response()->json("all panitia " . "has been deleted!");
         } else {
             return response()->json([
                 'success' => false,

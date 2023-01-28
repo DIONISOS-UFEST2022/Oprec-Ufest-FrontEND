@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string("name");
             $table->string("email")->unique();
             $table->string("program_studi");
+            $table->string("angkatan");
             $table->string("vaccine_certificate")->nullable()->default('none');
             $table->string('division_1');
             $table->string('division_2');

@@ -22,6 +22,7 @@ class PanitiaResource extends JsonResource
                 'email' => $this->email,
                 'program_studi' => $this->program_studi,
                 'vaccine_certificate' => $this->vaccine_certificate,
+                'angkatan' => $this->angkatan,
                 'division_1' => $this->division_1,
                 'division_2' => $this->division_2,
                 'phone_number' => $this->phone_number,

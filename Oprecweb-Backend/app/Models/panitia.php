@@ -17,6 +17,7 @@ class panitia extends Model
         'name',
         'email',
         'program_studi',
+        'angkatan',
         'vaccine_certificate',
         'division_1',
         'division_2',
