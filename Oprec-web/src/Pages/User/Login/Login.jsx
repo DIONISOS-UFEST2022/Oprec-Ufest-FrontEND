@@ -15,7 +15,7 @@ import Alert from "@mui/material/Alert";
 import { Formik } from "formik";
 import { Loginschema } from "./LoginSchema";
 // React
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 // Redux
 import { useDispatch } from "react-redux";
 import { pageChanged } from "../../../Redux/features/page/pageSlice";
@@ -31,6 +31,9 @@ import { m, domAnimation, LazyMotion } from "framer-motion";
 
 export default function Login() {
     // state
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, []);
     const [loading, Setloading] = useState(false);
     const [error, Seterror] = useState(false);
     const dispatch = useDispatch();
@@ -57,7 +60,7 @@ export default function Login() {
                         })
                             .then((result) => {
                                 if (result.data.data.role_id === 1) {
-                                    console.log(result.data.data);
+                                    // console.log(result.data.data);
                                     dispatch(userRoleAdded("admin"));
                                     dispatch(userRoleAdded("admin"));
                                     dispatch(pageChanged("division"));
@@ -70,7 +73,7 @@ export default function Login() {
                                 localStorage.setItem('LoginID', `${res.data}`);
                             })
                             .catch((err) => {
-                                console.log(err);
+                                // console.log(err);
                                 Seterror(true);
                                 Setloading(false);
                             })
@@ -106,7 +109,7 @@ export default function Login() {
                                     <Divider />
                                     <Box className="Subtitle" fontSize={["10px", "10px", "15px"]}> Let's grow together with UFEST!</Box>
                                     <Button className="Google">
-                                        <image className="googleicon" src={Google} alt="Google" />
+                                        <img className="googleicon" src={Google} alt="Google" />
                                         Sign in with Google
                                     </Button>
                                     <Divider className="Divider">or</Divider>
@@ -149,11 +152,11 @@ export default function Login() {
                                         <FormControlLabel
                                             className="RememberMe"
                                             control={<Checkbox defaultChecked />} label="Remember Me" />
-                                        <a
+                                        <p
                                             className="ForgotPass"
                                             onClick={() => { dispatch(pageChanged("register")) }}>
                                             Forgot Password?
-                                        </a>
+                                        </p>
                                     </div>
                                     <Button
                                         className="button"
@@ -166,9 +169,9 @@ export default function Login() {
                                 <br />
                                 <Box fontSize={["13px", "14px", "15px"]}>
                                     Belum punya akun?{' '}
-                                    <a onClick={() => { dispatch(pageChanged("register")) }}>
+                                    <p onClick={() => { dispatch(pageChanged("register")) }}>
                                         Daftar Sekarang!
-                                    </a>
+                                    </p>
                                 </Box>
                             </m.div>
                         </LazyMotion>

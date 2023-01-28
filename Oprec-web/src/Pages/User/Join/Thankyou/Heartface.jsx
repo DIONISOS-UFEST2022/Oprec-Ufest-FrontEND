@@ -2,7 +2,7 @@ import React from 'react'
 
 export function Heartface() {
     return (
-        <div transform={"translate(-0px, -50px)"}>
+        <div className='Heart-Face'>
             <svg width="45" height="13" viewBox="0 0 456 130" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g filter="url(#filter0_d_0_1)">
                     <line x1="92.5" y1="121.5" x2="347.549" y2="121.5" stroke="black" stroke-linecap="round" />

@@ -50,18 +50,22 @@ const columns = [
     { field: 'angkatan', headerName: 'Angkatan', width: 130, editable: true },
     { field: 'nim', headerName: 'NIM', width: 130, editable: true },
     { field: 'email', headerName: 'Email', width: 130, editable: true },
+    { field: 'divisi', headerName: 'Divisi', width: 130, editable: true },
+    { field: 'status', headerName: 'Status', width: 130, editable: true },
+    { field: 'id_line', headerName: 'Status', width: 130, editable: true },
 ];
 
 export default function Database(props) {
     const token = useSelector(selectuserToken);
     const [userData, SetuserData] = useState([]);
     useEffect(() => {
-        axios.get("http://127.0.0.1:8000/api/users", {
+        axios.get("http://127.0.0.1:8000/api/panitia", {
             headers:
                 { Authorization: `Bearer ${token}` }
         })
             .then((result) => {
                 SetuserData(result.data.data);
+                console.log(result);
             })
             .catch((err) => {
                 console.log(err);
@@ -73,9 +77,27 @@ export default function Database(props) {
             <CustomGrid
                 rowHeight={30}
                 rows={
-                    userData.map((post, index) => (
-                        { id: index, name: post.name, jurusan: post.jurusan, angkatan: post.angkatan, nim: post.nim, email: post.email }
-                    ))
+                    userData.map((post, index) => {
+                        let status = "";
+                        if (post.is_accepted === 1) {
+                            status = "Di Terima"
+                        } else {
+                            status = "Di Tolak"
+                        }
+                        return (
+                            {
+                                id: index,
+                                name: post.name,
+                                jurusan: post.program_studi,
+                                angkatan: post.angkatan,
+                                nim: post.nim,
+                                email: post.email,
+                                divisi: post.division_1,
+                                status: status,
+                                id_line: post.id_line,
+                            }
+                        )
+                    })
                 }
                 getRowClassName={(params) =>
                     params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'

@@ -15,7 +15,7 @@ export default function AboutCard(props) {
         <Suspense fallback={""}>
             <Grid container className={`About-Card ${direction}`}
             >
-                <Grid className="gridItem" item xs={5}
+                <Grid item className="gridItem" xs={5}
                     direction="column-reverse"
                     justifyContent="center"
                     alignItems="center"
@@ -23,7 +23,7 @@ export default function AboutCard(props) {
                     <p className={`About-Image ${direction}`}></p>
                 </Grid>
 
-                <Grid className="gridItem" item xs={7}>
+                <Grid item className="gridItem" xs={7}>
                     <p className="About-Title"
                         style={{
                             left: direction === "left" ? "unset" : "20px",

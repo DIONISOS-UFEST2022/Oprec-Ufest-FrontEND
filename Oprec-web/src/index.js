@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom/client';
 import { store } from './Redux/store';
 import { Provider } from 'react-redux';
 import './index.scss';
-import WebFont from 'webfontloader';
+// import WebFont from 'webfontloader';
 import LoadingScreen from './Reusable/LoadingScreen/LoadingScreen';
+
 
 const App = lazy(() => import('./App'));
 
@@ -20,13 +21,13 @@ root.render(
   </React.StrictMode>
 );
 
-const webFontConfig = {
-  custom: {
-    families: ['Rocket-Vintage'],
-    urls: ['./Asset/Font/Rocket Vintage.ttf'],
-  },
-  classes: false,
-  timeout: 1000,
-  active: root, // invoked when fonts are active
-};
-WebFont.load(webFontConfig);
+// const webFontConfig = {
+//   custom: {
+//     families: ['Rocket-Vintage'],
+//     urls: ["./Asset/Font/Rocket Vintage.ttf"],
+//   },
+//   classes: false,
+//   timeout: 1000,
+//   active: root, // invoked when fonts are active
+// };
+// WebFont.load(webFontConfig);

@@ -11,14 +11,15 @@
 ::-webkit-scrollbar-thumb {
     border-radius: 10px;
     transition: 0.5s;
-    background: rgb(138, 6, 138);
+    background: rgb(222, 183, 7);
     will-change: background;
 
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: rgb(74, 4, 74);
+    background: rgb(165, 137, 13);
+
 
 
 }

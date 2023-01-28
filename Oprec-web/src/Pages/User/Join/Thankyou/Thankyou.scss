@@ -1,7 +1,4 @@
 .thankyou {
-    // backdrop-filter: blur(5px);
-    // background-color: rgba(196, 35, 35, 0.5);
-
     .heart {
         background-size: cover;
         object-fit: cover;
@@ -16,16 +13,6 @@
         user-select: none;
     }
 
-    // .svgheart {
-    //     background-color: aqua;
-    //     background-clip: content-box;
-
-    //     .boxheart {
-    //         background-color: red;
-    //         width: 100px;
-    //         height: 100px;
-    //     }
-    // }
 
     .heartface {
         content: "";
@@ -37,4 +24,9 @@
         height: 200px;
         background-color: rgb(0, 0, 0);
     }
+}
+
+
+.Heart-Face {
+    transform: translate(-0px, -50px);
 }

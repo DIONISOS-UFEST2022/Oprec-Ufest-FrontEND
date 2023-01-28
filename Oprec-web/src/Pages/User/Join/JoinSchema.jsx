@@ -18,7 +18,8 @@ export const JoinSchema = Yup.object().shape({
     idline: Yup.string()
         .required("ID Line is a required field"),
     ig: Yup.string()
-        .required("Instagram is a required field"),
+        .required("Instagram is a required field")
+        .matches(/^https:\/\/www\.instagram\.com\/[a-zA-Z0-9_.]+\/?$/, "Enter a valid Instagram link"),
     domisili: Yup.string()
         .required("Domisili is a required field"),
     divisi: Yup.string()
@@ -37,15 +38,18 @@ export const JoinSchema = Yup.object().shape({
             "Visual"
         ])
         .required("Division is a required field"),
+    // .notOneOf([Yup.ref("divisialt")], "The two values should not be equal"),
     divisialt: Yup.string()
-        .required("Division is a required field"),
+        .required("Division is a required field")
+        .not([Yup.ref("divisi")], 'Divisi tidak boleh sama dengan Divisi Alternatif'),
     jawaban: Yup.string()
         .required("Answer is a required field"),
     jawaban2: Yup.string()
         .required("Answer is a required field"),
-    portofolio: Yup.string()
-        .required("Portofolio is a required field")
-        .matches(/^https:\/\/drive\.google\.com\/(file\/d\/|folderview\?id=|open\?id=|drive\/folders\/)([a-zA-Z0-9-_]+)/,
-            "Link must be from Google Drive"),
+    // portofolio: Yup.string()
+    //     // .optional()
+    //     // .required("Portofolio is a required field")
+    //     // .matches(/^https:\/\/drive\.google\.com\/(file\/d\/|folderview\?id=|open\?id=|drive\/folders\/)([a-zA-Z0-9-_]+)/,
+    //     //     "Link must be from Google Drive"),
 
 });

@@ -68,6 +68,7 @@ class UserController extends Controller
             return response()->json([
                 'success' => true,
                 'user'    => $user,
+                'token'   => $user->createToken('userLogin')->plainTextToken,
             ], 201);
         } else {
             return response()->json([

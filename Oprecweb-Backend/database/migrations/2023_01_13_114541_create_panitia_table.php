@@ -20,10 +20,11 @@ return new class extends Migration
             $table->string("email")->unique();
             $table->string("program_studi");
             $table->string("vaccine_certificate")->nullable()->default('none');
-            $table->integer('division_1');
-            $table->integer('division_2');
+            $table->string('division_1');
+            $table->string('division_2');
             $table->string("phone_number")->unique();
-            $table->string("reason");
+            $table->string("reason_1");
+            $table->string("reason_2");
             $table->string("portofolio")->nullable();
             $table->string("id_line");
             $table->string("instagram_account")->nullable();

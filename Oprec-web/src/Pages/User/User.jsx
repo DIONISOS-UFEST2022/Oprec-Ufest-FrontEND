@@ -16,10 +16,10 @@ const Join = lazy(() => import("./Join/Join"));
 
 
 export default function User() {
-    const isMobile = useMediaQuery("(max-width: 768px)")
+    const isMobile = useMediaQuery("(max-width: 960px)")
     const page = useSelector(selectPage);
     return (
-        <div className="user">
+        <div id="User-Page">
             <Suspense fallback={<LoadingScreen />}>
                 {isMobile ? <NavbarMobile /> : <Navbar />}
             </Suspense>
@@ -41,7 +41,7 @@ export default function User() {
                         return null;
                 }
             })()}
-            <Suspense fallback="Loading...">
+            <Suspense fallback="">
                 <Footer />
             </Suspense>
         </div>

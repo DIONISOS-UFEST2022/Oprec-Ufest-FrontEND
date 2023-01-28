@@ -21,7 +21,7 @@ function LinkCard(props) {
 
 export default function Footer() {
     return (
-        <Grid container className="Footer">
+        <Grid container id="Footer">
             <Grid item md={3} xs={12}>
                 <div className="Footer-Section">
                     <div className='Logo-Wrap'>

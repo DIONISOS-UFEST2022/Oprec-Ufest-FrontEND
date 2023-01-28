@@ -1,4 +1,4 @@
-import TextField from "@mui/material/TextField";
+import { TextField } from "../MaterialUICoreLazy/MaterialUICoreLazy";
 import styled from "styled-components";
 
 export const CustomTextField = styled(TextField)({

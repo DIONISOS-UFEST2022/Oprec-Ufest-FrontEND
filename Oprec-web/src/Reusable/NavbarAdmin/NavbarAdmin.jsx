@@ -8,7 +8,7 @@ import axios from "axios";
 import { userRoleAdded } from "../../Redux/features/users/userRoleSlice";
 const NavbarButtonAdmin = React.lazy(() => import("./NavbarAdminButton/NavbarAdminButton"));
 
-export function NavbarAdmin(props) {
+export default function NavbarAdmin(props) {
     const page = useSelector(selectPage);
     // const user = useSelector(selectuserRole);
     const dispatch = useDispatch();

@@ -5,7 +5,7 @@ const GridLazy = lazy(() => import("@material-ui/core/Grid"));
 export function Grid(props) {
     return (
         <Suspense fallback={""}>
-            <GridLazy {...props} />
+            <GridLazy  {...props} />
         </Suspense>
     );
 };
@@ -159,7 +159,7 @@ export function CardContent(props) {
             <LazyCardContent {...props} />
         </Suspense>
     );
-}   
+}
 
 // CircularProgress
 

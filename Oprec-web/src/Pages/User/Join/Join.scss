@@ -1,14 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
-
-
 .Join {
     background-image: url('/Asset/Image/Background/Homebg.webp');
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 100%;
-    min-height: 100vh;
+    height: 120%;
+    min-height: 120vh;
+    padding-bottom: 40px;
 
     .join {
         padding-top: 100px;
@@ -18,103 +16,108 @@
         -moz-user-select: none;
         -o-user-select: none;
         user-select: none;
-    }
 
-    .JoinTitle {
-        user-select: none;
-        font-size: 40px;
-        color: #395699;
-        margin-bottom: 25px;
-        display: block;
-        font-weight: bold;
-    }
+        .form {
+            position: relative;
+            z-index: 1;
+            background: #FFFFFF;
+            border-radius: 10px;
+            max-width: 360px;
+            margin: 0 auto 100px;
+            padding: 45px;
+            text-align: center;
 
-    .textarea {
-        margin-bottom: 80px;
-    }
+            .JoinTitle {
+                font-family: 'Rocket-Vintage';
+                user-select: none;
+                font-size: 60px;
+                color: #395699;
+                margin-bottom: 15px;
+                display: block;
+                font-weight: bold;
+            }
 
-    .wrapper {
-        padding: 15px;
-        background: #f2f2f2;
-        border-radius: 5px;
-    }
+            .Button-Bottom {
+                display: flex !important;
+                // flex-direction: column;
+                justify-content: space-between !important;
+                align-items: center;
+            }
 
-    .list {
-        margin: 0;
-        padding: 0;
-        padding-left: 0px;
-        list-style-position: inside;
-        list-style: circle;
-    }
+            .textarea {
+                margin-bottom: 80px;
+            }
 
-    .TextLabel {
-        opacity: 0.7;
-        margin: none;
-        text-align: left;
-    }
+            .Wrapper {
+                padding: 15px;
+                background: #f2f2f2;
+                border-radius: 5px;
+            }
 
-    .inp_option {
-        text-align: left;
-        background: #f2f2f2;
-        border-radius: 5px;
-        margin: 0 0 15px;
-        padding: 15px;
-        box-sizing: border-box;
-        font-size: 14px;
-        font-family: 'Comfortaa', cursive;
-        width: 100%;
+            .list {
+                margin: 0;
+                padding: 0;
+                padding-left: 0px;
+                list-style-position: inside;
+                list-style: circle;
+            }
 
-    }
+            .TextLabel {
+                opacity: 0.7;
+                margin: none;
+                text-align: left;
+            }
 
-    .login {
-        width: 360px;
-        padding: 8% 0 0;
-        margin: auto;
-        font-family: 'Comfortaa', cursive;
-    }
+            .inp_option {
+                text-align: left;
+                background: #f2f2f2;
+                border-radius: 5px;
+                margin: 0 0 15px;
+                padding: 15px;
+                box-sizing: border-box;
+                font-size: 14px;
+                font-family: 'Comfortaa', cursive;
+                width: 100%;
 
-    .form {
-        position: relative;
-        z-index: 1;
-        background: #FFFFFF;
-        border-radius: 10px;
-        max-width: 360px;
-        margin: 0 auto 100px;
-        padding: 45px;
-        text-align: center;
-    }
+            }
 
-    .Button {
-        font-family: 'Comfortaa', cursive;
-        text-transform: uppercase;
-        outline: 0;
-        background: #4b6cb7;
-        color: #FFFFFF;
-        -webkit-transition: all 0.3 ease;
-        transition: all 0.3 ease;
-        cursor: pointer;
-    }
+            .textfillheart {
+                animation: textfillheart 2s infinite ease-in-out alternate-reverse;
+                will-change: transfrom;
+            }
 
-    .textfillheart {
-        animation: textfillheart 2s infinite ease-in-out alternate-reverse;
-        will-change: transfrom;
-    }
+            @keyframes textfillheart {
+                from {
+                    transform: scale(1);
+                }
 
-    @keyframes textfillheart {
-        from {
-            transform: scale(1);
+                to {
+                    transform: scale(1.1);
+                }
+            }
+
+            p.error {
+                margin: 20px 10px 10px 10px;
+                text-align: left;
+                font-size: 10px;
+                color: red;
+                user-select: none;
+            }
+
+
+
+            .Img-Placeholder {
+                max-width: 50p;
+                max-height: 50px;
+            }
         }
 
-        to {
-            transform: scale(1.1);
-        }
+
     }
 
-    p.error {
-        margin: 20px 10px 10px 10px;
-        text-align: left;
-        font-size: 10px;
-        color: red;
-        user-select: none;
-    }
+
+
+
+
+
 }

@@ -14,6 +14,9 @@ class GoogleSheetController extends Controller
         $service->DeleteSheet();
         $panitia = Panitia::all()->toArray();
 
+        if (!$panitia) {
+            return response()->json('table Panitia is empty!');
+        }
 
         foreach ($panitia as $value) {
             $arr[] =
@@ -26,7 +29,8 @@ class GoogleSheetController extends Controller
                     $value['division_1'],
                     $value['division_2'],
                     $value['phone_number'],
-                    $value['reason'],
+                    $value['reason_1'],
+                    $value['reason_2'],
                     $value['portofolio'],
                     $value['id_line'],
                     $value['instagram_account'],
@@ -35,10 +39,41 @@ class GoogleSheetController extends Controller
                 ];
         }
 
-
         $data =  $service->writeSheet($arr);
+
         if (!$data) {
-            return response()->json('Error messages :)');
+            return response()->json('Something When Wrong... try again later');
+        }
+        return response()->json('success!');
+    }
+
+    public function appendData($panitia)
+    {
+        $service = new GoogleSheetsServices();
+
+        $arr[] =
+            [
+                $panitia->nim,
+                $panitia->name,
+                $panitia->email,
+                $panitia->program_studi,
+                $panitia->vaccine_certificate,
+                $panitia->division_1,
+                $panitia->division_2,
+                $panitia->phone_number,
+                $panitia->reason_1,
+                $panitia->reason_2,
+                $panitia->portofolio,
+                $panitia->id_line,
+                $panitia->instagram_account,
+                $panitia->city,
+                $panitia->is_accepted
+            ];
+
+        $data =  $service->appendSheet($arr);
+
+        if (!$data) {
+            return response()->json('Something When Wrong... try again later');
         }
         return response()->json('success!');
     }
