@@ -1,17 +1,15 @@
 <?php
 
 use App\Http\Controllers\AnnouncementController;
-use App\Http\Controllers\ReactController;
-use App\Http\Controllers\TestTableController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\UserController;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\GoogleSheetController;
 use App\Http\Controllers\PanitiaController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------

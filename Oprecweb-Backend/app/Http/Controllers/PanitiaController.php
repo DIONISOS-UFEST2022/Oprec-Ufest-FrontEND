@@ -55,7 +55,7 @@ class PanitiaController extends Controller
             'phone_number' => 'required|numeric:11|unique:panitia',
             'reason_1' => 'required|max:1000|string',
             'reason_2' => 'required|max:1000|string',
-            'portofolio' => 'required|url',
+            'portofolio' => 'url',
             'id_line' => 'required',
             'instagram_account' => 'required|url',
             'city' => 'required',
