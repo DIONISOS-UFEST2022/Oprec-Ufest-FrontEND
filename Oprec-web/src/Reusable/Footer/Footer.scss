@@ -1,44 +1,29 @@
-@font-face {
-    font-family: 'Louis-George-Cafe';
-    src: url(./../../Asset/Font/Louis\ George\ Cafe.ttf) format('truetype');
-}
-
+@use "src/index" as index;
 
 #Footer {
+    @include index.prevent-select;
     height: 100%;
     width: 100%;
     justify-content: space-between;
     overflow: hidden;
     padding-top: 70px;
-    background-color: rgb(0, 0, 0);
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -o-user-select: none;
-    user-select: none;
+    background-color: index.$black;
 
     .title {
-        margin: 10px;
-        color: #fff;
+        @include index.prevent-select;
+        color: index.$yellow;
+        font-family: index.$font;
         font-weight: bolder;
-        font-size: 25px;
-        user-select: none;
-        font-family: 'Rocket-Vintage';
-
-
+        font-size: 30px;
     }
 
     .Footer-Section {
+        @include index.prevent-select;
         width: 100%;
-        color: #fff;
-        padding: 20px;
+        color: index.$white;
+        // padding: 20px;
         text-align: left;
         overflow: visible;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -o-user-select: none;
-        user-select: none;
 
         .Logo-Wrap {
             display: flex;
@@ -58,7 +43,7 @@
 
         .address {
             margin: 10px;
-            font-family: 'Louis-George-Cafe';
+            font-family: index.$font2;
         }
 
         .link:hover {
@@ -70,72 +55,37 @@
     .Footer-Foot {
         padding: 20px;
         text-align: center;
-        color: rgb(144, 144, 144);
-        font-family: 'Louis-George-Cafe';
+        color: index.$white;
+        font-family: index.$font2;
 
         .purpleText {
-            color: #a100ec !important;
-            font-family: 'Louis-George-Cafe';
-
+            color: index.$purple;
+            font-family: index.$font2;
         }
     }
 }
 
 
 .Footer-Link-Card {
-    color: rgb(255, 255, 255);
-    text-decoration: none;
     display: flex;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
+    color: index.$white;
+    text-decoration: none;
     width: 100%;
     position: relative;
 
     .Card-Image {
         width: 25px;
         height: 25px;
-        transition: outline 150ms ease-in-out;
     }
 
     .Card-Caption {
+        @include index.underline;
         margin-left: 10px;
-        width: 400px;
-        font-family: 'Louis-George-Cafe';
+        font-family: index.$font2;
 
     }
 
-    :active {
-        text-decoration: none;
-    }
 
-    :hover {
-        color: rgb(186, 186, 186);
-
-        .Card-Image {
-            outline: 4px solid rgb(214, 57, 177);
-            border-radius: 50%;
-            transform-origin: 0% 50%;
-        }
-    }
-
-    ::after {
-        position: absolute;
-        display: block;
-        content: "";
-        height: 5px;
-        width: 50%;
-        background: rgb(210, 16, 87);
-        background: -moz-linear-gradient(90deg, rgba(255, 114, 166, 1) 27%, rgba(97, 76, 216, 1) 100%);
-        background: -webkit-linear-gradient(90deg, rgba(255, 114, 166, 1) 27%, rgba(97, 76, 216, 1) 100%);
-        background: linear-gradient(90deg, rgba(255, 114, 166, 1) 27%, rgba(97, 76, 216, 1) 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff72a6", endColorstr="#614cd8", GradientType=1);
-        border-radius: 20px;
-        transform: scaleX(0);
-        transition: transform 170ms ease-in-out;
-    }
-
-    :hover::after {
-        transform: scaleX(1);
-        transform-origin: 0% 50%;
-    }
 }

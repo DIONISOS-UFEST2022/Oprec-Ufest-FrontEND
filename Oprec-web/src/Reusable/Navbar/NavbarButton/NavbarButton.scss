@@ -1,8 +1,24 @@
+@use "../../../index.scss" as index;
+
 .Navbar-Desktop-Button {
-    font-family: Rocket-Vintage !important;
-    font-size: 30px !important;
-    color: rgb(245, 214, 63) !important;
-    text-shadow: 5px 0px 9px rgba(0, 0, 0);
-    width: 120px;
+    @include index.center;
+    font-family: index.$font;
+    pointer-events: all;
+    cursor: pointer;
+    overflow: visible;
+    background: none;
+    width: 145px;
     height: 40px;
+    border: none;
+
+    p {
+        @include index.prevent-select;
+        @include index.underline;
+        overflow: visible;
+        color: index.$yellow;
+        text-transform: none;
+        text-shadow: index.$text-shadow;
+        font-size: 30px !important;
+        padding-inline: 10px;
+    }
 }

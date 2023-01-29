@@ -6,21 +6,19 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "./Carousel.scss"
 import { Pagination } from "swiper";
-
+import { DivisionData } from "../DivisionData";
 
 
 export default function DivisonCarousel() {
     return (
         <div id="Carousel">
-            {/* <Suspense fallback={<div>Loading...</div>}> */}
             <Swiper
                 direction="horizontal"
-                mousewheelcontrol={true}
                 keyboard={{
                     enabled: true,
                     onlyInViewport: false,
                 }}
-                slidesPerView={3}
+                slidesPerView={'auto'}
                 spaceBetween={30}
                 pagination={{
                     clickable: true,
@@ -28,19 +26,12 @@ export default function DivisonCarousel() {
                 modules={[Pagination]}
                 className="Carousel-Swiper"
             >
-                <SwiperSlide>Slide 1</SwiperSlide>
-                <SwiperSlide>Slide 1</SwiperSlide>
-                <SwiperSlide>Slide 1</SwiperSlide>
-                <SwiperSlide>Slide 1</SwiperSlide>
-                <SwiperSlide>Slide 1</SwiperSlide>
-                <SwiperSlide>Slide 1</SwiperSlide>
-                <SwiperSlide>Slide 1</SwiperSlide>
-                <SwiperSlide>Slide 1</SwiperSlide>
-                <SwiperSlide>Slide 1</SwiperSlide>
-                <SwiperSlide>Slide 1</SwiperSlide>
-                <SwiperSlide>Slide 1</SwiperSlide>
+                {DivisionData.filter((item) => item.image).map((item, index) => {
+                    return <SwiperSlide className="Carousel-Swiper-Slide">
+                        <img rel="lazy" decoding="async" src={item.image} className="Carousel-Image" />
+                    </SwiperSlide>
+                })}
             </Swiper>
-            {/* </Suspense> */}
         </div>
     );
 }

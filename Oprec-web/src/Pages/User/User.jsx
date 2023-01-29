@@ -4,6 +4,7 @@ import { selectPage } from '../../Redux/features/page/pageSlice';
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Suspense, lazy } from "react";
 import LoadingScreen from "../../Reusable/LoadingScreen/LoadingScreen";
+
 const Navbar = lazy(() => import("../../Reusable/Navbar/Navbar"));
 const NavbarMobile = lazy(() => import("../../Reusable/Navbar/NavbarMobile/NavbarMobile"));
 const Footer = lazy(() => import("../../Reusable/Footer/Footer"));
@@ -16,8 +17,11 @@ const Join = lazy(() => import("./Join/Join"));
 
 
 export default function User() {
+    // play sound
+
     const isMobile = useMediaQuery("(max-width: 960px)")
     const page = useSelector(selectPage);
+
     return (
         <div id="User-Page">
             <Suspense fallback={<LoadingScreen />}>

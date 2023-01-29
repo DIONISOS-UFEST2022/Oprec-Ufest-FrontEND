@@ -1,47 +1,56 @@
+@use "src/index" as index;
+
 .Loading-Screen {
+    @include index.full-screen;
+    @include index.center;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: hsl(90, 100%, 86%);
-    z-index: 1000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: index.$yellow;
+    z-index: index.$z-index-7;
 
-    .Loading-Screen__content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
 
-        .Loading-Screen__content__text {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #fff;
-            margin-top: 1rem;
+    .Caption {
+        font-family: index.$font;
+        font-weight: bold;
+        font-size: 30px;
+        color: index.$white;
+        text-shadow: 5px 0px 9px index.$black;
+
+    }
+
+    .lds-circle {
+        display: inline-block;
+        transform: translateZ(1px);
+    }
+
+    .lds-circle>div {
+        display: inline-block;
+        width: 64px;
+        height: 64px;
+        margin: 8px;
+        border-radius: 50%;
+        background: #fff;
+        animation: lds-circle 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+    }
+
+    @keyframes lds-circle {
+
+        0%,
+        100% {
+            animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
+        }
+
+        0% {
+            transform: rotateY(0deg);
+        }
+
+        50% {
+            transform: rotateY(1800deg);
+            animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
+        }
+
+        100% {
+            transform: rotateY(3600deg);
         }
     }
 
-    .content {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        background-color: rgb(0, 255, 145);
-        width: 150px;
-        height: 150px;
-
-
-    }
-
-    .innercontent {
-        position: absolute;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        width: 100px;
-        height: 100px;
-    }
 }

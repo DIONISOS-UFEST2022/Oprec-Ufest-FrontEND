@@ -1,28 +1,18 @@
 import { lazy, Suspense } from "react";
 import { useSelector } from "react-redux";
 import { selectPage } from "../../Redux/features/page/pageSlice";
-import Division from "./Division/Division";
-import Database from "./Database/Database";
-import Feature from "./Feature/Feature";
-import NavbarAdmin from "./../../Reusable/NavbarAdmin/NavbarAdmin"
-
-
-// const NavbarAdmin = lazy(() => import("../../Reusable/NavbarAdmin/NavbarAdmin"));
-
-
-// const Division = lazy(() => import("./Division/Division"));
-// const Database = lazy(() => import("./Database/Database"));
-// const Feature = lazy(() => import("./Feature/Feature"));
-
-
-
+import "./Admin.scss"
+import LoadingScreen from "../../Reusable/LoadingScreen/LoadingScreen";
+const NavbarAdmin = lazy(() => import("./../../Reusable/NavbarAdmin/NavbarAdmin"));
+const Feature = lazy(() => import("./Feature/Feature"));
+const Division = lazy(() => import("./Division/Division"));
+const Database = lazy(() => import("./Database/Database"));
 
 export default function Admin() {
     const page = useSelector(selectPage);
-    return <div className="admin">
-        <Suspense fallback={<div>Loading...</div>}>
+    return <div id="Admin">
+        <Suspense fallback={<LoadingScreen />}>
             <NavbarAdmin />
-            {/* </Suspense> */}
             {(() => {
                 switch (page) {
                     case 'database':

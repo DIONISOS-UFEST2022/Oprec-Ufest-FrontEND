@@ -1,17 +1,16 @@
-.Division {
-    height: 80vh;
-    padding-top: 20vh;
-    background-image: url("./../../../Asset/Image/Background/Homebg.webp");
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-size: 100% 100%;
+@use "src/index" as index;
 
+.Division {
+    @include index.background("./../../../Asset/Image/Background/Homebg.webp");
+    @include index.center;
+    flex-direction: column;
+    height: 100vh;
 
     h1 {
-        font-size: 100px;
+        font-family: index.$font;
+        font-size: 50px;
         font-weight: bolder;
-        color: #000;
+        color: index.$yellow;
+        text-shadow: index.$text-shadow;
     }
 }

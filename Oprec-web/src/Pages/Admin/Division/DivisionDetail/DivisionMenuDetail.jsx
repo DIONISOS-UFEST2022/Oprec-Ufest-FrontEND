@@ -7,47 +7,48 @@ import { TableContainer } from '../../../../Reusable/MaterialUICoreLazy/Material
 import { TableHead } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
 import { TableRow } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
 import { Paper } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
-import { Button } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
-import { Typography } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
+// import { Button } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
+// import { Typography } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { selectuserToken } from '../../../../Redux/features/users/userRoleSlice';
-// import Modal from '@mui/joy/Modal';
-// import ModalClose from '@mui/joy/ModalClose';
-// import ModalDialog from '@mui/joy/ModalDialog';
+// URL
+import { URL } from '../../../../Reusable/Service/URL';
+// import { Modal } from '@mui/material';
 
-function DetailModal() {
-    const [open, setOpen] = useState('');
-    return (
-        <>
-            <Button variant="outlined" color="neutral" onClick={() => setOpen('center')}>
-                More Detail
-            </Button>
-            <Modal open={!!open} onClose={() => setOpen('')}>
-                <ModalDialog
-                    aria-labelledby="layout-modal-title"
-                    aria-describedby="layout-modal-description"
-                    layout={open || undefined}
-                >
-                    <ModalClose />
-                    <Typography
-                        id="layout-modal-title"
-                        component="h2"
-                        level="inherit"
-                        fontSize="1.25em"
-                        mb="0.25em"
-                    >
-                        Modal Dialog
-                    </Typography>
-                    <Typography id="layout-modal-description" textColor="text.tertiary">
-                        This is a <code>{open}</code> modal dialog. Press <code>esc</code> to
-                        close it.
-                    </Typography>
-                </ModalDialog>
-            </Modal>
-        </>
-    );
-}
+
+// function DetailModal() {
+//     const [open, setOpen] = useState('');
+//     return (
+//         <>
+//             <Button variant="outlined" color="neutral" onClick={() => setOpen('center')}>
+//                 More Detail
+//             </Button>
+//             <Modal open={!!open} onClose={() => setOpen('')}>
+//                 <ModalDialog
+//                     aria-labelledby="layout-modal-title"
+//                     aria-describedby="layout-modal-description"
+//                     layout={open || undefined}
+//                 >
+//                     <ModalClose />
+//                     <Typography
+//                         id="layout-modal-title"
+//                         component="h2"
+//                         level="inherit"
+//                         fontSize="1.25em"
+//                         mb="0.25em"
+//                     >
+//                         Modal Dialog
+//                     </Typography>
+//                     <Typography id="layout-modal-description" textColor="text.tertiary">
+//                         This is a <code>{open}</code> modal dialog. Press <code>esc</code> to
+//                         close it.
+//                     </Typography>
+//                 </ModalDialog>
+//             </Modal>
+//         </>
+//     );
+// }
 
 
 
@@ -85,7 +86,7 @@ function Row(props) {
                 <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="left">{row.email}</TableCell>
                 <TableCell align="left">{row.status}</TableCell>
-                <TableCell align="left"><DetailModal /></TableCell>
+                <TableCell align="left"></TableCell>
             </TableRow>
 
         </>
@@ -122,7 +123,7 @@ export default function DivisionMenu() {
     const token = useSelector(selectuserToken);
     const [userData, SetuserData] = useState([]);
     useEffect(() => {
-        axios.get("http://127.0.0.1:8000/api/users", {
+        axios.get(`${URL}/api/users`, {
             headers:
                 { Authorization: `Bearer ${token}` }
         })

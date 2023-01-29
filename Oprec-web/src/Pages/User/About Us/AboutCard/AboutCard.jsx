@@ -16,13 +16,9 @@ export default function AboutCard(props) {
             <Grid container className={`About-Card ${direction}`}
             >
                 <Grid item className="gridItem" xs={5}
-                    direction="column-reverse"
-                    justifyContent="center"
-                    alignItems="center"
                 >
                     <p className={`About-Image ${direction}`}></p>
                 </Grid>
-
                 <Grid item className="gridItem" xs={7}>
                     <p className="About-Title"
                         style={{

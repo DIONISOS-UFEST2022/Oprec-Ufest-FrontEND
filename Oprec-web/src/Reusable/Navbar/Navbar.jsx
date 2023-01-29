@@ -1,5 +1,5 @@
 import "./Navbar.scss";
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectuserRole } from "../../Redux/features/users/userRoleSlice";
 // import { selectPage } from "../../Redux/features/page/pageSlice";
@@ -10,14 +10,38 @@ import { Grid } from "../MaterialUICoreLazy/MaterialUICoreLazy";
 import HomeIcon from "./../../Asset/Image/NavbarIcon/home.webp"
 import AboutIcon from "./../../Asset/Image/NavbarIcon/about.webp"
 import DivisionIcon from "./../../Asset/Image/NavbarIcon/division.webp"
+import logouthandler from "./LogoutHandler/LogoutHandler";
+// Audio
+import { URL } from "../Service/URL";
+import axios from "axios";
+import { userRoleAdded } from "../../Redux/features/users/userRoleSlice";
 
+const AudioPlayButton = lazy(() => import("../../Pages/User/Home/Component/AudioPlayButton/AudioPlayButton"));
 
 
 function Navbar(props) {
+    const dispatch = useDispatch();
+    function Logout() {
+
+        const login = localStorage.getItem('LoginID');
+        axios.get(`${URL}/api/logout`, {
+            headers:
+                { Authorization: `Bearer ${login}` }
+        })
+            .then((res) => {
+                localStorage.removeItem('LoginID');
+                dispatch(pageChanged('login'));
+                dispatch(userRoleAdded('guest'));
+
+            }
+            )
+            .catch((err) => {
+                console.error(err);
+            }
+            );
+    }
 
     const user = useSelector(selectuserRole);
-    // const page = useSelector(selectPage);
-    const dispatch = useDispatch();
     return (
         <>
             <Grid container className="NavbarUser">
@@ -26,10 +50,14 @@ function Navbar(props) {
                         UFEST 2023
                     </div>
                 </Grid>
-                <Grid item md={2} lg={6}>
+                <Grid item md={'auto'} lg={'auto'}>
+                    <Suspense fallback="">
+                        <AudioPlayButton />
+                    </Suspense>
                 </Grid>
+                <Grid item md={2} lg={4}></Grid>
                 {user === "user" ?
-                    <Grid item md={2}>
+                    <Grid item md={1}>
                         <NavbarButton Title={"JOIN US!"} onClick={() => { dispatch(pageChanged("join")) }} />
                     </Grid>
                     : ""}
@@ -46,6 +74,12 @@ function Navbar(props) {
                     <Grid item md={2} lg={1}>
                         <NavbarButton Title={"Login"} onClick={() => { dispatch(pageChanged("login")) }} />
                     </Grid>
+                }
+                {user === "user" ?
+                    <Grid item md={2} lg={1}>
+                        <NavbarButton Title={"Log Out"} onClick={() => { Logout() }} />
+                    </Grid>
+                    : ""
                 }
             </Grid>
         </>

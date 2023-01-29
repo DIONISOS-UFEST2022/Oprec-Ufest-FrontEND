@@ -13,7 +13,7 @@ export default function About() {
     window.scrollTo(0, 0)
   }, []);
   return (<>
-    <div className="About">
+    <div id="About">
       <div className="Title" >What is UMN Festival 2023?</div>
       <Suspense fallback={<LoadingScreen />}>
         <Grid container>

@@ -1,7 +1,9 @@
+@use '../../../index.scss' as index;
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
 
-.NavbarMobileButton {
-    background-color: rgb(192, 192, 192, 0.3);
+.Navbar-Mobile-Button {
+    @include index.prevent-select;
+    background-color: rgba(0, 0, 0, 0.3);
     position: fixed;
     border-style: none;
     width: 50px;
@@ -16,7 +18,6 @@
     justify-content: center;
     align-items: left;
     padding: 10px;
-    font-family: 'Montserrat', sans-serif !important;
 
     .bar {
         height: 5px;
@@ -26,9 +27,7 @@
         position: absolute;
 
         &.up {
-            // margin-bottom: 4px;
             width: 27px;
-            // transform: translateY(-10px);
         }
 
         &.down {
@@ -36,50 +35,29 @@
         }
     }
 
-
 }
 
-.NavbarMenu {
-    height: 100vh;
-    width: 100vw;
-    background-color: rgb(10, 6, 76);
+.Navbar-Mobile-Menu-Container {
+    @include index.prevent-select;
+    @include index.full-screen;
+    background-color: index.$yellow;
+    text-shadow: 5px 0px 9px index.$black;
+    z-index: index.$z-index-6;
+    overflow: hidden;
     position: fixed;
     top: 0;
-    z-index: 100;
-    overflow: hidden;
-}
+    @include index.center;
+    text-align: center;
 
 
-.NavbarMobileMenu {
-    justify-content: center;
-    padding-top: 20vh;
-}
-
-
-.NavbarMobileMenuCard {
-    .title {
-        color: white;
-        margin: 10px;
-        font-size: 30px;
-        font-weight: 700;
-        font-family: 'Montserrat', sans-serif !important;
-        pointer-events: all;
+    .Navbar-Mobile-Menu-Card {
+        .title {
+            color: index.$white;
+            margin: 10px;
+            font-family: index.$font;
+            font-size: 40px;
+            font-weight: 700;
+            pointer-events: all;
+        }
     }
-
-
-
-}
-
-.LogoMobile {
-    z-index: 1000;
-    background-color: #f3ec78;
-    background-image: linear-gradient(45deg, dodgerblue, purple, red);
-    background-size: 100%;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -moz-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -moz-text-fill-color: transparent;
-    margin: 0;
-
 }

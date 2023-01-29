@@ -4,6 +4,7 @@ import "./Join.scss";
 import { Autocomplete, Divider } from "../../../Reusable/MaterialUICoreLazy/MaterialUIMaterialLazy";
 // Material UI Core
 import { Button, CircularProgress, Grid } from "../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy";
+import { CustomTextField } from "../../../Reusable/TextField/CustomTextField";
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
 // Form Control
@@ -14,16 +15,21 @@ import { Suspense, lazy, useRef, useState } from "react";
 import Thankyou from "./Thankyou/Thankyou";
 import { DivisiData, JurusanData } from "./AutoComplete/AutoComplete";
 import { JoinSchema } from "./JoinSchema";
-import { CustomTextField } from "../../../Reusable/TextField/CustomTextField";
-// import { UploadImage } from "./UploadImage/UploadImage";
 import { m, domAnimation, LazyMotion } from "framer-motion";
-import { useSelector } from "react-redux";
-import axios from "axios";
+// Redux
+import { useSelector, useDispatch } from "react-redux";
+import { userSetJoin } from "../../../Redux/features/users/userDataSlice";
 import { selectuserName, selectuserEmail, selectuserNim } from "../../../Redux/features/users/userRoleSlice";
-// import { useEffect } from "react";
+import { selectUser } from "../../../Redux/features/users/userDataSlice";
+import { useEffect } from "react";
 // Styling
 import { FileUploader } from "react-drag-drop-files";
 import "./UploadImage/UploadImage.scss"
+// URL
+import { postRequest } from "../../../Reusable/Service/AxiosClient";
+const JoinPage0 = lazy(() => import("./Page/JoinPage0"));
+const Sparkles = lazy(() => import("../../../Reusable/Animation/Sparkle/Sparkle"));
+
 
 const fileTypes = [
     "JPEG",
@@ -33,20 +39,6 @@ const fileTypes = [
 ];
 
 
-const JoinPage0 = lazy(() => import("./Page/JoinPage0"));
-const Sparkles = lazy(() => import("../../../Reusable/Animation/Sparkle/Sparkle"));
-// Dekorasi
-// Publikasi
-// Keamanan
-// Fresh Money
-// Sponsor
-// Dokumentasi
-// Acara
-// Perlengkapan
-// Lomba
-// Konsumsi
-// Website
-// Visual
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 10,
@@ -63,9 +55,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 
 
-export default function Join(props) {
-
-    // const [file, setFile] = useState(null);
+export default function Join() {
     const [loading, Setloading] = useState(false);
     const name = useSelector(selectuserName);
     const nim = useSelector(selectuserNim);
@@ -77,14 +67,25 @@ export default function Join(props) {
             formInput.current.focus()
         }
     }
-    const [joinpage, Setjoinpage] = useState(0);
 
+    const dispatch = useDispatch();
+    const joinned = useSelector(selectUser).isJoin;
+    const [joinpage, Setjoinpage] = useState(0);
+    useEffect(() => {
+        if (joinned === true) {
+            Setjoinpage(6)
+        }
+    }, [])
     function Prev(props) {
         return (
-            <Button className="Button" variant="contained" type="button" onClick={() => {
-                Setjoinpage(props.page)
-                titleRef.current.scrollIntoView({ behavior: 'smooth' })
-            }}>PREV</Button>
+            <Button
+                className="Button"
+                variant="contained"
+                type="button"
+                onClick={() => {
+                    Setjoinpage(props.page)
+                    titleRef.current.scrollIntoView({ behavior: 'smooth' })
+                }}>PREV</Button>
         )
     }
     function Next(props) {
@@ -123,39 +124,40 @@ export default function Join(props) {
                 }}
                 onSubmit={(values) => {
                     Setloading(true);
-                    const login = localStorage.getItem('LoginID');
-                    axios.post("http://127.0.0.1:8000/api/panitia/insertData", {
-                        nim: nim,
-                        name: name,
-                        email: email,
-                        program_studi: values.jurusan,
-                        division_1: values.divisialt,
-                        division_2: values.divisi,
-                        phone_number: values.nohp,
-                        reason_1: values.jawaban,
-                        reason_2: values.jawaban2,
-                        portofolio: values.portofolio,
-                        vaccine_certificate: values.vaksin,
-                        id_line: values.idline,
-                        instagram_account: values.ig,
-                        city: values.domisili,
-                    }, {
-                        headers:
-                            { Authorization: `Bearer ${login}`, 'Content-Type': 'multipart/form-data' },
-                    })
-                        .then((res) => {
-                            Setjoinpage(6);
-                            console.log(res);
+                    // const login = localStorage.getItem('LoginID');
+                    async function postData() {
+                        try {
+                            const response = await postRequest(`panitia/insertData`, {
+                                nim: nim,
+                                name: name,
+                                email: email,
+                                angkatan: values.angkatan,
+                                program_studi: values.jurusan,
+                                division_1: values.divisialt,
+                                division_2: values.divisi,
+                                phone_number: values.nohp,
+                                reason_1: values.jawaban,
+                                reason_2: values.jawaban2,
+                                portofolio: values.portofolio,
+                                vaccine_certificate: values.vaksin,
+                                id_line: values.idline,
+                                instagram_account: values.ig,
+                                city: values.domisili,
+                            })
+                            if (response.status === 201) {
+                                dispatch(userSetJoin());
+                                Setjoinpage(6);
+                                Setloading(false);
+                            } else {
+                                Setloading(false);
+                            }
+                            console.log(response)
+                        } catch (error) {
+                            console.log(error);
                             Setloading(false);
                         }
-                        )
-                        .catch((err) => {
-                            alert("error");
-                            console.log(err);
-                            Setloading(false);
-                        }
-                        )
-
+                    }
+                    postData();
                 }}
             >
                 {({
@@ -170,7 +172,9 @@ export default function Join(props) {
                     <div className="join" padding={"10px"}>
                         <div className="form">
                             <form noValidate onSubmit={handleSubmit}>
-                                <BorderLinearProgress variant="determinate" value={(100 / 6) * joinpage} />
+                                <Suspense fallback="">
+                                    <BorderLinearProgress variant="determinate" value={(100 / 6) * joinpage} />
+                                </Suspense>
                                 <br />
                                 {(() => {
                                     switch (joinpage) {
@@ -590,17 +594,3 @@ export default function Join(props) {
 
     );
 }
-
-
-// Dekorasi
-// Publikasi
-// Keamanan
-// Fresh Money
-// Sponsor
-// Dokumentasi
-// Acara
-// Perlengkapan
-// Lomba
-// Konsumsi
-// Website
-// Visual

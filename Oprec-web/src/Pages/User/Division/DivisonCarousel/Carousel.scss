@@ -1,35 +1,39 @@
-#Carousel {
+@use "src/index" as index;
 
+#Carousel {
     .Carousel-Swiper {
         width: 100vw;
         height: 400px;
+
+        .Carousel-Swiper-Slide {
+            @include index.prevent-select;
+            @include index.center;
+            width: 400px;
+            height: auto;
+            background-color: rgb(252, 199, 199, 0);
+
+            .Carousel-Image {
+                image-resolution: 300dpi;
+                height: 100%;
+                width: auto;
+                object-fit: cover;
+            }
+        }
     }
 
     .swiper-slide {
+        @include index.center;
         text-align: center;
         font-size: 18px;
-        background: #fff;
-        border-radius: 50%;
-        height: 400px;
-        width: 400px;
+        background: index.$white;
         display: -webkit-box;
         display: -ms-flexbox;
         display: -webkit-flex;
-        display: flex;
         -webkit-box-pack: center;
         -ms-flex-pack: center;
-        -webkit-justify-content: center;
-        justify-content: center;
         -webkit-box-align: center;
         -ms-flex-align: center;
-        -webkit-align-items: center;
-        align-items: center;
     }
 
-    .swiper-slide img {
-        display: block;
-        width: 100px;
-        height: 100px;
-        object-fit: cover;
-    }
+
 }

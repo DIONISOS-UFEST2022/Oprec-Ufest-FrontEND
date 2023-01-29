@@ -1,78 +1,60 @@
-$sm: 30em;
-$md: 48em;
-$lg: 62em;
-$xl: 80em;
-$xxl: 96em;
+@use "src/index" as index;
+
 
 .home {
+    @include index.background('./../../../Asset/Image/Background/Homebg.webp');
+    @include index.center;
     padding-top: 10vh;
     height: 85vh;
     padding-bottom: 5vh;
-    display: flex;
     position: relative;
     flex-direction: column;
-    align-items: center;
     overflow: hidden;
-    background-image: url('./../../../Asset/Image/Background/Homebg.webp');
-    background-repeat: repeat-x;
-    background-size: cover;
-    background-position: center;
 
     h1 {
         font-size: 100px;
         font-weight: bolder;
-        color: #000;
+        color: index.$black;
     }
 
     .home-image {
-        background-image: url('./../../../Asset/Image/Ufest Logo/ufestlogocolor.webp');
-        background-repeat: repeat-x;
-        background-size: cover;
-        background-position: center;
+        @include index.background('./../../../Asset/Image/Ufest Logo/ufestlogocolor.webp');
+        @include index.prevent-select;
         height: 400px;
         width: 400px;
         transform: scale(1.5);
         display: table-cell;
         vertical-align: middle;
         z-index: 1;
-        pointer-events: none;
-        -webkit-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
     }
 
-    @media screen and (max-width: $sm) {
+    @media screen and (max-width: index.$sm) {
         .home-image {
             height: 300px;
             width: 300px;
         }
     }
 
-
-
     .heading {
+        @include index.prevent-select;
         width: auto;
         height: 60px;
         overflow: hidden;
         margin: 20px;
         margin-top: 50px;
-        z-index: 2;
+        z-index: index.$z-index-2;
         pointer-events: none;
-        font-family: Rocket-Vintage !important;
+        font-family: index.$font;
         font-size: 50px;
-        color: rgb(245, 214, 63) !important;
-        text-shadow: 2px 0px 9px rgba(0, 0, 0, 1);
-        -webkit-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
+        color: index.$yellow;
+        text-shadow: index.$text-shadow;
     }
 
-    @media screen and (max-width: $sm) {
+    @media screen and (max-width: index.$sm) {
         .heading {
             font-size: 30px;
         }
     }
-        
 
     .pilar {
         position: absolute;
@@ -81,21 +63,13 @@ $xxl: 96em;
         bottom: 0px;
 
         &.left {
-            background-image: url('./../../../Asset/Image/Background/pilarLeft.webp');
-            background-repeat: repeat-x;
-            background-size: cover;
-            background-position: center;
+            @include index.image('./../../../Asset/Image/Background/pilarLeft.webp');
             left: -192px;
         }
 
         &.right {
-            background-image: url('./../../../Asset/Image/Background/pilarRight.webp');
-            background-repeat: repeat-x;
-            background-size: cover;
-            background-position: center;
+            @include index.image('./../../../Asset/Image/Background/pilarRight.webp');
             right: -192px;
         }
     }
-
-
 }

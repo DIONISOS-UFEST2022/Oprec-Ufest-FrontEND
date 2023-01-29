@@ -29,3 +29,14 @@ export function Divider(props) {
         </Suspense>
     );
 }
+
+
+const GridLazy = lazy(() => import("@mui/material/Grid"));
+
+export function Grid(props) {
+    return (
+        <Suspense fallback={""}>
+            <GridLazy {...props} />
+        </Suspense>
+    );
+}

@@ -1,36 +1,28 @@
-.About {
-    display: flex;
+@use "src/index" as index;
+
+
+#About {
+    @include index.background("./../../../Asset/Image/Background/Homebg.webp");
+    @include index.center;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     padding-top: 10vh;
-    // background-image: url('/Asset/Image/Background/Homebg.webp');
-    background-image: url("./../../../Asset/Image/Background/Homebg.webp");
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
     min-height: 100vh;
 
     .Title {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: Rocket-Vintage !important;
+        @include index.center;
+        font-family: index.$font;
         text-align: center;
         font-size: 50px;
         font-weight: bolder;
-        color: rgb(245, 214, 63) !important;
+        color: index.$yellow;
         text-shadow: 2px 0px 9px rgba(0, 0, 0, 1);
         height: 100%;
         margin: 20px;
 
-        @media screen and (max-width: 768px) {
+        @media screen and (max-width: index.$md) {
             font-size: 30px;
         }
 
-
     }
-
 
 }

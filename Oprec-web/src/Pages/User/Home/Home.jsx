@@ -3,12 +3,18 @@ import { Suspense, lazy, useEffect } from "react";
 // styling
 import "./Home.scss";
 import { LazyMotion, m, domAnimation } from "framer-motion"
+// import Dragon from "./Component/Dragon/Dragon";
+
+// import { Button } from "../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy";
+// import { Button } from "../../../Reusable/MaterialUICoreLazy/MaterialUIMaterialLazy";
+// import AudioPlayButton from "./Component/AudioPlayButton/AudioPlayButton";
+
+const Dragon = lazy(() => import("./Component/Dragon/Dragon"));
 const HomeButton = lazy(() => import("./Component/HomeButton/HomeButton"));
 
 
 // start from here
 export default function Home() {
-
     useEffect(() => {
         window.scrollTo(0, 0)
     }, []);
@@ -40,12 +46,12 @@ export default function Home() {
                             decoding="async"
                             className="home-image"
                         />
+                        {/* <Dragon /> */}
                     </Suspense>
                 </m.div>
             </LazyMotion>
 
             <p className="heading">Welcome #Spartan</p>
-            {/* <Suspense fallback={<div>Loading...</div>}> */}
             <LazyMotion features={domAnimation}>
                 <m.div
                     initial={{ opacity: 0 }}
@@ -54,8 +60,7 @@ export default function Home() {
                     <HomeButton />
                 </m.div>
             </LazyMotion>
-            {/* <HomeButton /> */}
-            {/* </Suspense> */}
+            {/* <AudioPlayButton /> */}
         </div>
     )
 }

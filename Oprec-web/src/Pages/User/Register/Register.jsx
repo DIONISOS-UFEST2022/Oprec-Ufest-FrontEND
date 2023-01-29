@@ -12,12 +12,14 @@ import { pageChanged } from "../../../Redux/features/page/pageSlice";
 import { userRoleAdded } from "../../../Redux/features/users/userRoleSlice";
 import { userTokenAdded } from "../../../Redux/features/users/userRoleSlice";
 // Axios
-import axios from "axios";
 // Module
 import { CustomTextField } from "../../../Reusable/TextField/CustomTextField";
 // animation
 import { motion } from "framer-motion";
 import { userDataAdded } from "../../../Redux/features/users/userRoleSlice";
+// URL
+import { URL } from "../../../Reusable/Service/URL";
+import { postRequest } from "../../../Reusable/Service/AxiosClient";
 
 export default function Register() {
     // use dispatch to change page
@@ -37,14 +39,18 @@ export default function Register() {
             initialValues={{ email: "", password: "", fullname: "", nim: "", repassword: "" }}
             onSubmit={(values) => {
                 Setloading(true);
-                axios.post('http://localhost:8000/api/register', {
-                    name: values.fullname,
-                    nim: values.nim,
-                    password: values.password,
-                    email: values.email,
-                })
-                    .then(function (response) {
+                async function Register() {
+                    try {
+                        const response = await postRequest('register', {
+                            name: values.fullname,
+                            nim: values.nim,
+                            password: values.password,
+                            email: values.email,
+                        });
+                        console.log(response);
                         if (response.data.success === true) {
+                            localStorage.setItem('LoginID', response.data.login_token);
+                            dispatch(userTokenAdded(response.data.token));
                             dispatch(pageChanged("home"));
                             dispatch(userRoleAdded("user"));
                             dispatch(userDataAdded({
@@ -52,35 +58,17 @@ export default function Register() {
                                 nim: response.data.user.nim,
                                 email: response.data.user.email,
                             }));
-                            axios.post('http://localhost:8000/api/login', {
-                                email: values.email,
-                                password: values.password,
-                            })
-                                .then(function (response) {
-                                    // console.log(response);
-                                    if (response.status === 200) {
-                                        localStorage.setItem('LoginID', `${response.data}`);
-                                        dispatch(userTokenAdded(response.data.token));
-                                    } else {
-                                        console.log("Register Failed");
-                                    }
-                                })
-                                .catch(function (error) {
-                                    console.log(error);
-                                });
-
+                            Setloading(false);
                         } else {
-                            alert("Register Failed");
+                            console.log(response);
+                            Setloading(false);
                         }
+                    } catch (error) {
+                        console.log(error);
                         Setloading(false);
-                    })
-                    .catch(function (error) {
-                        alert(error.response.data.message);
-                        if (error.response.data.success === false) {
-                            alert("Register Failed");
-                        }
-                        Setloading(false);
-                    });
+                    }
+                }
+                Register();
             }}
         >
             {({
@@ -102,7 +90,7 @@ export default function Register() {
                                 <span className="Title">Register</span>
                                 <CustomTextField
                                     id="fullname"
-                                    ref={formInput}
+                                    // ref={formInput}
                                     value={values.fullname}
                                     onKeyDownCapture={EnterHandleClick}
                                     type="text"
@@ -117,7 +105,7 @@ export default function Register() {
                                 </p>
                                 <CustomTextField
                                     id="nim"
-                                    ref={formInput}
+                                    // ref={formInput}
                                     value={values.nim}
                                     onKeyDownCapture={EnterHandleClick}
                                     type="text"
@@ -132,7 +120,7 @@ export default function Register() {
                                 </p>
                                 <CustomTextField
                                     id="email"
-                                    ref={formInput}
+                                    // ref={formInput}
                                     value={values.email}
                                     onKeyDownCapture={EnterHandleClick}
                                     type="email"
@@ -147,7 +135,7 @@ export default function Register() {
                                 </p>
                                 <CustomTextField
                                     id="password"
-                                    ref={formInput}
+                                    // ref={formInput}
                                     value={values.password}
                                     onKeyDownCapture={EnterHandleClick}
                                     type="password"
@@ -161,8 +149,8 @@ export default function Register() {
                                     {errors.password && touched.password && errors.password}
                                 </p>
                                 <CustomTextField
-                                    id="password"
-                                    ref={formInput}
+                                    id="repassword"
+                                    // ref={formInput}
                                     value={values.repassword}
                                     onKeyDownCapture={EnterHandleClick}
                                     type="password"
@@ -176,18 +164,7 @@ export default function Register() {
                                     {touched.repassword && errors.repassword}
                                 </p>
                                 <Button
-                                    disabled={
-                                        !values.fullname ||
-                                        !values.nim ||
-                                        !values.email ||
-                                        !values.password ||
-                                        !values.repassword ||
-                                        errors.fullname ||
-                                        errors.nim ||
-                                        errors.email ||
-                                        errors.password ||
-                                        errors.repassword
-                                    }
+                                    disabled={(errors.fullname || errors.nim || errors.email || errors.password || errors.repassword) ? true : false}
                                     className="button"
                                     variant="contained"
                                     type="submit"

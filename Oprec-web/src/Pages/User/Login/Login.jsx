@@ -27,7 +27,9 @@ import axios from "axios";
 import Google from "./../../../Asset/OtherLogo/google.png";
 // animation
 import { m, domAnimation, LazyMotion } from "framer-motion";
-
+// URL
+// import { URL } from "../../../Reusable/Service/URL";
+import { postRequest } from "../../../Reusable/Service/AxiosClient";
 
 export default function Login() {
     // state
@@ -37,7 +39,6 @@ export default function Login() {
     const [loading, Setloading] = useState(false);
     const [error, Seterror] = useState(false);
     const dispatch = useDispatch();
-    // next input when press enter
     const formInput = useRef(null);
     const EnterHandleClick = (e) => {
         if (e.key === 'Enter') {
@@ -51,50 +52,44 @@ export default function Login() {
             initialValues={{ email: "", password: "" }}
             onSubmit={(values) => {
                 Setloading(true);
-                axios.post("http://127.0.0.1:8000/api/login", values)
-                    .then((res) => {
-                        dispatch(userTokenAdded(res.data));
-                        axios.get("http://127.0.0.1:8000/api/me", {
-                            headers:
-                                { Authorization: `Bearer ${res.data}` }
-                        })
-                            .then((result) => {
-                                if (result.data.data.role_id === 1) {
-                                    // console.log(result.data.data);
-                                    dispatch(userRoleAdded("admin"));
-                                    dispatch(userRoleAdded("admin"));
-                                    dispatch(pageChanged("division"));
-                                    Setloading(false);
-                                } else if (result.data.data.role_id === 2) {
-                                    dispatch(userRoleAdded("user"));
-                                    dispatch(pageChanged("home"));
-                                    Setloading(false);
-                                }
-                                localStorage.setItem('LoginID', `${res.data}`);
-                            })
-                            .catch((err) => {
-                                // console.log(err);
-                                Seterror(true);
+                const userLogin = async () => {
+                    try {
+                        const res = await postRequest('login', values);
+                        console.log(res.data);
+                        if (res.data.success === true) {
+                            dispatch(userTokenAdded(res.data));
+                            if (res.data.role === 1) {
+                                dispatch(userRoleAdded("admin"));
+                                dispatch(pageChanged("division"));
                                 Setloading(false);
-                            })
-                    }
-                    )
-                    .catch((err) => {
-                        Seterror(true);
+                            } else if (res.data.role === 2) {
+                                dispatch(userRoleAdded("user"));
+                                dispatch(pageChanged("home"));
+                                Setloading(false);
+                            }
+                            localStorage.setItem('LoginID', res.data.login_token);
+                            // localStorage.setItem('LoginID', res.data.id);
+                            Setloading(false);
+                        } else {
+                            Setloading(false);
+                            Seterror(true);
+                        }
+                    } catch (error) {
                         Setloading(false);
+                        Seterror(true);
                     }
-                    )
+                }
+                userLogin();
             }}
         >
             {({
-                values,
                 errors,
                 touched,
                 handleChange,
                 handleBlur,
                 handleSubmit,
             }) => (
-                <Box id="Login">
+                <div id="Login">
                     {error ? <Alert severity="error">Login error, email or password incorrect!</Alert> : ""}
                     <Box className="form" paddingX={["20px", "30px", "45px"]}>
                         <LazyMotion features={domAnimation}>
@@ -123,7 +118,7 @@ export default function Login() {
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         onKeyDown={EnterHandleClick}
-                                        ref={formInput}
+                                        // ref={formInput}
                                         fullWidth
                                     />
                                     <p className="error">
@@ -140,7 +135,7 @@ export default function Login() {
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         onKeyDown={EnterHandleClick}
-                                        ref={formInput}
+                                        // ref={formInput}
                                         fullWidth
                                     />
                                     <p className="error">
@@ -176,7 +171,7 @@ export default function Login() {
                             </m.div>
                         </LazyMotion>
                     </Box>
-                </Box>
+                </div>
             )}
         </Formik>
     );

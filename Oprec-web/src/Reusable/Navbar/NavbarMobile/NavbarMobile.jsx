@@ -1,43 +1,9 @@
-import React, { useEffect, useState, Suspense, lazy } from 'react'
+import { useEffect, useState, Suspense, lazy } from 'react'
 import "./NavbarMobile.scss"
 import { useSelector } from 'react-redux'
 import { selectPage } from '../../../Redux/features/page/pageSlice'
 import { LazyMotion, m, domAnimation, useAnimation } from "framer-motion"
-const NavbarMobileMenu = lazy(() => import('./NavbarMobileMenu.jsx'))
-
-// Menu
-const Menu = [
-    {
-        name: 'Home',
-        link: '/',
-        state: 'home',
-    },
-    {
-        name: 'About',
-        link: '/about',
-        state: 'about',
-    },
-    {
-        name: 'Division',
-        link: '/division',
-        state: 'division',
-    },
-    {
-        name: 'Join',
-        link: '/join',
-        state: 'join',
-    },
-    {
-        name: 'Login',
-        link: '/login',
-        state: 'login',
-    },
-    {
-        name: 'Register',
-        link: '/register',
-        state: 'register',
-    },
-]
+const NavbarMobileMenu = lazy(() => import('./NavbarMobileMenu/NavbarMobileMenu.jsx'))
 
 
 export default function NavbarMobile() {
@@ -45,7 +11,6 @@ export default function NavbarMobile() {
     const page = useSelector(selectPage);
     const [open, setopen] = useState(true);
     // animation
-
     const control = useAnimation();
     const bar1 = useAnimation();
     const bar2 = useAnimation();
@@ -53,7 +18,6 @@ export default function NavbarMobile() {
 
     useEffect(() => {
         if (open === false) {
-
             control.start({
                 opacity: 0,
                 y: "-100vh",
@@ -82,7 +46,6 @@ export default function NavbarMobile() {
 
         }
         setopen(true);
-        console.log(open);
     }, [page])
     return (<>
         <LazyMotion features={domAnimation}>
@@ -92,7 +55,7 @@ export default function NavbarMobile() {
                     y: "-100vh",
                 }}
                 animate={control}
-                className='NavbarMenu'
+                className='Navbar-Mobile-Menu-Container'
 
             >
                 <Suspense fallback={""}>
@@ -105,7 +68,6 @@ export default function NavbarMobile() {
             aria-label='menu-button'
             onClick={() => {
                 setopen(!open);
-                console.log(open);
                 if (open) {
                     control.start({
                         opacity: 1,
@@ -114,17 +76,21 @@ export default function NavbarMobile() {
                             type: "spring",
                             stiffness: 100,
                             damping: 20,
-                            when: "beforeChildren",
+                            // when: "beforeChildren",
                         },
                     })
                     bar1.start({
                         y: 0,
+                        transition: {
+                            type: "spring",
+                            stiffness: 100,
+                            damping: 20,
+                        },
                     })
                     bar2.start({
                         y: 0,
                     })
                     navanimate.start({
-                        // y: "100vh",
                         transition: {
                             type: "spring",
                             stiffness: 100,
@@ -150,7 +116,6 @@ export default function NavbarMobile() {
                         y: 5,
                     })
                     navanimate.start({
-                        // y: "0vh",
                         transition: {
                             type: "spring",
                             stiffness: 100,
@@ -162,25 +127,27 @@ export default function NavbarMobile() {
             }
 
             }
-            className='NavbarMobileButton'>
-            <m.div
-                className='bar up'
-                animate={bar1}
-                initial={{
-                    y: -5,
-                }}
-            ></m.div>
-            <m.div
-                animate={bar2}
-                className='bar down'
-                initial={{
-                    y: 5,
-                }}
-            ></m.div>
+            className='Navbar-Mobile-Button'
+        >
+            <LazyMotion features={domAnimation}>
+                <m.div
+                    className='bar up'
+                    animate={bar1}
+                    initial={{
+                        y: -5,
+                    }}
+                ></m.div>
+            </LazyMotion>
+            <LazyMotion features={domAnimation}>
+                <m.div
+                    animate={bar2}
+                    className='bar down'
+                    initial={{
+                        y: 5,
+                    }}
+                ></m.div>
+            </LazyMotion>
         </m.button>
-        {/* <Box className="LogoMobile" color={'white'} position="fixed" left={"16px"} top="30px" fontWeight={"bold"} fontSize="30px">
-            UFEST
-        </Box> */}
     </>
     )
 }

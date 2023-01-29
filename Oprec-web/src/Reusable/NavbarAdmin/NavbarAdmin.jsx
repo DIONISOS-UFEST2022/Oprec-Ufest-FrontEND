@@ -6,7 +6,11 @@ import { selectPage } from "../../Redux/features/page/pageSlice";
 import { pageChanged } from "../../Redux/features/page/pageSlice";
 import axios from "axios";
 import { userRoleAdded } from "../../Redux/features/users/userRoleSlice";
+import { URL } from "../Service/URL";
+
+
 const NavbarButtonAdmin = React.lazy(() => import("./NavbarAdminButton/NavbarAdminButton"));
+
 
 export default function NavbarAdmin(props) {
     const page = useSelector(selectPage);
@@ -16,7 +20,7 @@ export default function NavbarAdmin(props) {
     // logout
     function logouthandler() {
         const login = localStorage.getItem('LoginID');
-        axios.get("http://127.0.0.1:8000/api/logout", {
+        axios.get(`${URL}/api/logout`, {
             headers:
                 { Authorization: `Bearer ${login}` }
         })

@@ -17,7 +17,14 @@ export default function DivisionNav(props) {
     return (<>
         <div className="DivisionNav">
             {DivisionData.filter((data) => data.id !== 0).map((filtered, index) => {
-                return <DivisionNavCard key={filtered.id} color={page === "about" ? "red" : "white"} className="DivisionNav" subTitle={filtered.name} Title={filtered.division} onClick={() => { props.handleClick(filtered.division); }} />
+                return <DivisionNavCard
+                    key={filtered.id}
+                    color={page === "about" ? "red" : "white"}
+                    className="DivisionNav"
+                    subTitle={filtered.name}
+                    Title={filtered.division}
+                    onClick={() => { props.handleClick(filtered.division); }}
+                />
             }
             )}
         </div>

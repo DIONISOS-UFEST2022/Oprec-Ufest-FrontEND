@@ -1,3 +1,5 @@
+@use "src/index" as index;
+
 .HomeButton {
     position: relative;
     border: none;
@@ -37,13 +39,14 @@
     }
 
     .front {
+        @include index.prevent-select;
+        font-family: index.$font2;
+        font-size: 1.35rem;
         display: block;
         position: relative;
         padding: 12px 42px;
         border-radius: 12px;
-        // font-family: 
-        font-size: 1.25rem;
-        color: white;
+        color: index.$white;
         background: linear-gradient(-45deg, #7b0025, #ff33a3, #f03c3c);
         will-change: transform;
         transform: translateY(-4px);
@@ -52,41 +55,36 @@
         background-size: 600%;
         -webkit-animation: anime 5s linear infinite;
         animation: anime 5s linear infinite;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -o-user-select: none;
-        user-select: none;
     }
 
-}
+    :hover {
+        filter: brightness(110%);
+    }
 
-.HomeButton:hover {
-    filter: brightness(110%);
-}
+    :hover .front {
+        transform: translateY(-6px);
+        transition:
+            transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+    }
 
-.HomeButton:hover .front {
-    transform: translateY(-6px);
-    transition:
-        transform 250ms cubic-bezier(.3, .7, .4, 1.5);
-}
+    :active .front {
+        transform: translateY(-2px);
+        transition: transform 34ms;
+    }
 
-.HomeButton:active .front {
-    transform: translateY(-2px);
-    transition: transform 34ms;
-}
+    :hover .shadow {
+        transform: translateY(4px);
+        transition:
+            transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+    }
 
-.HomeButton:hover .shadow {
-    transform: translateY(4px);
-    transition:
-        transform 250ms cubic-bezier(.3, .7, .4, 1.5);
-}
+    :active .shadow {
+        transform: translateY(1px);
+        transition: transform 34ms;
+    }
 
-.HomeButton:active .shadow {
-    transform: translateY(1px);
-    transition: transform 34ms;
-}
+    :focus:not(:focus-visible) {
+        outline: none;
+    }
 
-.HomeButton:focus:not(:focus-visible) {
-    outline: none;
 }

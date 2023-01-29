@@ -1,38 +1,34 @@
+@use "src/index" as index;
+
+
 .Join {
-    // background-image: url('/Asset/Image/Background/Homebg.webp');
-    background-image: url("./../../../Asset/Image/Background/Homebg.webp");
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 120%;
+    @include index.background("./../../../Asset/Image/Background/Homebg.webp");
+    @include index.center;
+    height: 100%;
     min-height: 120vh;
-    padding-bottom: 40px;
 
     .join {
-        padding-top: 100px;
+        @include index.center;
+        @include index.prevent-select;
         height: 100%;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -o-user-select: none;
-        user-select: none;
 
         .form {
             position: relative;
             z-index: 1;
-            background: #FFFFFF;
+            background: index.$white;
             border-radius: 10px;
-            max-width: 360px;
+            width: index.$form-width;
             margin: 0 auto 100px;
             padding: 45px;
             text-align: center;
+            font-family: index.$font2;
 
             .JoinTitle {
-                font-family: 'Rocket-Vintage';
-                user-select: none;
+                @include index.prevent-select;
+                font-family: index.$font;
                 font-size: 60px;
-                color: #395699;
+                color: index.$yellow;
+                // text-shadow: index.$text-shadow;
                 margin-bottom: 15px;
                 display: block;
                 font-weight: bold;
@@ -40,10 +36,17 @@
 
             .Button-Bottom {
                 display: flex !important;
-                // flex-direction: column;
                 justify-content: space-between !important;
                 align-items: center;
+
+                button {
+                    background-color: index.$blue;
+                    border: none;
+                    color: index.$white;
+                }
+
             }
+
 
             .textarea {
                 margin-bottom: 80px;
@@ -51,7 +54,7 @@
 
             .Wrapper {
                 padding: 15px;
-                background: #f2f2f2;
+                background: index.$white;
                 border-radius: 5px;
             }
 
@@ -77,7 +80,7 @@
                 padding: 15px;
                 box-sizing: border-box;
                 font-size: 14px;
-                font-family: 'Comfortaa', cursive;
+                font-family: index.$font2;
                 width: 100%;
 
             }
@@ -105,20 +108,10 @@
                 user-select: none;
             }
 
-
-
             .Img-Placeholder {
                 max-width: 50p;
                 max-height: 50px;
             }
         }
-
-
     }
-
-
-
-
-
-
 }

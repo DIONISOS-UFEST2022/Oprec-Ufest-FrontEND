@@ -11,7 +11,8 @@ const initialState = {
     id: "",
     token: "",
     isLogin: false,
-    isRegister: false
+    isRegister: false,
+    isJoin: false,
 };
 
 const userDataSlice = createSlice({
@@ -33,6 +34,9 @@ const userDataSlice = createSlice({
             state.token = action.payload.token;
             state.isLogin = action.payload.isLogin;
             state.isRegister = action.payload.isRegister;
+        },
+        userSetJoin(state) {
+            state.isJoin = true;
         }
     }
 });
@@ -40,6 +44,6 @@ const userDataSlice = createSlice({
 
 export const selectUser = (state) => state.userData;
 
-export const { userLogin, userRegister, setUserToken } = userDataSlice.actions;
+export const { userLogin, userRegister, setUserToken, userSetJoin } = userDataSlice.actions;
 
 export default userDataSlice.reducer;
