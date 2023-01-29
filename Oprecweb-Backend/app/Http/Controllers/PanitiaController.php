@@ -78,7 +78,10 @@ class PanitiaController extends Controller
         $service->appendData($panitia);
 
         if ($panitia) {
-            return new PanitiaResource($panitia, 201);
+            return response()->json([
+                'success' => true,
+                'data' => new PanitiaResource($panitia, 201),
+            ], 201);
         } else {
             return response()->json([
                 'success' => false,
@@ -146,7 +149,6 @@ class PanitiaController extends Controller
             'is_accepted' => 'numeric:1'
         ]);
 
-
         $input = collect(request()->all())->filter()->all();
 
         if ($request->vaccine_certificate) {
@@ -171,7 +173,10 @@ class PanitiaController extends Controller
         $service->init();
 
         if ($panitia) {
-            return new PanitiaResource($panitia, 201);
+            return response()->json([
+                'success' => true,
+                'data' => new PanitiaResource($panitia, 201),
+            ], 201);
         } else {
             return response()->json([
                 'success' => false,

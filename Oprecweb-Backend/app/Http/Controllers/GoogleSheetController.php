@@ -45,7 +45,10 @@ class GoogleSheetController extends Controller
         if (!$data) {
             return response()->json('Something When Wrong... try again later');
         }
-        return response()->json('success!');
+
+        return response()->json([
+            'success' => true,
+        ], 201);
     }
 
     public function appendData($panitia)
@@ -77,6 +80,8 @@ class GoogleSheetController extends Controller
         if (!$data) {
             return response()->json('Something When Wrong... try again later');
         }
-        return response()->json('success!');
+        return response()->json([
+            'success' => true,
+        ], 201);
     }
 }

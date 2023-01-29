@@ -27,7 +27,12 @@ class AuthenticationController extends Controller
             ]);
         }
 
-        return $user->createToken('userLogin')->plainTextToken;
+
+        return response()->json([
+            'success' => true,
+            'login_token' => $user->createToken('userLogin')->plainTextToken,
+            'role' => $user->role_id,
+        ], 201);
     }
 
     public function logout(Request $request)
