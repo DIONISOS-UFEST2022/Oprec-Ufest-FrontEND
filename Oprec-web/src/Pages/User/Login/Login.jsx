@@ -55,7 +55,6 @@ export default function Login() {
                 const userLogin = async () => {
                     try {
                         const res = await postRequest('login', values);
-                        console.log(res.data);
                         if (res.data.success === true) {
                             dispatch(userTokenAdded(res.data));
                             if (res.data.role === 1) {
@@ -68,7 +67,6 @@ export default function Login() {
                                 Setloading(false);
                             }
                             localStorage.setItem('LoginID', res.data.login_token);
-                            // localStorage.setItem('LoginID', res.data.id);
                             Setloading(false);
                         } else {
                             Setloading(false);

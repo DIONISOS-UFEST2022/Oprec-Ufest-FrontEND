@@ -2,14 +2,26 @@
 
 
 .home {
-    @include index.background('./../../../Asset/Image/Background/Homebg.webp');
-    @include index.center;
-    padding-top: 10vh;
-    height: 85vh;
-    padding-bottom: 5vh;
     position: relative;
     flex-direction: column;
     overflow: hidden;
+    will-change: height;
+    @include index.background('./../../../Asset/Image/Background/Homebg.webp');
+    @include index.center;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    padding-bottom: 10vh;
+
+    @media screen and (max-width: index.$sm) {
+        background-image: url('./../../../Asset/Image/Background/Homebg.webp');
+        background-size: cover;
+        background-position: center;
+        background-attachment: local;
+        height: 120%;
+        padding-top: 20%;
+        padding-bottom: 20%;
+    }
 
     h1 {
         font-size: 100px;
@@ -37,17 +49,19 @@
 
     .heading {
         @include index.prevent-select;
+        font-family: index.$font;
+        color: index.$yellow;
+        text-shadow: index.$text-shadow;
         width: auto;
-        height: 60px;
+        height: 35px;
         overflow: hidden;
         margin: 20px;
         margin-top: 50px;
-        z-index: index.$z-index-2;
+        z-index: index.$z-index-3;
         pointer-events: none;
-        font-family: index.$font;
         font-size: 50px;
-        color: index.$yellow;
-        text-shadow: index.$text-shadow;
+        font-weight: bold;
+
     }
 
     @media screen and (max-width: index.$sm) {
@@ -59,8 +73,9 @@
     .pilar {
         position: absolute;
         width: 80vh;
-        height: 80vh;
-        bottom: 0px;
+        height: 110vh;
+        bottom: -4vh;
+        transform: scale(1.15) !important;
 
         &.left {
             @include index.image('./../../../Asset/Image/Background/pilarLeft.webp');

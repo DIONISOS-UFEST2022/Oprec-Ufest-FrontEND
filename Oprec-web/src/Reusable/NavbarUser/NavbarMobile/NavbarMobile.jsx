@@ -23,10 +23,6 @@ export default function NavbarMobile() {
                 y: "-100vh",
                 transition: {
                     type: "spring",
-                    stiffness: 100,
-                    damping: 20,
-                    when: "afterChildren",
-
                 },
             })
             bar1.start({
@@ -36,11 +32,8 @@ export default function NavbarMobile() {
                 y: 5,
             })
             navanimate.start({
-                // y: "0vh",
                 transition: {
                     type: "spring",
-                    stiffness: 100,
-                    damping: 20,
                 },
             })
 
@@ -73,10 +66,7 @@ export default function NavbarMobile() {
                         opacity: 1,
                         y: "0vh",
                         transition: {
-                            type: "spring",
-                            stiffness: 100,
-                            damping: 20,
-                            // when: "beforeChildren",
+                            type: "tween",
                         },
                     })
                     bar1.start({

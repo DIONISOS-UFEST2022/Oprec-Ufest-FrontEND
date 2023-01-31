@@ -4,11 +4,6 @@
 #Login {
     @include index.background("./../../../Asset/Image/Background/Homebg.webp");
     @include index.center;
-    // height: 100%;
-    // min-height: 100vh;
-    // padding-top: 15vh;
-    // padding-bottom: 5vh;
-    // padding-inline: 10px;
     height: 100%;
     min-height: 120vh;
 
@@ -25,6 +20,14 @@
         text-align: center;
         padding-inline: 40px;
 
+        @media screen and (max-width: index.$sm) {
+            width: 60%;
+            height: auto;
+            width: 100%;
+            margin-inline: 20px;
+        }
+
+
         .Title {
             @include index.prevent-select;
             font-weight: bold;
@@ -34,6 +37,10 @@
             margin: 0;
             margin-top: 20px;
             font-family: index.$font;
+
+            @media screen and (max-width: index.$sm) {
+                font-size: 26px;
+            }
         }
 
         .Subtitle {
@@ -44,8 +51,10 @@
             margin-bottom: 10px;
             display: block;
 
+            @media screen and (max-width: index.$sm) {
+                font-size: 12px;
+            }
         }
-
 
         // Google
         .Google {
@@ -65,7 +74,18 @@
             .googleicon {
                 width: 20px;
                 height: 20px;
+
+                @media screen and (max-width: index.$sm) {
+                    width: 10px;
+                    height: 10px;
+                }
             }
+
+            @media screen and (max-width: index.$sm) {
+                height: 30px;
+                font-size: 10px;
+            }
+
         }
 
 
@@ -77,6 +97,12 @@
             justify-content: space-between;
             align-items: center;
             padding-inline: 10px;
+
+            @media screen and (max-width: index.$sm) {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
         }
 
         .Divider {

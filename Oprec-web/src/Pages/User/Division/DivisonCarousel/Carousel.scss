@@ -8,8 +8,9 @@
         .Carousel-Swiper-Slide {
             @include index.prevent-select;
             @include index.center;
-            width: 400px;
+            width: 300px;
             height: auto;
+            padding-left: 10px;
             background-color: rgb(252, 199, 199, 0);
 
             .Carousel-Image {
@@ -34,6 +35,67 @@
         -webkit-box-align: center;
         -ms-flex-align: center;
     }
+}
+
+.Modal {
+    @include index.modalcontainer;
+    @include index.center;
+    // flex-direction: column;
+    padding: 20px;
+    opacity: 1 !important;
+    display: block;
 
 
+    .Title {
+        @include index.center;
+        display: block;
+        font-family: index.$font;
+        font-size: 30px;
+        font-weight: bolder;
+        color: index.$blue;
+        text-shadow: none !important;
+    }
+
+    .Image {
+        @include index.center;
+        width: 100px;
+        height: 100px;
+        border-radius: 10px;
+        object-fit: cover;
+        background-color: rgb(255, 255, 255, 0.7);
+        border-radius: 50%;
+    }
+
+    .NameDesc {
+        @include index.center;
+        flex-direction: column;
+        margin-top: 10px;
+        font-family: index.$font;
+    }
+
+    .Desc {
+        font-family: index.$font2;
+        font-size: 15px;
+        font-weight: bolder;
+        color: index.$white;
+        text-align: justify;
+        text-align-last: center;
+        overflow-wrap: break-word;
+        word-break: break-all;
+        line-height: 15px;
+    }
+}
+
+
+.Carousel-Detail {
+    @include index.center;
+    width: 300px;
+    height: 300px;
+
+    .Carousel-Image {
+        // transform: scale(0.1);
+        object-fit: cover !important;
+        background-position: center !important;
+        // background-color: rgb(255, 255, 255, 0.7);
+    }
 }

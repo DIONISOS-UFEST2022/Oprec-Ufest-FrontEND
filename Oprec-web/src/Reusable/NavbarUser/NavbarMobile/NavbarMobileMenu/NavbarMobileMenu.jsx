@@ -1,28 +1,20 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import { Grid } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 import { pageChanged } from '../../../../Redux/features/page/pageSlice'
-import { m, useInView, LazyMotion, domAnimation } from 'framer-motion';
+import { m, LazyMotion, domAnimation } from 'framer-motion';
 import { selectuserRole } from '../../../../Redux/features/users/userRoleSlice'
 import { NavbarMobileMenuList as Menus } from './NavbarMobileMenuList'
 
 function Card(props) {
-    const ref = useRef(null);
-    const isInView = useInView(ref);
     return (
-        <Grid style={{
-            transform: isInView ? "" : "translateY(-30px)",
-            opacity: isInView ? 1 : 0,
-            transition: "0.3s",
-            transitionDelay: isInView ? "0.5s" : "0s"
-        }}
-            item xs={12}
+        <Grid item
+            xs={12}
             className="Navbar-Mobile-Menu-Card"
-
         >
-            <div ref={ref} onClick={props.onClick} onTouchEnd={props.onTouch} className='title'>
+            <button onTouchStartCapture={props.onTouch} className='Navbar-Menu-Button'>
                 {props.name}
-            </div>
+            </button>
         </Grid >
     )
 }

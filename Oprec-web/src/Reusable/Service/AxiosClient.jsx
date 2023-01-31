@@ -1,5 +1,4 @@
 import axios from 'axios';
-// import { URL as link } from './URL';
 
 const axiosClient = axios.create();
 
@@ -12,7 +11,7 @@ localStorage.getItem('LoginID') ? axiosClient.defaults.headers = {
     :
 
     axiosClient.defaults.headers = {
-        Authorization: `Bearer ${localStorage.getItem('LoginID')}`,
+        // Authorization: `Bearer ${localStorage.getItem('LoginID')}`,
     };
 
 

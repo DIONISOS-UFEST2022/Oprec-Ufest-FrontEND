@@ -1,0 +1,17 @@
+@use "src/index.scss" as index;
+
+.Profile-Button {
+    font-family: index.$font;
+    pointer-events: all;
+    cursor: pointer;
+    color: index.$yellow;
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    padding: 10px;
+
+    &:hover {
+        background-color: #000;
+        color: #fff;
+    }
+}

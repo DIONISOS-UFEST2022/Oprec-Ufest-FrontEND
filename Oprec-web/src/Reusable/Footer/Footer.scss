@@ -1,5 +1,9 @@
 @use "src/index" as index;
 
+$title-font-size: 30px;
+$font-size: 20px;
+$margin-start: 20px;
+
 #Footer {
     @include index.prevent-select;
     height: 100%;
@@ -7,34 +11,40 @@
     justify-content: space-between;
     overflow: hidden;
     padding-top: 70px;
-    background-color: index.$black;
+    background: rgb(178, 138, 103);
+    background: -moz-linear-gradient(0deg, rgba(178, 138, 103, 1) 0%, rgba(146, 100, 69, 1) 100%);
+    background: -webkit-linear-gradient(0deg, rgba(178, 138, 103, 1) 0%, rgba(146, 100, 69, 1) 100%);
+    background: linear-gradient(0deg, rgba(178, 138, 103, 1) 0%, rgba(146, 100, 69, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#b28a67", endColorstr="#926445", GradientType=1);
 
     .title {
         @include index.prevent-select;
         color: index.$yellow;
         font-family: index.$font;
         font-weight: bolder;
-        font-size: 30px;
+        font-size: $title-font-size;
+        margin: 10px;
+        margin-inline-start: $margin-start;
+        height: 40px;
     }
 
     .Footer-Section {
         @include index.prevent-select;
         width: 100%;
         color: index.$white;
-        // padding: 20px;
         text-align: left;
         overflow: visible;
 
         .Logo-Wrap {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
+            @include index.center;
+            overflow: hidden;
 
             .UFEST-LOGO {
+                @include index.center;
+                background-color: rgb(255, 0, 0, 0);
                 transform: scale(1.5);
-                width: 200px;
-                height: 200px;
+                width: 250px;
+                height: 250px;
                 border-radius: 50%;
                 pointer-events: none;
             }
@@ -42,50 +52,67 @@
 
 
         .address {
-            margin: 10px;
+            margin: 0;
+            margin-left: $margin-start;
             font-family: index.$font2;
+            font-size: $font-size;
+            line-height: 25px;
+
+            @media screen and (max-width: index.$sm) {
+                font-size: 15px;
+                line-height: 20px;
+            }
         }
 
         .link:hover {
             text-decoration: underline;
-
         }
     }
 
     .Footer-Foot {
+        @include index.prevent-select;
         padding: 20px;
         text-align: center;
-        color: index.$white;
+        color: rgba(219, 219, 219, 1);
         font-family: index.$font2;
+        font-size: $font-size;
+        margin-top: 20px;
 
         .purpleText {
-            color: index.$purple;
+            color: yellow;
             font-family: index.$font2;
+
+
+        }
+
+        @media screen and (max-width: index.$sm) {
+            font-size: 15px;
+            line-height: 20px;
         }
     }
 }
 
 
 .Footer-Link-Card {
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    color: index.$white;
+    @include index.prevent-select;
+    display: inline;
     text-decoration: none;
-    width: 100%;
     position: relative;
+    margin: 0%;
 
     .Card-Image {
-        width: 25px;
-        height: 25px;
+        border-radius: 50%;
+        background-color: index.$blue;
+        width: 45px;
+        height: 45px;
+        margin-left: $margin-start;
+        transition: 0.5s all;
+        pointer-events: all;
+
+        :hover {
+            background-color: index.$white;
+        }
+
     }
-
-    .Card-Caption {
-        @include index.underline;
-        margin-left: 10px;
-        font-family: index.$font2;
-
-    }
-
 
 }

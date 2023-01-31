@@ -1,0 +1,11 @@
+@use "src/index.scss" as index;
+
+#WelcomeAnimate {
+    @include index.center;
+    // transform: translate3d(0, -180px, 0);
+
+    .mv-svg-title {
+        @include index.animatesvg;
+    }
+
+}

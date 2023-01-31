@@ -1,5 +1,4 @@
 @use '../../../index.scss' as index;
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
 
 .Navbar-Mobile-Button {
     @include index.prevent-select;
@@ -11,7 +10,7 @@
     top: 20px;
     right: 15px;
     border-radius: 50%;
-    z-index: 101;
+    z-index: index.$z-index-6;
     pointer-events: all;
     display: flex;
     flex-direction: column;
@@ -37,10 +36,15 @@
 
 }
 
+
+.navbar-mobile-menu-button {
+    z-index: index.$z-index-6;
+}
+
 .Navbar-Mobile-Menu-Container {
     @include index.prevent-select;
     @include index.full-screen;
-    background-color: index.$yellow;
+    background-color: rgb(245, 214, 63, 0.95);
     text-shadow: 5px 0px 9px index.$black;
     z-index: index.$z-index-6;
     overflow: hidden;
@@ -48,13 +52,17 @@
     top: 0;
     @include index.center;
     text-align: center;
-
+    will-change: transform, opacity;
 
     .Navbar-Mobile-Menu-Card {
-        .title {
-            color: index.$white;
-            margin: 10px;
+        .Navbar-Menu-Button {
+            border: none;
+            background-color: rgb(255, 255, 255, 0);
+            text-shadow: index.$text-shadow;
             font-family: index.$font;
+            color: index.$white;
+            z-index: index.$z-index-6;
+            margin: 10px;
             font-size: 40px;
             font-weight: 700;
             pointer-events: all;

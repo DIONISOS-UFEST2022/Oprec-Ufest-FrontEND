@@ -26,4 +26,4 @@ export function Heartface() {
     )
 }
 
-export default Heartface
+export default Heartface;

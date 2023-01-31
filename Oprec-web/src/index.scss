@@ -1,10 +1,43 @@
+@font-face {
+    font-family: 'Rocket-Vintage';
+    src:
+        url("/Asset/Font/Rocket\ Vintage.ttf") format('truetype'),
+        url("/Asset/Font/Rocket\ Vintage.otf") format('opentype'),
+        url("/Asset/Font/Rocket\ Vintage.woff") format('woff'),
+        url("/Asset/Font/Rocket\ Vintage.woff2") format('woff2'),
+        url("/Asset/Font/Rocket\ Vintage.eot") format('embedded-opentype'),
+        url("/Asset/Font/Rocket\ Vintage.svg") format('svg'),
+}
+
+@font-face {
+    font-family: 'Louis George Cafe';
+    src:
+        url("/Asset/Font/Louis\ George\ Cafe.ttf") format('truetype'),
+        url("/Asset/Font/Louis\ George\ Cafe.otf") format('opentype'),
+        url("/Asset/Font/Louis\ George\ Cafe.woff") format('woff'),
+        url("/Asset/Font/Louis\ George\ Cafe.woff2") format('woff2'),
+        url("/Asset/Font/Louis\ George\ Cafe.eot") format('embedded-opentype'),
+        url("/Asset/Font/Louis\ George\ Cafe.svg") format('svg'),
+}
+
+$font: 'Rocket-Vintage' !important;
+$font2: 'Louis George Cafe' !important;
+
 // COLOR SCHEME
-$yellow: rgb(245, 214, 63);
-$red: rgb(198, 36, 48);
-$blue: rgb(20, 80, 117);
+$yellow: #f5d63f;
+$red: #c62430;
+$blue: #145075;
 $white : rgb(255, 255, 255);
 $black : rgb(0, 0, 0);
 $purple: rgb(181, 21, 255);
+
+@mixin orangegrad {
+    background: rgb(245, 205, 51);
+    background: -moz-linear-gradient(0deg, rgba(245, 205, 51, 1) 0%, rgba(252, 159, 50, 1) 46%);
+    background: -webkit-linear-gradient(0deg, rgba(245, 205, 51, 1) 0%, rgba(252, 159, 50, 1) 46%);
+    background: linear-gradient(0deg, rgba(245, 205, 51, 1) 0%, rgba(252, 159, 50, 1) 46%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f5cd33", endColorstr="#fc9f32", GradientType=1);
+}
 
 // Media Queries
 $sm: 30em;
@@ -27,7 +60,7 @@ $z-index-7: 7;
 $form-width: 360px;
 
 // text shadow
-$text-shadow: 2px 0px 9px rgba(0, 0, 0, 1);
+$text-shadow: 2px 3px 9px rgba(0, 0, 0, 1);
 
 // Background
 @mixin background ($background_image) {
@@ -50,21 +83,6 @@ $text-shadow: 2px 0px 9px rgba(0, 0, 0, 1);
     height: 100vh;
 }
 
-// Default Font
-@font-face {
-    font-family: 'Rocket-Vintage';
-    src: url('../Assets/Fonts/Rocket-Vintage.ttf') format('truetype');
-}
-
-
-@font-face {
-    font-family: 'Louis George Cafe';
-    src: url('../Assets/Fonts/Louis-George-Cafe.ttf') format('truetype');
-}
-
-$font: 'Rocket-Vintage', sans-serif;
-$font2: 'Louis George Cafe', sans-serif;
-
 
 // prevent selection
 @mixin prevent-select {
@@ -79,7 +97,7 @@ $font2: 'Louis George Cafe', sans-serif;
 // Scrollbar
 
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 3px;
 }
 
 /* Track */
@@ -121,8 +139,24 @@ $font2: 'Louis George Cafe', sans-serif;
     margin: 0;
 }
 
-// Center
+// Modal Container
+@mixin modalcontainer {
+    @include orangegrad();
+    // background-color: ;
+    height: 400px !important;
+    width: 250px;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: none !important;
+    position: absolute;
+    border-radius: 40px;
+    padding: 30px;
+}
 
+// Center
 @mixin center {
     display: flex;
     justify-content: center;
@@ -131,9 +165,7 @@ $font2: 'Louis George Cafe', sans-serif;
     -webkit-align-items: center;
 }
 
-
 // Underline Animation
-
 @mixin underline($background-color: $yellow) {
     position: relative;
     overflow: hidden;
@@ -156,4 +188,162 @@ $font2: 'Louis George Cafe', sans-serif;
         transform-origin: bottom left;
     }
 
+}
+
+// Ripple effect
+@mixin ripple {
+    border-radius: 20px;
+    animation: ripple 2s infinite !important;
+
+    @media screen and (max-width: $sm) {
+        animation: none !important;
+    }
+}
+
+@keyframes ripple {
+    $color: rgb(162, 162, 162);
+
+    0% {
+        box-shadow:
+            0 0 0 0px $color,
+            0 0 0 0px $color,
+            0 0 0 0px $color,
+            0 0 0 0px $color,
+            0 0 0 0px $color,
+            0 0 0 0px $color,
+            0 0 0 0px $color,
+            0 0 0 0px $color;
+    }
+
+    100% {
+        box-shadow:
+            0 0 0 5px rgba(68, 68, 238, 0.0),
+            0 0 0 7px rgba(255, 255, 255, 0),
+            0 0 0 10px rgba(68, 68, 238, 0.0),
+            0 0 0 12px rgba(255, 255, 255, 0),
+            0 0 0 20px rgba(68, 68, 238, 0.0),
+            0 0 0 22px rgba(255, 255, 255, 0),
+            0 0 0 35px rgba(68, 68, 238, 0.0),
+            0 0 0 37px rgba(255, 255, 255, 0);
+    }
+
+}
+
+
+
+@mixin animatesvg {
+    position: absolute;
+    height: 700px;
+    width: 700px;
+
+    .text-path {
+        display: block;
+        fill-opacity: 0;
+        // fill: $yellow;
+        fill-opacity: 0;
+        stroke: url(#gradation-1);
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke: #d2b;
+        stroke-width: 3px;
+    }
+
+    .text-path {
+        stroke-width: 3px;
+        $nth: 1;
+        $delay: 0;
+        will-change: stroke-dashoffset, stroke-dasharray, stroke, fill-opacity, filter, box-shadow, transform;
+
+        @while $nth <=10 {
+            &:nth-child(#{$nth}) {
+                box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+                animation: dash1 2.0s linear forwards;
+                animation-delay:#{$delay}s;
+                stroke-dasharray: 800;
+                stroke-dashoffset: 800;
+                filter: url(#shadow);
+
+            }
+
+            $nth: $nth+1;
+            $delay: $delay+0.1;
+        }
+
+        $nth: 11;
+        $delay: 0;
+
+        @while $nth <=36 {
+            &:nth-child(#{$nth}) {
+                animation: dash1_en 2.0s linear forwards;
+                animation-delay:#{$delay}s;
+                stroke-dasharray: 200;
+                filter: url(#shadow);
+            }
+
+            $nth: $nth+1;
+            $delay: $delay+0.04;
+        }
+    }
+
+    @keyframes dash1 {
+        0% {
+            stroke-dashoffset: 800;
+            stroke-width: 3px;
+        }
+
+        50% {
+            stroke-dashoffset: 1600;
+            stroke-width: 0.1px;
+        }
+
+        50.1% {
+            stroke-dashoffset: 800;
+        }
+
+        80% {
+            stroke-width: 2px;
+            fill: #d2b;
+            fill-opacity: 0;
+        }
+
+        100% {
+            stroke-dashoffset: 0;
+            stroke: $blue;
+            stroke-width: 0.5;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+            fill: $yellow;
+            fill-opacity: 1;
+            stroke-dasharray: 400;
+        }
+    }
+
+    @keyframes dash1_en {
+        0% {
+            stroke-dashoffset: 200;
+            stroke-width: 2px;
+        }
+
+        50% {
+            stroke-dashoffset: 400;
+            stroke-width: 0.1px;
+        }
+
+        50.1% {
+            stroke-dashoffset: 200;
+        }
+
+        80% {
+            stroke-width: 1px;
+            fill: #d2b;
+            fill-opacity: 0;
+        }
+
+        100% {
+            stroke-dashoffset: 0;
+            stroke: $blue;
+            stroke-width: 0.5;
+            fill: $yellow;
+            fill-opacity: 1;
+        }
+    }
 }

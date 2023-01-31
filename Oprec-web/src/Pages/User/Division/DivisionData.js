@@ -20,6 +20,7 @@ export const DivisionData = [
         division: "BPH",
         description: "Atlas digambarkan sebagai makhluk laut yang menopang pilar-pilar yang memisahkan langit dan bumi",
         color: "Active",
+        jobdesk: "",
         image: Atlas,
 
     },

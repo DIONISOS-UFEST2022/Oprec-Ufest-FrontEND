@@ -6,9 +6,11 @@
     position: fixed;
     background-color: index.$yellow;
     z-index: index.$z-index-7;
-
+    
 
     .Caption {
+        @include index.prevent-select;
+        text-align: center;
         font-family: index.$font;
         font-weight: bold;
         font-size: 30px;
@@ -29,7 +31,7 @@
         margin: 8px;
         border-radius: 50%;
         background: #fff;
-        animation: lds-circle 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+        animation: lds-circle 6s cubic-bezier(0, 0.2, 0.8, 1) infinite;
     }
 
     @keyframes lds-circle {

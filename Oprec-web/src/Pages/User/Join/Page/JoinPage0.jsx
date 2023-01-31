@@ -14,7 +14,7 @@ export default function JoinPage0() {
             <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
                 <ListItem alignItems="flex-start">
                     <ListItemAvatar>
-                        <Avatar alt="1" sx={{ bgcolor: "green" }} src="/static/images/avatar/1.jpg" />
+                        <Avatar alt="1" sx={{ bgcolor: "green" }} src="/1.jpg" />
                     </ListItemAvatar>
                     <ListItemText
                         primary="Sertifikat Covid-19"
@@ -28,7 +28,7 @@ export default function JoinPage0() {
                 <Divider variant="inset" component="li" />
                 <ListItem alignItems="flex-start">
                     <ListItemAvatar>
-                        <Avatar alt="2" sx={{ bgcolor: "green" }} src="/static/images/avatar/2.jpg" />
+                        <Avatar alt="2" sx={{ bgcolor: "green" }} src="/2.jpg" />
                     </ListItemAvatar>
                     <ListItemText
                         primary="Portofolio (Opsional)"

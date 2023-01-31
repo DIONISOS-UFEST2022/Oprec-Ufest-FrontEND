@@ -1,90 +1,71 @@
 @use "src/index" as index;
 
 .HomeButton {
+    @include index.center;
     position: relative;
     border: none;
-    background: transparent;
     padding: 0;
     cursor: pointer;
-    outline-offset: 4px;
-    transition: filter 250ms;
-    z-index: 3;
+    z-index: index.$z-index-2;
+    height: 250px;
+    width: 400px;
+    transform: translate3d(0, -580px, 0);
 
-    .shadow {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border-radius: 12px;
-        background: hsl(0deg 0% 0% / 0.25);
-        will-change: transform;
-        transform: translateY(2px);
-        transition:
-            transform 600ms cubic-bezier(.3, .7, .4, 1);
+    @media screen and (max-width: index.$sm) {
+
+        height: 125px;
+        width: 200px;
     }
 
-    .edge {
+
+
+    .background {
+        @include index.prevent-select;
         position: absolute;
-        top: 0;
+        background-repeat: no-repeat;
+        z-index: index.$z-index-3;
+        width: 400px;
+        height: auto;
+        margin: auto;
         left: 0;
-        width: 100%;
-        height: 100%;
-        border-radius: 12px;
-        background: linear-gradient(to left,
-                hsl(340deg 100% 16%) 0%,
-                hsl(340deg 100% 32%) 8%,
-                hsl(340deg 100% 32%) 92%,
-                rgb(0, 82, 45) 100%);
+        right: 0;
+        transition: 250ms;
+        animation-direction: alternate-reverse;
+        will-change: translate;
+
+        @media screen and (max-width: index.$sm) {
+            width: 200px;
+            transform: translateY(-25px);
+        }
     }
 
     .front {
-        @include index.prevent-select;
-        font-family: index.$font2;
-        font-size: 1.35rem;
-        display: block;
-        position: relative;
-        padding: 12px 42px;
-        border-radius: 12px;
-        color: index.$white;
-        background: linear-gradient(-45deg, #7b0025, #ff33a3, #f03c3c);
-        will-change: transform;
-        transform: translateY(-4px);
-        transition:
-            transform 600ms cubic-bezier(.3, .7, .4, 1);
-        background-size: 600%;
-        -webkit-animation: anime 5s linear infinite;
-        animation: anime 5s linear infinite;
+        text-align: center;
+        color: index.$yellow;
+        text-shadow: index.$text-shadow;
+        font-family: index.$font;
+        font-size: 27px;
+        transform: scale(1.4) translateX(5px);
+        position: absolute;
+        z-index: index.$z-index-4;
+        width: 200px;
+        margin: auto;
+        left: 0;
+        right: 0;
+        pointer-events: none;
+
+        @media screen and (max-width: index.$sm) {
+            font-size: 14.1px;
+            width: 100px;
+            transform: translateY(-25px);
+
+        }
     }
 
     :hover {
-        filter: brightness(110%);
-    }
+        transform: scaleX(1.6);
+        word-spacing: 20px;
 
-    :hover .front {
-        transform: translateY(-6px);
-        transition:
-            transform 250ms cubic-bezier(.3, .7, .4, 1.5);
-    }
-
-    :active .front {
-        transform: translateY(-2px);
-        transition: transform 34ms;
-    }
-
-    :hover .shadow {
-        transform: translateY(4px);
-        transition:
-            transform 250ms cubic-bezier(.3, .7, .4, 1.5);
-    }
-
-    :active .shadow {
-        transform: translateY(1px);
-        transition: transform 34ms;
-    }
-
-    :focus:not(:focus-visible) {
-        outline: none;
     }
 
 }

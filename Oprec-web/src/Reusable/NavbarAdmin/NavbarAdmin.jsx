@@ -19,24 +19,22 @@ export default function NavbarAdmin(props) {
 
     // logout
     function logouthandler() {
-        const login = localStorage.getItem('LoginID');
-        axios.get(`${URL}/api/logout`, {
-            headers:
-                { Authorization: `Bearer ${login}` }
-        })
-            .then((res) => {
-                localStorage.removeItem('LoginID');
-                // console.log(res.data);
-                dispatch(pageChanged('login'));
-                dispatch(userRoleAdded('guest'));
+        // const login = localStorage.getItem('LoginID');
+        // axios.get(`${URL}/api/logout`, {
+        //     headers:
+        //         { Authorization: `Bearer ${login}` }
+        // })
+        //     .then((res) => {
+        //         localStorage.removeItem('LoginID');
+        //         dispatch(pageChanged('login'));
+        //         dispatch(userRoleAdded('guest'));
 
-            }
-            )
-            .catch((err) => {
-                // console.log(login)
-                console.error(err);
-            }
-            );
+        //     }
+        //     )
+        //     .catch((err) => {
+        //         console.error(err);
+        //     }
+        //     );
 
     }
     return (

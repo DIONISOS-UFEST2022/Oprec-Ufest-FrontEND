@@ -10,14 +10,20 @@
     .join {
         @include index.center;
         @include index.prevent-select;
+        // padding-top: 5vh;
         height: 100%;
+        max-width: 95vw;
+
+        @media screen and (max-width: index.$sm) {
+            padding-top: 15vh;
+        }
 
         .form {
+            width: index.$form-width;
             position: relative;
             z-index: 1;
             background: index.$white;
             border-radius: 10px;
-            width: index.$form-width;
             margin: 0 auto 100px;
             padding: 45px;
             text-align: center;
@@ -28,7 +34,6 @@
                 font-family: index.$font;
                 font-size: 60px;
                 color: index.$yellow;
-                // text-shadow: index.$text-shadow;
                 margin-bottom: 15px;
                 display: block;
                 font-weight: bold;
@@ -47,6 +52,7 @@
 
             }
 
+            
 
             .textarea {
                 margin-bottom: 80px;

@@ -8,6 +8,12 @@
     padding-top: 10vh;
     min-height: 100vh;
 
+
+    .GridItem {
+        @include index.center;
+        margin: 10px;
+    }
+
     .Title {
         @include index.center;
         font-family: index.$font;

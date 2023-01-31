@@ -1,66 +1,52 @@
 // react
-import { Suspense, lazy, useEffect } from "react";
+import { Suspense, lazy, useEffect, useState, useMemo, useCallback } from "react";
 // styling
 import "./Home.scss";
-import { LazyMotion, m, domAnimation } from "framer-motion"
-// import Dragon from "./Component/Dragon/Dragon";
-
-// import { Button } from "../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy";
-// import { Button } from "../../../Reusable/MaterialUICoreLazy/MaterialUIMaterialLazy";
-// import AudioPlayButton from "./Component/AudioPlayButton/AudioPlayButton";
-
-const Dragon = lazy(() => import("./Component/Dragon/Dragon"));
+// import { LazyMotion, m, domAnimation } from "framer-motion"
+// import WelcomeAnimate from "./Component/WelcomeAnimate/WelcomeAnimate";
+// import { useMediaQuery } from "@material-ui/core";
+// import UFESTLOGO from "./Component/UFESTLOGO/UFESTLOGO";
+import { useMediaQuery } from "@mui/material";
+import WelcomeAnimate from "./Component/WelcomeAnimate/WelcomeAnimate";
 const HomeButton = lazy(() => import("./Component/HomeButton/HomeButton"));
+const UFESTLOGO = lazy(() => import("./Component/UFESTLOGO/UFESTLOGO"));
+const Pilar = lazy(() => import("./pilar"));
 
 
 // start from here
 export default function Home() {
+    const [isMobile] = useState(useMediaQuery("(max-width: 600px)"));
     useEffect(() => {
         window.scrollTo(0, 0)
     }, []);
+    const MemoLogo = useCallback(() => {
+        return <UFESTLOGO />
+    }, [])
     return (
         <div className="home">
-            <Suspense fallback={""}>
-                <div rel="preload" decoding="async" className="pilar left" />
-                <div rel="preload" decoding="async" className="pilar right" />
-            </Suspense>
-            <LazyMotion features={domAnimation}>
-                <m.div
-                    initial={{
-                        opacity: 0,
-                        // y: -400
-                    }}
-                    animate={{
-                        opacity: 2,
-                        // y: 0,
-                        transition: {
-                            duration: 1,
-                        }
-                    }}
-                >
-                    <Suspense fallback={""}>
-
-                        <div
-                            rel="preload"
-                            loading="lazy"
-                            decoding="async"
-                            className="home-image"
-                        />
-                        {/* <Dragon /> */}
-                    </Suspense>
-                </m.div>
-            </LazyMotion>
-
-            <p className="heading">Welcome #Spartan</p>
-            <LazyMotion features={domAnimation}>
-                <m.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                >
+            {isMobile ?
+                <>
+                    <div
+                        rel="preload"
+                        loading="lazy"
+                        decoding="async"
+                        className="home-image"
+                    />
+                    {/* <MemoLogo /> */}
+                    <p className="heading">Welcome #Spartan</p>
                     <HomeButton />
-                </m.div>
-            </LazyMotion>
-            {/* <AudioPlayButton /> */}
+                </>
+                :
+                <>
+                    <Suspense fallback={""}>
+                        <Pilar />
+                    </Suspense>
+                    <MemoLogo />
+
+                    <WelcomeAnimate />
+                    <HomeButton />
+                </>
+            }
         </div>
     )
 }

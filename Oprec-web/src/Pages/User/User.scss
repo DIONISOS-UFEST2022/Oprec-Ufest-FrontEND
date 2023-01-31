@@ -1,5 +1,30 @@
+@use "src/index" as index;
+
 #User-Page {
     overflow: hidden;
     position: relative;
     min-height: 100vh;
+}
+
+.slash {
+    background-color: aqua;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    z-index: index.$z-index-7;
+    animation: arrow 1s 1;
+}
+
+@keyframes arrow {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(-200px, 10px);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
 }

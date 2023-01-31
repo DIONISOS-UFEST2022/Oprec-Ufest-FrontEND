@@ -5,33 +5,86 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "./Carousel.scss"
-import { Pagination } from "swiper";
+import { Pagination, Mousewheel, FreeMode } from "swiper";
 import { DivisionData } from "../DivisionData";
+import { Modal } from "@mui/material";
 
 
-export default function DivisonCarousel() {
-    return (
-        <div id="Carousel">
-            <Swiper
-                direction="horizontal"
-                keyboard={{
-                    enabled: true,
-                    onlyInViewport: false,
-                }}
-                slidesPerView={'auto'}
-                spaceBetween={30}
-                pagination={{
-                    clickable: true,
-                }}
-                modules={[Pagination]}
-                className="Carousel-Swiper"
-            >
-                {DivisionData.filter((item) => item.image).map((item, index) => {
-                    return <SwiperSlide className="Carousel-Swiper-Slide">
-                        <img rel="lazy" decoding="async" src={item.image} className="Carousel-Image" />
-                    </SwiperSlide>
-                })}
-            </Swiper>
+function CarouselDetail({ props }) {
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    return (<>
+        <Modal
+            sx={{
+            }}
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <div className='Modal'>
+                <div className='Title'>
+                    {props.name} ({props.division})
+                </div>
+                <div className='NameDesc'>
+                    &ldquo;{props.namedesc}&rdquo;
+                </div>
+                <div className='Desc'>
+                    {props.description}
+                </div>
+            </div>
+        </Modal>
+        <div onClick={handleOpen} className="Carousel-Detail">
+            <img rel="lazy" decoding="async" src={props.image} className="Carousel-Image" />
         </div>
+    </>)
+}
+
+export default function DivisonCarousel(props) {
+    return (
+        <>
+            <div id="Carousel">
+                <Swiper
+                    // direction="horizontal"
+                    // slidesPerView={1}
+                    // freeMode={true}
+                    // pagination={{ clickable: true }}
+                    // mousewheel={true}
+                    modules={[Pagination, Mousewheel, FreeMode]}
+                    slideToClickedSlide={true}
+                    direction="horizontal"
+                    keyboard={{
+                        enabled: true,
+                        onlyInViewport: false,
+                    }}
+                    mousewheel={{
+                        enabled: true,
+                        sensitivity: 1,
+                    }}
+                    parallax={true}
+                    slidesPerView={'auto'}
+                    spaceBetween={30}
+                    pagination={{
+                        clickable: true,
+                    }}
+                    // modules={[Pagination]}
+                    className="Carousel-Swiper"
+                    swipeHandler={".Carousel-Swiper-Slide"}
+                    scrollbar={{
+                        el: ".swiper-scrollbar",
+                        draggable: true,
+                        dragSize: 100,
+                    }}
+
+                >
+                    {DivisionData.filter((item) => item.image).map((item, index) => {
+                        return <SwiperSlide className="Carousel-Swiper-Slide">
+                            <CarouselDetail props={item} />
+                        </SwiperSlide>
+                    })}
+                </Swiper>
+            </div>
+        </>
     );
 }

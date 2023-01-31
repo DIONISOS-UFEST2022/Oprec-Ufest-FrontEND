@@ -72,6 +72,7 @@ export default function Join() {
     const joinned = useSelector(selectUser).isJoin;
     const [joinpage, Setjoinpage] = useState(0);
     useEffect(() => {
+        scroll(0, 0);
         if (joinned === true) {
             Setjoinpage(6)
         }
