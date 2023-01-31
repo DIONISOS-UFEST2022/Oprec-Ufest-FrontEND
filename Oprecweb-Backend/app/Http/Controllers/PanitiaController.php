@@ -21,7 +21,15 @@ class PanitiaController extends Controller
     public function index()
     {
         $panitia = panitia::all();
-        return PanitiaResource::collection($panitia);
+        if (!$panitia) {
+            return response()->json([
+                'success' => false,
+            ], 409);
+        }
+        return response()->json([
+            'success' => true,
+            'data' => PanitiaResource::collection($panitia),
+        ], 201);
     }
 
     /**
@@ -73,6 +81,7 @@ class PanitiaController extends Controller
         }
 
         $panitia->is_accepted = 0;
+        $panitia->save();
 
         $service = new GoogleSheetController();
         $service->appendData($panitia);
@@ -99,13 +108,15 @@ class PanitiaController extends Controller
     {
         $panitia = Panitia::findOrFail($id);
 
-        if ($panitia) {
-            return new PanitiaResource($panitia, 201);
-        } else {
+        if (!$panitia) {
             return response()->json([
                 'success' => false,
-            ], 404);
+            ], 409);
         }
+        return response()->json([
+            'success' => true,
+            'data' => new PanitiaResource($panitia),
+        ], 201);
     }
 
     /**
@@ -203,11 +214,14 @@ class PanitiaController extends Controller
         $service->init();
 
         if ($panitia) {
-            return response()->json("Panitia " . $panitia->name . "has been deleted!");
+            return response()->json([
+                'success' => true,
+                'msg'    => "Panitia " . $panitia->name . " has been deleted!",
+            ], 201);
         } else {
             return response()->json([
                 'success' => false,
-            ], 404);
+            ], 409);
         }
     }
 
@@ -227,7 +241,10 @@ class PanitiaController extends Controller
         $service->init();
 
         if ($panitia) {
-            return response()->json("all panitia " . "has been deleted!");
+            return response()->json([
+                'success' => true,
+                'msg'    => " All Panitia " . "has been deleted!",
+            ], 201);
         } else {
             return response()->json([
                 'success' => false,

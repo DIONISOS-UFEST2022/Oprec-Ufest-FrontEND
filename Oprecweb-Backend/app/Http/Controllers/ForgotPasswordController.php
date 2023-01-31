@@ -25,13 +25,15 @@ class ForgotPasswordController extends Controller
 
         if ($status == Password::RESET_LINK_SENT) {
             return response()->json([
-                'status' => __($status)
+                'success' => true,
+                'msg' => __($status)
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'msg' => [trans($status)]
             ]);
         }
-
-        throw ValidationException::withMessages([
-            'email' => [trans($status)]
-        ]);
     }
 
     public function resetPassword(Request $request)
@@ -39,9 +41,7 @@ class ForgotPasswordController extends Controller
         $credential = $request->validate([
             'email' => 'required|email',
             'token' => 'required|string',
-            'password' => [
-                'string:8|confirmed|required',
-            ],
+            'password' => 'string:8|confirmed|required',
         ]);
         $status = Password::reset(
             $credential,
@@ -56,7 +56,7 @@ class ForgotPasswordController extends Controller
             }
         );
         return response()->json([
-            'status' => __($status)
+            'msg' => __($status)
         ]);
     }
 

@@ -43,7 +43,10 @@ class GoogleSheetController extends Controller
         $data =  $service->writeSheet($arr);
 
         if (!$data) {
-            return response()->json('Something When Wrong... try again later');
+            return response()->json([
+                'success' => false,
+                'msg' => 'Something When Wrong... try again later',
+            ], 403);
         }
 
         return response()->json([
@@ -78,7 +81,10 @@ class GoogleSheetController extends Controller
         $data =  $service->appendSheet($arr);
 
         if (!$data) {
-            return response()->json('Something When Wrong... try again later');
+            return response()->json([
+                'success' => false,
+                'msg' => 'Something When Wrong... try again later',
+            ], 403);
         }
         return response()->json([
             'success' => true,

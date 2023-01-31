@@ -49,6 +49,9 @@ class AuthenticationController extends Controller
 
     public function me()
     {
-        return new UserResource(Auth::user());
+        return response()->json([
+            'success' => true,
+            'user' =>  new UserResource(Auth::user())
+        ], 201);
     }
 }

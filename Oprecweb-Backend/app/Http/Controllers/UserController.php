@@ -19,7 +19,16 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return UserResource::collection($users);
+
+        if (!$users) {
+            return response()->json([
+                'success' => false,
+            ], 409);
+        }
+        return response()->json([
+            'success' => true,
+            'user'    => UserResource::collection($users),
+        ], 201);
     }
 
     /**
@@ -67,7 +76,7 @@ class UserController extends Controller
         if ($user) {
             return response()->json([
                 'success' => true,
-                'user'    => $user,
+                'users'    => $user,
                 'login_token'   => $user->createToken('userLogin')->plainTextToken,
             ], 201);
         } else {
@@ -86,7 +95,16 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        return new UserResource($user);
+        if ($user) {
+            return response()->json([
+                'success' => true,
+                'user'    => new UserResource($user),
+            ], 201);
+        } else {
+            return response()->json([
+                'success' => false,
+            ], 409);
+        }
     }
 
     /**
@@ -132,7 +150,16 @@ class UserController extends Controller
         $user->update($input);
         $user->update([$input, 'password' => $password]);
 
-        return new UserResource($user);
+        if ($user) {
+            return response()->json([
+                'success' => true,
+                'user'    => new userResource($user),
+            ], 201);
+        } else {
+            return response()->json([
+                'success' => false,
+            ], 409);
+        }
     }
 
     /**
@@ -146,6 +173,15 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return response()->json("User " . $user->name . "has been deleted!");
+        if ($user) {
+            return response()->json([
+                'success' => true,
+                'msg'    => "User " . $user->name . " has been deleted!",
+            ], 201);
+        } else {
+            return response()->json([
+                'success' => false,
+            ], 409);
+        }
     }
 }

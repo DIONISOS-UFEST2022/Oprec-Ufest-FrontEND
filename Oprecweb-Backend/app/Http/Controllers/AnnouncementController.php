@@ -16,6 +16,16 @@ class AnnouncementController extends Controller
     public function index()
     {
         $info = Announcement::all();
+        if ($info) {
+            return response()->json([
+                'success' => true,
+                'data' => AnnouncementResource::collection($info),
+            ], 201);
+        } else {
+            return response()->json([
+                'success' => false,
+            ], 404);
+        }
         return AnnouncementResource::collection($info);
     }
 
@@ -44,11 +54,14 @@ class AnnouncementController extends Controller
         $info = Announcement::create($request->all());
 
         if ($info) {
-            return new AnnouncementResource($info, 201);
+            return response()->json([
+                'success' => true,
+                'data' => new AnnouncementResource($info, 201),
+            ], 201);
         } else {
             return response()->json([
                 'success' => false,
-            ], 409);
+            ], 404);
         }
     }
 
@@ -63,7 +76,10 @@ class AnnouncementController extends Controller
         $info = Announcement::findOrFail($id);
 
         if ($info) {
-            return new AnnouncementResource($info, 201);
+            return response()->json([
+                'success' => true,
+                'data' => new AnnouncementResource($info, 201),
+            ], 201);
         } else {
             return response()->json([
                 'success' => false,
@@ -102,7 +118,10 @@ class AnnouncementController extends Controller
         $info->update($input);
 
         if ($info) {
-            return new AnnouncementResource($info, 201);
+            return response()->json([
+                'success' => true,
+                'data' => new AnnouncementResource($info, 201),
+            ], 201);
         } else {
             return response()->json([
                 'success' => false,
@@ -121,9 +140,12 @@ class AnnouncementController extends Controller
         $info = Announcement::findOrFail($id);
 
         if ($info) {
-            $tempName = $info->name;
+            $tempName = $info->id;
             $info->forceDelete();
-            return response()->json("announcement " . $tempName . "has been deleted!");
+            return response()->json([
+                'success' => true,
+                'msg' => "announcement " . $tempName . "has been deleted!",
+            ], 201);
         } else {
             return response()->json([
                 'success' => false,
