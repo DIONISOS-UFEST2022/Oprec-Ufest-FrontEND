@@ -2,10 +2,17 @@
 
 #WelcomeAnimate {
     @include index.center;
-    // transform: translate3d(0, -180px, 0);
+    position: relative;
+    height: 200px;
+    // border: 10px solid black;
 
     .mv-svg-title {
+        bottom: -350px;
         @include index.animatesvg;
+
+        @media screen and (max-width: index.$md) {
+            bottom: -250px !important;
+        }
     }
 
 }

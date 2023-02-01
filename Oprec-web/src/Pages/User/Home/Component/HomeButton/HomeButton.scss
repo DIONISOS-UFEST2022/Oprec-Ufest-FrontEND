@@ -14,12 +14,13 @@
     @media screen and (max-width: index.$sm) {
 
         height: 125px;
-        width: 200px;
+        width: 300px;
     }
 
 
 
     .background {
+        @include index.center;
         @include index.prevent-select;
         position: absolute;
         background-repeat: no-repeat;
@@ -34,12 +35,14 @@
         will-change: translate;
 
         @media screen and (max-width: index.$sm) {
-            width: 200px;
+            width: 300px;
+            height: 200px;
             transform: translateY(-25px);
         }
     }
 
     .front {
+        @include index.center;
         text-align: center;
         color: index.$yellow;
         text-shadow: index.$text-shadow;
@@ -48,15 +51,15 @@
         transform: scale(1.4) translateX(5px);
         position: absolute;
         z-index: index.$z-index-4;
-        width: 200px;
+        width: 300px;
         margin: auto;
         left: 0;
         right: 0;
         pointer-events: none;
 
         @media screen and (max-width: index.$sm) {
-            font-size: 14.1px;
-            width: 100px;
+            font-size: 27.1px;
+            width: 300px;
             transform: translateY(-25px);
 
         }

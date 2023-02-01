@@ -31,7 +31,7 @@ function CarouselDetail({ props }) {
                     &ldquo;{props.namedesc}&rdquo;
                 </div>
                 <div className='Desc'>
-                    {props.description}
+                    {props.jobdesk}
                 </div>
             </div>
         </Modal>
@@ -79,8 +79,10 @@ export default function DivisonCarousel(props) {
 
                 >
                     {DivisionData.filter((item) => item.image).map((item, index) => {
-                        return <SwiperSlide className="Carousel-Swiper-Slide">
-                            <CarouselDetail props={item} />
+                        return <SwiperSlide key={item.id} className="Carousel-Swiper-Slide">
+                            <CarouselDetail
+                                props={item}
+                            />
                         </SwiperSlide>
                     })}
                 </Swiper>

@@ -1,24 +1,14 @@
 @use "src/index" as index;
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
 
 #Login {
     @include index.background("./../../../Asset/Image/Background/Homebg.webp");
     @include index.center;
+    background-attachment: local;
     height: 100%;
     min-height: 120vh;
 
     .form {
-        width: index.$form-width;
-        font-family: index.$font2;
-        position: relative;
-        z-index: 1;
-        background: index.$white;
-        border-radius: 10px;
-        margin: 10px auto 100px;
-        padding-top: 20px;
-        padding-bottom: 20px;
-        text-align: center;
-        padding-inline: 40px;
+        @include index.form-layout;
 
         @media screen and (max-width: index.$sm) {
             width: 60%;
@@ -39,7 +29,7 @@
             font-family: index.$font;
 
             @media screen and (max-width: index.$sm) {
-                font-size: 26px;
+                font-size: 36px;
             }
         }
 
@@ -54,38 +44,6 @@
             @media screen and (max-width: index.$sm) {
                 font-size: 12px;
             }
-        }
-
-        // Google
-        .Google {
-            height: 40px;
-            background-color: #FFFFFF;
-            color: #182848;
-            border: 1px solid rgb(24, 40, 72, 0.5);
-            border-radius: 40px;
-            font-weight: bold;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-
-            .googleicon {
-                width: 20px;
-                height: 20px;
-
-                @media screen and (max-width: index.$sm) {
-                    width: 10px;
-                    height: 10px;
-                }
-            }
-
-            @media screen and (max-width: index.$sm) {
-                height: 30px;
-                font-size: 10px;
-            }
-
         }
 
 
@@ -106,70 +64,11 @@
         }
 
         .Divider {
+            @include index.prevent-select;
             margin-top: 10px;
-            margin-bottom: 10px;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
+            margin-bottom: 30px;
         }
 
-        .ForgotPass {
-            cursor: pointer;
-            font-weight: bold;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            color: #122758;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-
-        .RememberMe {
-            @include index.prevent-select;
-        }
-
-
-        input:focus {
-            background: #dbdbdb;
-        }
-
-        button {
-            @include index.prevent-select;
-            text-transform: uppercase;
-            outline: 0;
-            background: index.$blue;
-            width: 100%;
-            border: 0;
-            border-radius: 40px;
-            padding: 15px;
-            color: #FFFFFF;
-            font-size: 14px;
-            -webkit-transition: all 0.3 ease;
-            transition: all 0.3 ease;
-            cursor: pointer;
-
-        }
-
-        button:active {
-            background: index.$blue;
-        }
-
-
-        p.error {
-            @include index.prevent-select;
-            margin: 10px 10px 10px 10px;
-            text-align: left;
-            font-size: 10px;
-            color: red;
-        }
     }
 
 }

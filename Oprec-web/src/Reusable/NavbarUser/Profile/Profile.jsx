@@ -1,21 +1,28 @@
 import * as React from 'react';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Popper from '@mui/material/Popper';
-import PopupState, { bindToggle, bindPopper } from 'material-ui-popup-state';
-import Fade from '@mui/material/Fade';
-import Paper from '@mui/material/Paper';
 import "./Profile.scss"
 // import logouthandler from '../../Navbar/LogoutHandler/LogoutHandler';
 import { getRequest } from '../../Service/AxiosClient';
-import { useDispatch } from 'react-redux';
-// import { pageChanged } from '../../Redux/features/page/pageSlice';
-// import { userRoleAdded } from '../../Redux/features/users/userRoleSlice';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { pageChanged } from '../../../Redux/features/page/pageSlice';
 import { userRoleAdded } from '../../../Redux/features/users/userRoleSlice';
+import { Modal } from "@mui/material";
+import { selectuserName } from '../../../Redux/features/users/userRoleSlice';
+import { selectuserNim } from '../../../Redux/features/users/userRoleSlice';
+
+
 
 export default function Profile(props) {
     const dispatch = useDispatch();
+    const name = useSelector(selectuserName);
+    const nim = useSelector(selectuserNim);
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    React.useEffect(() => {
+        console.log(name);
+        console.log(nim);
+    }, [name, nim]);
     async function LogOut() {
         try {
             const login = await getRequest("logout");
@@ -30,25 +37,33 @@ export default function Profile(props) {
     }
     // LogOut();
     return (
-        <PopupState className='Profile' variant="popper" popupId="demo-popup-popper">
-            {(popupState) => (
-                <div>
-                    <button className='Profile-Button' {...bindToggle(popupState)}>
-                        Profile
-                    </button>
-                    <Popper {...bindPopper(popupState)} transition>
-                        {({ TransitionProps }) => (
-                            <Fade {...TransitionProps} timeout={350}>
-                                <Paper>
-                                    <div className='Profile-Container'>
-                                        {props.children}
-                                    </div>
-                                </Paper>
-                            </Fade>
-                        )}
-                    </Popper>
+        <>
+            <Modal
+                sx={{
+                }}
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <div className='Modal-Profile'>
+                    <div className=''>
+                        {name}
+                    </div>
+                    <div className='NameDesc'>
+                        {/* {nim} */}
+                    </div>
+                    <div className='Desc'>
+                        <button className='Logout-Button' onClick={LogOut}>Log Out</button>
+                    </div>
                 </div>
-            )}
-        </PopupState>
+            </Modal>
+            <div onClick={handleOpen}>
+                <button className='Profile-Button'>
+                    Profile
+                </button>
+            </div>
+
+        </>
     );
 }

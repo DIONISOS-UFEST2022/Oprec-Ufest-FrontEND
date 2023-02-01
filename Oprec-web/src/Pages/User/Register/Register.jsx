@@ -20,6 +20,7 @@ import { userDataAdded } from "../../../Redux/features/users/userRoleSlice";
 // URL
 import { URL } from "../../../Reusable/Service/URL";
 import { postRequest } from "../../../Reusable/Service/AxiosClient";
+import CustomButton from "../../../Reusable/CustomComponent/CustomButton";
 
 export default function Register() {
     // use dispatch to change page
@@ -163,17 +164,16 @@ export default function Register() {
                                 <p className="error">
                                     {touched.repassword && errors.repassword}
                                 </p>
-                                <Button
-                                    disabled={(errors.fullname || errors.nim || errors.email || errors.password || errors.repassword) ? true : false}
-                                    className="button"
-                                    variant="contained"
-                                    type="submit"
-                                    onClick={() => {
-                                        handleSubmit(values);
-                                    }}>
-                                    {loading ? (<CircularProgress />) : "Register"}
-                                </Button>
-
+                                <div className="center">
+                                    <CustomButton
+                                        disabled={(errors.fullname || errors.nim || errors.email || errors.password || errors.repassword) ? true : false}
+                                        type="submit"
+                                        onClick={() => {
+                                            handleSubmit(values);
+                                        }}>
+                                        {loading ? (<CircularProgress />) : "Register"}
+                                    </CustomButton>
+                                </div>
                             </form>
                             <br />
                             <p fontSize={"15px"} fontWeight="bold">

@@ -8,7 +8,7 @@ export default function Division() {
         setdivision(pagestate);
     };
     return (
-        <div className="Division">
+        <div className="Admin-Division">
             <Suspense fallback="Loading...">
                 {(() => {
                     switch (division) {

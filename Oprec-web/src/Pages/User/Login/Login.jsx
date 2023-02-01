@@ -8,28 +8,32 @@ import {
     TextField,
     Checkbox,
 } from "../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy";
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { Divider } from "@mui/material";
-import Alert from "@mui/material/Alert";
+import CustomButton from "../../../Reusable/CustomComponent/CustomButton.jsx";
+// import Alert from "@mui/material/Alert";
 // Form Control
 import { Formik } from "formik";
 import { Loginschema } from "./LoginSchema";
 // React
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 // Redux
 import { useDispatch } from "react-redux";
 import { pageChanged } from "../../../Redux/features/page/pageSlice";
 import { userRoleAdded } from "../../../Redux/features/users/userRoleSlice";
 import { userTokenAdded } from "../../../Redux/features/users/userRoleSlice";
-// axios
-import axios from "axios";
-// Asset
-import Google from "./../../../Asset/OtherLogo/google.png";
 // animation
 import { m, domAnimation, LazyMotion } from "framer-motion";
 // URL
-// import { URL } from "../../../Reusable/Service/URL";
 import { postRequest } from "../../../Reusable/Service/AxiosClient";
+
+
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export default function Login() {
     // state
@@ -40,12 +44,9 @@ export default function Login() {
     const [error, Seterror] = useState(false);
     const dispatch = useDispatch();
     const formInput = useRef(null);
-    const EnterHandleClick = (e) => {
-        if (e.key === 'Enter') {
-            formInput.current.focus()
-        }
-    }
     // animation
+
+
     return (
         <Formik
             validationSchema={Loginschema}
@@ -83,12 +84,23 @@ export default function Login() {
             {({
                 errors,
                 touched,
-                handleChange,
-                handleBlur,
                 handleSubmit,
+                handleChange,
             }) => (
                 <div id="Login">
-                    {error ? <Alert severity="error">Login error, email or password incorrect!</Alert> : ""}
+                    {error === true && loading === false ?
+                        <>
+                            <Alert severity="error" sx={{
+                                margin: '10px',
+                                width: '80%',
+                                position: 'absolute',
+                                top: '8vh',
+                                zIndex: '4',
+                            }}>
+                                Email or Password is wrong!
+                            </Alert>
+                        </>
+                        : ""}
                     <Box className="form" paddingX={["20px", "30px", "45px"]}>
                         <LazyMotion features={domAnimation}>
                             <m.div
@@ -99,24 +111,16 @@ export default function Login() {
                                     {/* Title */}
                                     <Box className="Title" fontSize={["35px", "40px", "45px"]}>WELCOME BACK!</Box>
                                     {/* Sub Title */}
-                                    <Divider />
+
                                     <Box className="Subtitle" fontSize={["10px", "10px", "15px"]}> Let's grow together with UFEST!</Box>
-                                    <Button className="Google">
-                                        <img className="googleicon" src={Google} alt="Google" />
-                                        Sign in with Google
-                                    </Button>
-                                    <Divider className="Divider">or</Divider>
+                                    <Divider className="Divider" />
                                     <TextField
                                         helperText=""
                                         id="email"
                                         name="email"
                                         label="Email Student UMN"
-                                        placeholder="Masukan email student UMN"
-                                        className="form-control inp_text"
-                                        onBlur={handleBlur}
+                                        placeholder="Enter UMN student email "
                                         onChange={handleChange}
-                                        onKeyDown={EnterHandleClick}
-                                        // ref={formInput}
                                         fullWidth
                                     />
                                     <p className="error">
@@ -127,50 +131,51 @@ export default function Login() {
                                         type={"password"}
                                         id="password"
                                         name="password"
-                                        label="Enter your password"
-                                        placeholder="Masukan password"
+                                        label="Password"
+                                        placeholder="Enter your password"
                                         className="form-control"
-                                        onBlur={handleBlur}
                                         onChange={handleChange}
-                                        onKeyDown={EnterHandleClick}
-                                        // ref={formInput}
                                         fullWidth
                                     />
                                     <p className="error">
                                         {errors.password && touched.password && errors.password}
                                     </p>
-                                    <div
-                                        className="Checkbox-Section"
-                                    >
-                                        <FormControlLabel
-                                            className="RememberMe"
-                                            control={<Checkbox defaultChecked />} label="Remember Me" />
-                                        <p
-                                            className="ForgotPass"
-                                            onClick={() => { dispatch(pageChanged("register")) }}>
-                                            Forgot Password?
-                                        </p>
+
+                                    <div className="center">
+                                        <CustomButton
+                                            type="submit"
+                                            disabled={!(errors.email === undefined && errors.password === undefined) || (loading === true)}
+
+                                        >
+                                            {loading ? (<CircularProgress
+                                                color="green"
+                                                size={24}
+                                                sx={{
+                                                    width: '10px',
+                                                }}
+                                            />) : "Login"}
+                                        </CustomButton>
                                     </div>
-                                    <Button
-                                        className="button"
-                                        variant="contained"
-                                        type="submit"
-                                    >
-                                        {loading ? (<CircularProgress />) : "Login"}
-                                    </Button>
                                 </form>
-                                <br />
-                                <Box fontSize={["13px", "14px", "15px"]}>
-                                    Belum punya akun?{' '}
-                                    <p onClick={() => { dispatch(pageChanged("register")) }}>
-                                        Daftar Sekarang!
+                                <div className="center">
+                                    <p
+                                        className="ForgotPass"
+                                        onClick={() => { dispatch(pageChanged("register")) }}>
+                                        Forgot Password?
+                                    </p>
+                                </div>
+                                <Box className="center bold" fontSize={["13px", "14px", "15px"]}>
+                                    Don't have account?&nbsp;
+                                    <p className="purple underline" onClick={() => { dispatch(pageChanged("register")) }}>
+                                        Register Now!
                                     </p>
                                 </Box>
                             </m.div>
                         </LazyMotion>
                     </Box>
                 </div>
-            )}
-        </Formik>
+            )
+            }
+        </Formik >
     );
 }

@@ -39,12 +39,21 @@ $purple: rgb(181, 21, 255);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f5cd33", endColorstr="#fc9f32", GradientType=1);
 }
 
+@mixin browngrad {
+    background: rgb(178, 138, 103);
+    background: -moz-linear-gradient(0deg, rgba(178, 138, 103, 1) 0%, rgba(146, 100, 69, 1) 100%);
+    background: -webkit-linear-gradient(0deg, rgba(178, 138, 103, 1) 0%, rgba(146, 100, 69, 1) 100%);
+    background: linear-gradient(0deg, rgba(178, 138, 103, 1) 0%, rgba(146, 100, 69, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#b28a67", endColorstr="#926445", GradientType=1);
+}
+
 // Media Queries
-$sm: 30em;
-$md: 48em;
-$lg: 62em;
-$xl: 80em;
-$xxl: 96em;
+$xs: 0;
+$sm: 540px;
+$md: 720px;
+$lg: 960px;
+$xl: 1140px;
+$xxl: 1320px;
 
 
 // z-index
@@ -58,6 +67,8 @@ $z-index-7: 7;
 
 // form layout
 $form-width: 360px;
+
+
 
 // text shadow
 $text-shadow: 2px 3px 9px rgba(0, 0, 0, 1);
@@ -76,6 +87,7 @@ $text-shadow: 2px 3px 9px rgba(0, 0, 0, 1);
     background-size: cover;
     background-position: center;
 }
+
 
 // full screen
 @mixin full-screen {
@@ -156,7 +168,7 @@ $text-shadow: 2px 3px 9px rgba(0, 0, 0, 1);
     padding: 30px;
 }
 
-// Center
+// layout
 @mixin center {
     display: flex;
     justify-content: center;
@@ -164,6 +176,53 @@ $text-shadow: 2px 3px 9px rgba(0, 0, 0, 1);
     -webkit-justify-content: center;
     -webkit-align-items: center;
 }
+
+.center {
+    @include center();
+
+}
+
+@mixin space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    -webkit-justify-content: space-between;
+    -webkit-align-items: center;
+}
+
+.space-between {
+    @include space-between();
+
+}
+
+
+// form layout
+@mixin form-layout {
+    width: $form-width;
+    font-family: $font2;
+    position: relative;
+    z-index: 1;
+    background: $white;
+    border-radius: 10px;
+    margin: 10px auto 100px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+    padding-inline: 40px;
+}
+
+
+.error {
+    margin: 0px 10px 10px 0px;
+    text-align: left;
+    font-size: 13px;
+    color: red;
+    height: 13px;
+    user-select: none;
+    font-family: $font2;
+    font-weight: 400;
+}
+
 
 // Underline Animation
 @mixin underline($background-color: $yellow) {
@@ -234,7 +293,7 @@ $text-shadow: 2px 3px 9px rgba(0, 0, 0, 1);
 @mixin animatesvg {
     position: absolute;
     height: 700px;
-    width: 700px;
+    width: 800px;
 
     .text-path {
         display: block;
@@ -254,7 +313,7 @@ $text-shadow: 2px 3px 9px rgba(0, 0, 0, 1);
         $delay: 0;
         will-change: stroke-dashoffset, stroke-dasharray, stroke, fill-opacity, filter, box-shadow, transform;
 
-        @while $nth <=10 {
+        @while $nth <30 {
             &:nth-child(#{$nth}) {
                 box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
                 animation: dash1 2.0s linear forwards;
@@ -266,23 +325,11 @@ $text-shadow: 2px 3px 9px rgba(0, 0, 0, 1);
             }
 
             $nth: $nth+1;
-            $delay: $delay+0.1;
+            $delay: $delay+0.05;
         }
 
-        $nth: 11;
-        $delay: 0;
-
-        @while $nth <=36 {
-            &:nth-child(#{$nth}) {
-                animation: dash1_en 2.0s linear forwards;
-                animation-delay:#{$delay}s;
-                stroke-dasharray: 200;
-                filter: url(#shadow);
-            }
-
-            $nth: $nth+1;
-            $delay: $delay+0.04;
-        }
+        // $nth: 11;
+        // $delay: 0;
     }
 
     @keyframes dash1 {
@@ -347,3 +394,27 @@ $text-shadow: 2px 3px 9px rgba(0, 0, 0, 1);
         }
     }
 }
+
+// font styling instant
+.bold {
+    font-weight: 700;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.purple {
+    color: $purple;
+    cursor: pointer;
+
+    &:hover {
+        color: purple;
+    }
+}
+
+// font styling

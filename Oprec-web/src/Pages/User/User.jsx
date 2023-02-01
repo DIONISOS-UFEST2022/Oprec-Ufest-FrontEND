@@ -53,9 +53,11 @@ export default function User() {
         <>
             {/* <div ref={userRef} className="slash"></div> */}
             <div id="User-Page">
-                <Suspense fallback={<LoadingScreen />}>
+                {/* <Suspense fallback={<LoadingScreen />}>
                     {isMobile ? <NavbarMobile /> : <NavbarUser />}
-                </Suspense>
+                </Suspense> */}
+                <NavbarUser />
+
                 {(() => {
                     switch (page) {
                         case 'home':

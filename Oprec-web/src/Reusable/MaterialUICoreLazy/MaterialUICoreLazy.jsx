@@ -100,7 +100,8 @@ const LazyTextField = lazy(() => import("@material-ui/core/TextField"));
 export function TextField(props) {
     return (
         <Suspense fallback={""}>
-            <LazyTextField {...props} />
+            <LazyTextField
+                {...props} />
         </Suspense>
     );
 }

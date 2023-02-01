@@ -2,14 +2,62 @@
 
 .LOGOWRAP {
     @include index.center;
-
+    margin-top: 10vh;
+    z-index: index.$z-index-2;
 
     .UFESTLOGO {
         position: static;
-        height: 600px;
-        width: 600px;
+        height: 400px;
+        width: 400px;
+        margin-top: 10vh;
+
+        @media screen and (min-width: index.$xxl) {
+            margin-top: 5vh;
+            height: 400px;
+            width: 400px;
+        }
+
+        @media screen and (max-width: index.$xxl) {
+            margin-top: 5vh;
+            height: 350px;
+            width: 350px;
+        }
+
+        @media screen and (max-width: index.$xl) {
+            margin-top: 10vh;
+            height: 325px;
+            width: 325px;
+        }
+
+        @media screen and (max-width: index.$lg) {
+            margin-top: 10vh;
+            height: 325px;
+            width: 325px;
+        }
+
+        @media screen and (max-width: index.$md) {
+            margin-top: 10vh;
+            height: 300px;
+            width: 300px;
+        }
+
+        @media screen and (max-width: index.$sm) {
+            margin-top: 10vh;
+            height: 250px;
+            width: 250px;
+        }
+
+        @media screen and (max-width: index.$xs) {
+            margin-top: 10vh;
+            height: 200px;
+            width: 200px;
+        }
+
+
 
         .text-path1 {
+            transform: scale(1.7);
+            transform-origin: center 40%;
             display: block;
             fill-opacity: 0;
             stroke: url(#gradation-1);

@@ -1,62 +1,31 @@
+@use "src/index" as index;
+
 #Register {
-    // background-image: url('/Asset/Image/Background/Homebg.webp');
-    background-image: url("./../../../Asset/Image/Background/Homebg.webp");
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    @include index.background("./../../../Asset/Image/Background/Homebg.webp");
+    @include index.center;
     height: 100%;
-    min-height: 100vh;
-    padding-top: 10vh;
-    padding-bottom: 5vh;
+    min-height: 120vh;
+    background-attachment: local;
 
     .form {
-        position: relative;
-        z-index: 1;
-        background: #FFFFFF;
-        border-radius: 10px;
-        max-width: 360px;
-        margin: 0 auto 100px;
-        padding: 45px;
-        text-align: center;
+        @include index.form-layout;
 
         .Title {
-            font-size: 40px;
-            color: #4b6cb7;
-            margin-bottom: 25px;
+            @include index.prevent-select;
+            font-weight: bold;
+            font-size: 50px;
+            color: index.$yellow;
             display: block;
-            font-family: 'Rocket-Vintage';
+            margin: 0;
+            margin-top: 20px;
+            font-family: index.$font;
 
+            @media screen and (max-width: index.$sm) {
+                font-size: 26px;
+            }
         }
 
-        .error {
-            margin: 20px 10px 10px 10px;
-            text-align: left;
-            font-size: 10px;
-            color: red;
-            user-select: none;
-        }
-
-        .button {
-            font-family: 'Comfortaa', cursive;
-            text-transform: uppercase;
-            outline: 0;
-            background: #122758;
-            width: 100%;
-            border: 0;
-            border-radius: 40px;
-            padding: 15px;
-            color: #FFFFFF;
-            font-size: 14px;
-            -webkit-transition: all 0.3 ease;
-            transition: all 0.3 ease;
-            cursor: pointer;
-
-        }
-
-        .button:active {
-            background: #395591;
-        }
+    
 
         .Purple {
             color: #c208b3 !important;

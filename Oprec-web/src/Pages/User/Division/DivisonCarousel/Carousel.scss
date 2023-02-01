@@ -93,9 +93,7 @@
     height: 300px;
 
     .Carousel-Image {
-        // transform: scale(0.1);
         object-fit: cover !important;
         background-position: center !important;
-        // background-color: rgb(255, 255, 255, 0.7);
     }
 }

@@ -2,10 +2,6 @@
 import { Suspense, lazy, useEffect, useState, useMemo, useCallback } from "react";
 // styling
 import "./Home.scss";
-// import { LazyMotion, m, domAnimation } from "framer-motion"
-// import WelcomeAnimate from "./Component/WelcomeAnimate/WelcomeAnimate";
-// import { useMediaQuery } from "@material-ui/core";
-// import UFESTLOGO from "./Component/UFESTLOGO/UFESTLOGO";
 import { useMediaQuery } from "@mui/material";
 import WelcomeAnimate from "./Component/WelcomeAnimate/WelcomeAnimate";
 const HomeButton = lazy(() => import("./Component/HomeButton/HomeButton"));
@@ -42,7 +38,6 @@ export default function Home() {
                         <Pilar />
                     </Suspense>
                     <MemoLogo />
-
                     <WelcomeAnimate />
                     <HomeButton />
                 </>

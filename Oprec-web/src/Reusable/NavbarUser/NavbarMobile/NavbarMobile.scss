@@ -44,7 +44,8 @@
 .Navbar-Mobile-Menu-Container {
     @include index.prevent-select;
     @include index.full-screen;
-    background-color: rgb(245, 214, 63, 0.95);
+    @include index.browngrad;
+   
     text-shadow: 5px 0px 9px index.$black;
     z-index: index.$z-index-6;
     overflow: hidden;
@@ -55,6 +56,8 @@
     will-change: transform, opacity;
 
     .Navbar-Mobile-Menu-Card {
+
+
         .Navbar-Menu-Button {
             border: none;
             background-color: rgb(255, 255, 255, 0);
@@ -66,6 +69,23 @@
             font-size: 40px;
             font-weight: 700;
             pointer-events: all;
+            position: relative;
+
+            .ActiveLine {
+                position: absolute;
+                margin: auto;
+                top: 10px;
+                bottom: 0;
+                left: 0;
+                right: 0;
+
+                .path {
+                    stroke-dasharray: 100;
+                    stroke-dashoffset: 0;
+                }
+            }
         }
+
+
     }
 }

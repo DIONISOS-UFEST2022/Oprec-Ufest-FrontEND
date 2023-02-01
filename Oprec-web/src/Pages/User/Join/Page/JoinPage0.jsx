@@ -9,7 +9,7 @@ import Avatar from '@mui/material/Avatar';
 export default function JoinPage0() {
     return (
         <>
-            <p>Yang harus dipersiapkan :</p>
+            <p><strong>Before we start, prepare :</strong></p>
             <Divider />
             <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
                 <ListItem alignItems="flex-start">
@@ -17,10 +17,10 @@ export default function JoinPage0() {
                         <Avatar alt="1" sx={{ bgcolor: "green" }} src="/1.jpg" />
                     </ListItemAvatar>
                     <ListItemText
-                        primary="Sertifikat Covid-19"
+                        primary="Third COVID-19 Vaccine Certificate"
                         secondary={
                             <React.Fragment>
-                                {"Sertifikat Covid-19 dalam format JPG/PNG maksimal 1MB"}
+                                {"Third COVID-19 vaccine certificate, in jpg or png format. Maks size is 1 MB. "}
                             </React.Fragment>
                         }
                     />
@@ -31,11 +31,11 @@ export default function JoinPage0() {
                         <Avatar alt="2" sx={{ bgcolor: "green" }} src="/2.jpg" />
                     </ListItemAvatar>
                     <ListItemText
-                        primary="Portofolio (Opsional)"
+                        primary="Portofolio (for Visual and Documentation Division)"
                         secondary={
                             <React.Fragment>
-                                {"Khusus untuk divisi Visual dan Dokumentasi. "}
-                                {"Portofolio di upload ke dalam Google Drive. Pastikan tautannya dapat diakses publik."}
+                                {"Specifically for the Visual and Documentation division. "}
+                                {"Portfolio is uploaded to Google Drive. Make sure the link is publicly accessible."}
                             </React.Fragment>
                         }
                     />

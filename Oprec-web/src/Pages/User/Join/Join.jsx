@@ -27,6 +27,7 @@ import { FileUploader } from "react-drag-drop-files";
 import "./UploadImage/UploadImage.scss"
 // URL
 import { postRequest } from "../../../Reusable/Service/AxiosClient";
+import CustomButton from "../../../Reusable/CustomComponent/CustomButton";
 const JoinPage0 = lazy(() => import("./Page/JoinPage0"));
 const Sparkles = lazy(() => import("../../../Reusable/Animation/Sparkle/Sparkle"));
 
@@ -79,33 +80,29 @@ export default function Join() {
     }, [])
     function Prev(props) {
         return (
-            <Button
-                className="Button"
-                variant="contained"
+            <CustomButton
                 type="button"
                 onClick={() => {
                     Setjoinpage(props.page)
                     titleRef.current.scrollIntoView({ behavior: 'smooth' })
-                }}>PREV</Button>
+                }}>PREV</CustomButton>
         )
     }
     function Next(props) {
         return (
-            <Button
-                className="Button"
-                variant="contained"
+            <CustomButton
                 type="submit"
                 disabled={props.disabled}
                 onClick={() => {
                     Setjoinpage(props.page);
                     titleRef.current.scrollIntoView({ behavior: 'smooth' });
-                }}>NEXT</Button>
+                }}>NEXT</CustomButton>
         )
     }
 
 
     return (
-        <div className="Join" ref={titleRef}>
+        <div>
             <Formik
                 validationSchema={JoinSchema}
                 initialValues={{
@@ -205,10 +202,12 @@ export default function Join() {
                                                                 </Sparkles>
                                                                 <Divider />
                                                                 <JoinPage0 />
-                                                                <Button className="Button" variant="contained" type="button" onClick={() => {
-                                                                    Setjoinpage(1)
-                                                                    titleRef.current.scrollIntoView({ behavior: 'smooth' })
-                                                                }}>Let's GO</Button>
+                                                                <div className="center">
+                                                                    <CustomButton type="button" onClick={() => {
+                                                                        Setjoinpage(1)
+                                                                        titleRef.current.scrollIntoView({ behavior: 'smooth' })
+                                                                    }}>Let's GO</CustomButton>
+                                                                </div>
                                                             </div>
                                                         </m.div>
                                                     </LazyMotion>
@@ -315,17 +314,14 @@ export default function Join() {
                                                     <p className="error">
                                                         {errors.domisili && touched.domisili && errors.domisili}
                                                     </p>
-                                                    <div className="Button-Bottom">
+                                                    <div className="space-between">
                                                         <Prev page={0} />
-                                                        <Button
-                                                            className="Button"
-                                                            variant="contained"
-                                                            // type="submit"
+                                                        <CustomButton
                                                             disabled={!(values.jurusan && values.angkatan && values.alamat && values.domisili)}
                                                             onClick={() => {
                                                                 Setjoinpage(2);
                                                                 titleRef.current.scrollIntoView({ behavior: 'smooth' });
-                                                            }}>NEXT</Button>
+                                                            }}>NEXT</CustomButton>
                                                     </div>
                                                 </Suspense>
                                             </>);
@@ -475,7 +471,7 @@ export default function Join() {
                                                         {errors.divisialt && touched.divisialt && errors.divisialt}
                                                     </p>
 
-                                                    <div className="Button-Bottom">
+                                                    <div className="space-between">
                                                         <Prev page={1} />
                                                         <Next page={
                                                             values.divisi === "Visual" ? 3 : 4
@@ -505,7 +501,7 @@ export default function Join() {
                                                 <p className="error">
                                                     {errors.portofolio && touched.portofolio && errors.portofolio}
                                                 </p>
-                                                <div className="Button-Bottom">
+                                                <div className="space-between">
                                                     <Prev page={2} />
                                                     <Next page={4} />
                                                 </div>
@@ -530,7 +526,7 @@ export default function Join() {
                                                 <p className="error">
                                                     {errors.jawaban && touched.jawaban && errors.jawaban}
                                                 </p>
-                                                <div className="Button-Bottom">
+                                                <div className="space-between">
                                                     <Prev page={
                                                         values.divisi === "Visual" ? 3 : 2
                                                     } />
@@ -561,7 +557,7 @@ export default function Join() {
                                                 <p className="error">
                                                     {errors.jawaban2 && touched.jawaban2 && errors.jawaban2}
                                                 </p>
-                                                <div className="Button-Bottom">
+                                                <div className="space-between">
                                                     <Prev page={4} />
                                                     <Button
                                                         className="button"
