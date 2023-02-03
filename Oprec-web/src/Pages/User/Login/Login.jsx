@@ -4,30 +4,27 @@ import "./Login.scss";
 import {
     Box,
     CircularProgress,
-    Button,
     TextField,
-    Checkbox,
 } from "../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy";
-import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import { Divider } from "@mui/material";
 import CustomButton from "../../../Reusable/CustomComponent/CustomButton.jsx";
-// import Alert from "@mui/material/Alert";
 // Form Control
 import { Formik } from "formik";
 import { Loginschema } from "./LoginSchema";
 // React
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 // Redux
 import { useDispatch } from "react-redux";
 import { pageChanged } from "../../../Redux/features/page/pageSlice";
 import { userRoleAdded } from "../../../Redux/features/users/userRoleSlice";
-import { userTokenAdded } from "../../../Redux/features/users/userRoleSlice";
 // animation
 import { m, domAnimation, LazyMotion } from "framer-motion";
 // URL
 import { postRequest } from "../../../Reusable/Service/AxiosClient";
+import { getRequest } from "../../../Reusable/Service/AxiosClient";
+import { useNavigate, Navigate } from "react-router-dom";
+import { setCookie } from "react-use-cookie";
 
 
 
@@ -38,47 +35,51 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 export default function Login() {
     // state
     useEffect(() => {
+        setCookie('login', 'login', { path: '/' });
         window.scrollTo(0, 0)
     }, []);
     const [loading, Setloading] = useState(false);
     const [error, Seterror] = useState(false);
     const dispatch = useDispatch();
-    const formInput = useRef(null);
     // animation
-
+    const navigate = useNavigate();
 
     return (
         <Formik
             validationSchema={Loginschema}
-            initialValues={{ email: "", password: "" }}
+            initialValues={{ name: "", email: "", password: "" }}
             onSubmit={(values) => {
                 Setloading(true);
-                const userLogin = async () => {
+                async function login() {
                     try {
-                        const res = await postRequest('login', values);
-                        if (res.data.success === true) {
-                            dispatch(userTokenAdded(res.data));
-                            if (res.data.role === 1) {
-                                dispatch(userRoleAdded("admin"));
-                                dispatch(pageChanged("division"));
-                                Setloading(false);
-                            } else if (res.data.role === 2) {
-                                dispatch(userRoleAdded("user"));
-                                dispatch(pageChanged("home"));
-                                Setloading(false);
-                            }
-                            localStorage.setItem('LoginID', res.data.login_token);
-                            Setloading(false);
-                        } else {
-                            Setloading(false);
-                            Seterror(true);
-                        }
+                        await postRequest('login', values)
+                            .then((res) => {
+                                if (res.data.success === true) {
+                                    if (res.data.role === 1) {
+                                        dispatch(userRoleAdded("admin"));
+                                        localStorage.setItem('LoginID', res.data.login_token);
+                                        localStorage.setItem('Email', res.data.user.email);
+                                        Setloading(false);
+                                        navigate('/admin');
+                                    } else if (res.data.role === 2) {
+                                        console.log(res)
+                                        dispatch(userRoleAdded("user"));
+                                        localStorage.setItem('LoginID', res.data.login_token);
+                                        // localStorage.setItem('Email', res.data.user.email);
+                                        Setloading(false);
+                                        navigate('/home');
+                                    }
+                                } else {
+                                    Setloading(false);
+                                    Seterror(true);
+                                }
+                            })
                     } catch (error) {
                         Setloading(false);
                         Seterror(true);
                     }
                 }
-                userLogin();
+                login();
             }}
         >
             {({
@@ -148,7 +149,6 @@ export default function Login() {
 
                                         >
                                             {loading ? (<CircularProgress
-                                                color="green"
                                                 size={24}
                                                 sx={{
                                                     width: '10px',
@@ -166,7 +166,9 @@ export default function Login() {
                                 </div>
                                 <Box className="center bold" fontSize={["13px", "14px", "15px"]}>
                                     Don't have account?&nbsp;
-                                    <p className="purple underline" onClick={() => { dispatch(pageChanged("register")) }}>
+                                    <p className="purple underline" onClick={() => {
+                                        navigate('/register')
+                                    }}>
                                         Register Now!
                                     </p>
                                 </Box>

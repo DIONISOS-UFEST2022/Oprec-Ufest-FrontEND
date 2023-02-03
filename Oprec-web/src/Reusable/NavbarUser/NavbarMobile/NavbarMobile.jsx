@@ -1,28 +1,27 @@
 import { useEffect, useState, Suspense, lazy } from 'react'
 import "./NavbarMobile.scss"
-import { useSelector } from 'react-redux'
-import { selectPage } from '../../../Redux/features/page/pageSlice'
 import { LazyMotion, m, domAnimation, useAnimation } from "framer-motion"
+import { useLocation } from 'react-router-dom'
 const NavbarMobileMenu = lazy(() => import('./NavbarMobileMenu/NavbarMobileMenu.jsx'))
 
 
 export default function NavbarMobile() {
     // redux
-    const page = useSelector(selectPage);
     const [open, setopen] = useState(true);
     // animation
     const control = useAnimation();
+    const display = useAnimation();
     const bar1 = useAnimation();
     const bar2 = useAnimation();
     const navanimate = useAnimation();
-
+    var location = useLocation();
     useEffect(() => {
         if (open === false) {
             control.start({
-                opacity: 0,
-                y: "-100vh",
+                transform: "scale(1)",
                 transition: {
-                    type: "spring",
+                    type: "tween",
+                    duration: 0.8
                 },
             })
             bar1.start({
@@ -31,92 +30,91 @@ export default function NavbarMobile() {
             bar2.start({
                 y: 5,
             })
-            navanimate.start({
+            display.start({
+                transform: "translate3d(1000px,0,0)",
+            })
+        }
+
+        setopen(true);
+    }, [location])
+
+    function clickHandler() {
+        setopen(!open);
+        if (open) {
+            control.start({
+                transform: "scale(50)",
+                transition: {
+                    type: "tween",
+                    duration: 0.4,
+                },
+
+            })
+            bar1.start({
+                y: 0,
                 transition: {
                     type: "spring",
+                    stiffness: 100,
+                    damping: 20,
                 },
             })
-
+            bar2.start({
+                y: 0,
+            })
+            display.start({
+                transform: "translate3d(0,0,0)",
+            })
         }
-        setopen(true);
-    }, [page])
+        else {
+            control.start({
+                transform: "scale(1)",
+                transition: {
+                    type: "tween",
+                    duration: 0.7,
+                },
+            })
+            bar1.start({
+                y: -5,
+            })
+            bar2.start({
+                y: 5,
+            })
+            display.start({
+                transform: "translate3d(1000px,0,0)",
+                transition: {
+                    type: "tween",
+                    duration: 0,
+                    delay: 0.6,
+                },
+            })
+        }
+
+    }
+
+
     return (<>
         <LazyMotion features={domAnimation}>
             <m.div
                 initial={{
-                    opacity: 0,
-                    y: "-100vh",
+                    transform: "translate3d(1000px,0,0)"
                 }}
-                animate={control}
-                className='Navbar-Mobile-Menu-Container'
-
+                animate={display}
+                className={`Navbar-Mobile-Menu-Container `}
             >
                 <Suspense fallback={""}>
                     <NavbarMobileMenu animate={navanimate} />
                 </Suspense>
             </m.div>
         </LazyMotion>
+        {/*  */}
+        <LazyMotion features={domAnimation}>
+            <m.div
+                animate={control}
+                id="navbar-mobile-menu-button">
+            </m.div>
+        </LazyMotion>
         <m.button
-            id="navbar-mobile-menu-button"
             aria-label='menu-button'
-            onClick={() => {
-                setopen(!open);
-                if (open) {
-                    control.start({
-                        opacity: 1,
-                        y: "0vh",
-                        transition: {
-                            type: "tween",
-                        },
-                    })
-                    bar1.start({
-                        y: 0,
-                        transition: {
-                            type: "spring",
-                            stiffness: 100,
-                            damping: 20,
-                        },
-                    })
-                    bar2.start({
-                        y: 0,
-                    })
-                    navanimate.start({
-                        transition: {
-                            type: "spring",
-                            stiffness: 100,
-                            damping: 20,
-                        },
-                    })
-                } else {
-                    control.start({
-                        opacity: 0,
-                        y: "-100vh",
-                        transition: {
-                            type: "spring",
-                            stiffness: 100,
-                            damping: 20,
-                            when: "afterChildren",
-
-                        },
-                    })
-                    bar1.start({
-                        y: -5,
-                    })
-                    bar2.start({
-                        y: 5,
-                    })
-                    navanimate.start({
-                        transition: {
-                            type: "spring",
-                            stiffness: 100,
-                            damping: 20,
-                        },
-                    })
-                }
-
-            }
-
-            }
+            onClick={clickHandler}
             className='Navbar-Mobile-Button'
         >
             <LazyMotion features={domAnimation}>
@@ -138,6 +136,7 @@ export default function NavbarMobile() {
                 ></m.div>
             </LazyMotion>
         </m.button>
+
     </>
     )
 }

@@ -1,26 +1,26 @@
 // Styling
 import "./Register.scss";
-import { Button, CircularProgress } from "../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy";
+import { CircularProgress } from "../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy";
 // Form Control
 import { Formik } from "formik";
 import { RegisterSchema } from "./RegisterSchema";
 // React
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 // Redux
 import { useDispatch } from "react-redux";
 import { pageChanged } from "../../../Redux/features/page/pageSlice";
-import { userRoleAdded } from "../../../Redux/features/users/userRoleSlice";
-import { userTokenAdded } from "../../../Redux/features/users/userRoleSlice";
-// Axios
+import { userRoleAdded, userTokenAdded } from "../../../Redux/features/users/userRoleSlice";
 // Module
 import { CustomTextField } from "../../../Reusable/TextField/CustomTextField";
 // animation
 import { motion } from "framer-motion";
 import { userDataAdded } from "../../../Redux/features/users/userRoleSlice";
-// URL
-import { URL } from "../../../Reusable/Service/URL";
+import { Link, useNavigate } from "react-router-dom";
 import { postRequest } from "../../../Reusable/Service/AxiosClient";
 import CustomButton from "../../../Reusable/CustomComponent/CustomButton";
+import axios from "axios";
+import VerifyEmail from "../VerifyEmail/VerifyEmail";
+import { useLocation } from "react-router-dom";
 
 export default function Register() {
     // use dispatch to change page
@@ -33,44 +33,60 @@ export default function Register() {
             formInput.current.focus()
         }
     }
-    // const userData = useSelector((state) => state);
+    const navigate = useNavigate();
+    const pathname = useLocation();
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
     return (
         <Formik
             validationSchema={RegisterSchema}
             initialValues={{ email: "", password: "", fullname: "", nim: "", repassword: "" }}
             onSubmit={(values) => {
                 Setloading(true);
-                async function Register() {
+                const sendData = async () => {
                     try {
-                        const response = await postRequest('register', {
+                        await postRequest('register', {
                             name: values.fullname,
                             nim: values.nim,
                             password: values.password,
                             email: values.email,
-                        });
-                        console.log(response);
-                        if (response.data.success === true) {
-                            localStorage.setItem('LoginID', response.data.login_token);
-                            dispatch(userTokenAdded(response.data.token));
-                            dispatch(pageChanged("home"));
-                            dispatch(userRoleAdded("user"));
-                            dispatch(userDataAdded({
-                                name: response.data.user.name,
-                                nim: response.data.user.nim,
-                                email: response.data.user.email,
-                            }));
-                            Setloading(false);
-                        } else {
-                            console.log(response);
-                            Setloading(false);
-                        }
-                    } catch (error) {
+                        })
+                            .then((response) => {
+                                if (response.data.success === true) {
+                                    console.log(response.data);
+                                    localStorage.setItem('LoginID', response.data.login_token);
+                                    localStorage.setItem('Email', response.data.user.email);
+                                    dispatch(userTokenAdded(response.data.login_token));
+                                    dispatch(userRoleAdded(response.data.user.role));
+                                    dispatch(userDataAdded({
+                                        name: response.data.user.name,
+                                        nim: response.data.user.nim,
+                                        email: response.data.user.email,
+                                    }));
+                                    navigate('/register/verify', {
+                                        state: { previousPath: pathname }
+                                    });
+                                }
+                                else {
+                                    alert("error, email already exist");
+                                }
+                                Setloading(false);
+
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                                Setloading(false);
+                            })
+                    }
+                    catch (error) {
                         console.log(error);
                         Setloading(false);
                     }
                 }
-                Register();
-            }}
+                sendData();
+            }
+            }
         >
             {({
                 values,
@@ -91,7 +107,6 @@ export default function Register() {
                                 <span className="Title">Register</span>
                                 <CustomTextField
                                     id="fullname"
-                                    // ref={formInput}
                                     value={values.fullname}
                                     onKeyDownCapture={EnterHandleClick}
                                     type="text"
@@ -168,9 +183,8 @@ export default function Register() {
                                     <CustomButton
                                         disabled={(errors.fullname || errors.nim || errors.email || errors.password || errors.repassword) ? true : false}
                                         type="submit"
-                                        onClick={() => {
-                                            handleSubmit(values);
-                                        }}>
+                                    // onClick={handleSubmit}
+                                    >
                                         {loading ? (<CircularProgress />) : "Register"}
                                     </CustomButton>
                                 </div>
@@ -178,7 +192,9 @@ export default function Register() {
                             <br />
                             <p fontSize={"15px"} fontWeight="bold">
                                 Already have account?{' '}
-                                <a className="Purple" onClick={() => { dispatch(pageChanged('login')) }}>
+                                <a className="Purple" onClick={() => {
+                                    navigate('/login');
+                                }}>
                                     Login now!
                                 </a>
                             </p>

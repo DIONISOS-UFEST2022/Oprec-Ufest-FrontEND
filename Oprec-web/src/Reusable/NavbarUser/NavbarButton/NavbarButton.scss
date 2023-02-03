@@ -12,6 +12,10 @@
     border: none;
     position: relative;
 
+    .active {
+        color: index.$yellow;
+    }
+
     .Title {
         @include index.prevent-select;
         overflow: visible;

@@ -1,30 +1,33 @@
-import React, { useEffect } from 'react'
 import { Grid } from '@mui/material'
-import { useSelector, useDispatch } from 'react-redux'
-import { pageChanged } from '../../../../Redux/features/page/pageSlice'
+import { useSelector } from 'react-redux'
 import { m, LazyMotion, domAnimation } from 'framer-motion';
 import { selectuserRole } from '../../../../Redux/features/users/userRoleSlice'
 import { NavbarMobileMenuList as Menus } from './NavbarMobileMenuList'
 import { selectPage } from '../../../../Redux/features/page/pageSlice';
-
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Divider } from '../../../MaterialUICoreLazy/MaterialUIMaterialLazy';
 
 function Card(props) {
     const page = useSelector(selectPage);
+    const navigate = useNavigate();
+    const handleTouch = () => {
+        navigate(`${props.state}`)
+    }
+    var location = useLocation();
     return (
         <Grid item
             xs={12}
             className="Navbar-Mobile-Menu-Card"
         >
-
             <button
-                // style={{
-                //     border:
-                //         props.state === page ? "1px solid #f5d63f" : "1px solid #00000000"
-                //     ,
-                // }}
-                onTouchStartCapture={props.onTouch} className='Navbar-Menu-Button'>
+                onTouchStartCapture={handleTouch}
+                className='Navbar-Menu-Button'
+                style={{
+                    color: location.pathname === `/${props.state}` ? "#f5d63f" : "white",
+                }}
+            >
                 {props.name}
-                {props.state === page ?
+                {location.pathname === `/${props.state}` ?
                     <div className="ActiveLine">
                         <svg
                             width="78"
@@ -37,14 +40,11 @@ function Card(props) {
                         </svg></div>
                     : ""}
             </button>
-
-
         </Grid >
     )
 }
 
 export default function NavbarMobileMenu(props) {
-    const dispatch = useDispatch();
     const roleselector = useSelector(selectuserRole);
     return (
         <LazyMotion features={domAnimation}>
@@ -52,6 +52,9 @@ export default function NavbarMobileMenu(props) {
                 animate={props.animate}
             >
                 <Grid container className='Navbar-Mobile-Menu'>
+                    {/* <Grid item xs={12} className='Navbar-Mobile-Menu-Header'>
+                        <h1>UMN FESTIVAL</h1>
+                    </Grid> */}
                     {
                         Menus.filter(
                             (item) => {
@@ -64,11 +67,12 @@ export default function NavbarMobileMenu(props) {
                                 }
                             }
                         ).map((item, index) => {
-                            return (
+                            return (<>
                                 <Card onTouch={
                                     () => {
-                                        dispatch(pageChanged(item.state))
                                     }} key={index} name={item.name} link={item.link} onClick={props.onClick} state={item.state} />
+                                <Divider />
+                            </>
                             )
                         })}
                 </Grid>

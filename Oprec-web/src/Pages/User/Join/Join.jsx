@@ -28,6 +28,7 @@ import "./UploadImage/UploadImage.scss"
 // URL
 import { postRequest } from "../../../Reusable/Service/AxiosClient";
 import CustomButton from "../../../Reusable/CustomComponent/CustomButton";
+import { setCookie } from 'react-use-cookie';
 const JoinPage0 = lazy(() => import("./Page/JoinPage0"));
 const Sparkles = lazy(() => import("../../../Reusable/Animation/Sparkle/Sparkle"));
 
@@ -68,34 +69,32 @@ export default function Join() {
             formInput.current.focus()
         }
     }
-
     const dispatch = useDispatch();
     const joinned = useSelector(selectUser).isJoin;
     const [joinpage, Setjoinpage] = useState(0);
     useEffect(() => {
-        scroll(0, 0);
+        setCookie('join', 'join', { path: '/' });
+        window.scrollTo(0, 0);
         if (joinned === true) {
             Setjoinpage(6)
         }
-    }, [])
+    }, [joinpage])
     function Prev(props) {
         return (
             <CustomButton
                 type="button"
                 onClick={() => {
                     Setjoinpage(props.page)
-                    titleRef.current.scrollIntoView({ behavior: 'smooth' })
                 }}>PREV</CustomButton>
         )
     }
     function Next(props) {
         return (
             <CustomButton
-                type="submit"
+                type="button"
                 disabled={props.disabled}
                 onClick={() => {
                     Setjoinpage(props.page);
-                    titleRef.current.scrollIntoView({ behavior: 'smooth' });
                 }}>NEXT</CustomButton>
         )
     }
@@ -122,7 +121,6 @@ export default function Join() {
                 }}
                 onSubmit={(values) => {
                     Setloading(true);
-                    // const login = localStorage.getItem('LoginID');
                     async function postData() {
                         try {
                             const response = await postRequest(`panitia/insertData`, {
@@ -142,6 +140,7 @@ export default function Join() {
                                 instagram_account: values.ig,
                                 city: values.domisili,
                             })
+                            console.log(response);
                             if (response.status === 201) {
                                 dispatch(userSetJoin());
                                 Setjoinpage(6);
@@ -474,7 +473,10 @@ export default function Join() {
                                                     <div className="space-between">
                                                         <Prev page={1} />
                                                         <Next page={
-                                                            values.divisi === "Visual" ? 3 : 4
+                                                            values.divisi === "Visual" ||
+                                                                values.divisi === "Dokumentasi" ||
+                                                                values.divisialt === "Dokumentasi" ||
+                                                                values.divisialt === "Visual" ? 3 : 4
                                                         }
                                                             disabled={!(values.nohp && values.idline && values.ig && values.divisi && values.divisialt && values.vaksin)}
                                                         />
@@ -496,7 +498,8 @@ export default function Join() {
                                                     className="textarea"
                                                     id="portofolio"
                                                     multiline
-                                                    rows={3}
+                                                    minRows={3}
+                                                // rows={3}
                                                 />
                                                 <p className="error">
                                                     {errors.portofolio && touched.portofolio && errors.portofolio}
@@ -521,7 +524,8 @@ export default function Join() {
                                                     className="textarea"
                                                     id="jawaban"
                                                     multiline
-                                                    rows={4}
+                                                    minRows={4}
+                                                // rows={4}
                                                 />
                                                 <p className="error">
                                                     {errors.jawaban && touched.jawaban && errors.jawaban}
@@ -552,20 +556,20 @@ export default function Join() {
                                                     placeholder="Masukan Jawaban"
                                                     id="jawaban2"
                                                     multiline
-                                                    rows={4}
+                                                    minRows={4}
+                                                // rows={4}
                                                 />
                                                 <p className="error">
                                                     {errors.jawaban2 && touched.jawaban2 && errors.jawaban2}
                                                 </p>
                                                 <div className="space-between">
                                                     <Prev page={4} />
-                                                    <Button
-                                                        className="button"
+                                                    <CustomButton
                                                         variant="contained"
                                                         type="submit"
                                                     >
                                                         {loading ? (<CircularProgress />) : "Submit"}
-                                                    </Button>
+                                                    </CustomButton>
                                                 </div>
                                             </>)
 

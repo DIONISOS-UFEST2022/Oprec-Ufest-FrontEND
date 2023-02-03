@@ -17,8 +17,6 @@
         width: 300px;
     }
 
-
-
     .background {
         @include index.center;
         @include index.prevent-select;

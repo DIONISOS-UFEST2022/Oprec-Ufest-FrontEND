@@ -1,3 +1,64 @@
+// cursor
+
+
+// #root {
+//     // cursor: url("/Asset/Image/cursor.webp"), auto !important;
+//     // -webkit-animation: cursor 400ms infinite;
+//     // animation: cursor 400ms infinite;
+// }
+
+@-webkit-keyframes cursor {
+    0% {
+        cursor: url("/Asset/Image/cursor.png"), auto;
+    }
+
+    20% {
+        cursor: url("/Asset/Image/cursor.webp"), auto;
+    }
+
+    40% {
+        cursor: url("/Asset/Image/cursor.webp"), auto;
+    }
+
+    60% {
+        cursor: url("/Asset/Image/cursor.png"), auto;
+    }
+
+    80% {
+        cursor: url("/Asset/Image/cursor.png"), auto;
+    }
+
+    100% {
+        cursor: url("/Asset/Image/cursor.webp"), auto;
+    }
+}
+
+@keyframes cursor {
+    0% {
+        cursor: url("/Asset/Image/cursor.png"), auto;
+    }
+
+    20% {
+        cursor: url("/Asset/Image/cursor.webp"), auto;
+    }
+
+    40% {
+        cursor: url("/Asset/Image/cursor.webp"), auto;
+    }
+
+    60% {
+        cursor: url("/Asset/Image/cursor.png"), auto;
+    }
+
+    80% {
+        cursor: url("/Asset/Image/cursor.png"), auto;
+    }
+
+    100% {
+        cursor: url("/Asset/Image/cursor.webp"), auto;
+    }
+}
+
 @font-face {
     font-family: 'Rocket-Vintage';
     src:
@@ -104,6 +165,10 @@ $text-shadow: 2px 3px 9px rgba(0, 0, 0, 1);
     -moz-user-select: none;
     -webkit-touch-callout: none;
     -khtml-user-select: none;
+}
+
+.prevent-select {
+    @include prevent-select;
 }
 
 // Scrollbar
@@ -260,7 +325,9 @@ $text-shadow: 2px 3px 9px rgba(0, 0, 0, 1);
 }
 
 @keyframes ripple {
-    $color: rgb(162, 162, 162);
+    $color: rgba(216, 216, 216, 0.5);
+    $color2: rgb(255, 255, 255, 0);
+    $color3: rgb(255, 255, 255, 0);
 
     0% {
         box-shadow:
@@ -276,16 +343,20 @@ $text-shadow: 2px 3px 9px rgba(0, 0, 0, 1);
 
     100% {
         box-shadow:
-            0 0 0 5px rgba(68, 68, 238, 0.0),
-            0 0 0 7px rgba(255, 255, 255, 0),
-            0 0 0 10px rgba(68, 68, 238, 0.0),
-            0 0 0 12px rgba(255, 255, 255, 0),
-            0 0 0 20px rgba(68, 68, 238, 0.0),
-            0 0 0 22px rgba(255, 255, 255, 0),
-            0 0 0 35px rgba(68, 68, 238, 0.0),
-            0 0 0 37px rgba(255, 255, 255, 0);
+            0 0 0 5px $color3,
+            0 0 0 7px $color2,
+            0 0 0 10px $color3,
+            0 0 0 12px $color2,
+            0 0 0 20px $color3,
+            0 0 0 22px $color2,
+            0 0 0 35px $color3,
+            0 0 0 37px $color2;
     }
 
+}
+
+.ripple {
+    @include ripple;
 }
 
 
@@ -418,3 +489,31 @@ $text-shadow: 2px 3px 9px rgba(0, 0, 0, 1);
 }
 
 // font styling
+
+.index {
+    position: relative;
+}
+
+// divider
+
+.divider {
+    position: absolute;
+    width: 1px;
+    height: 90%;
+    background-color: rgba(255, 255, 255, 0.5);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+
+    @media screen and (max-width: $sm) {
+        background-color: rgba(255, 255, 255, 0.3);
+        top: 100%;
+        width: 70%;
+        height: 1px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+}

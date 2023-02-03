@@ -11,6 +11,7 @@
 
     .form {
         @include index.form-layout;
+        margin-top: 10vh;
 
         @media screen and (max-width: index.$sm) {
             height: auto;
@@ -88,6 +89,7 @@
         }
 
         .textfillheart {
+            @include index.prevent-select;
             animation: textfillheart 2s infinite ease-in-out alternate-reverse;
             will-change: transfrom;
         }

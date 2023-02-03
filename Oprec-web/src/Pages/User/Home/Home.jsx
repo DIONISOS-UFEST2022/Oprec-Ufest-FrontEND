@@ -2,8 +2,10 @@
 import { Suspense, lazy, useEffect, useState, useMemo, useCallback } from "react";
 // styling
 import "./Home.scss";
+import { m, LazyMotion, domAnimation } from "framer-motion";
 import { useMediaQuery } from "@mui/material";
 import WelcomeAnimate from "./Component/WelcomeAnimate/WelcomeAnimate";
+import { setCookie } from "react-use-cookie";
 const HomeButton = lazy(() => import("./Component/HomeButton/HomeButton"));
 const UFESTLOGO = lazy(() => import("./Component/UFESTLOGO/UFESTLOGO"));
 const Pilar = lazy(() => import("./pilar"));
@@ -13,6 +15,7 @@ const Pilar = lazy(() => import("./pilar"));
 export default function Home() {
     const [isMobile] = useState(useMediaQuery("(max-width: 600px)"));
     useEffect(() => {
+        setCookie('home', 'home', { path: '/' });
         window.scrollTo(0, 0)
     }, []);
     const MemoLogo = useCallback(() => {
@@ -22,12 +25,27 @@ export default function Home() {
         <div className="home">
             {isMobile ?
                 <>
-                    <div
-                        rel="preload"
-                        loading="lazy"
-                        decoding="async"
-                        className="home-image"
-                    />
+                    <LazyMotion features={domAnimation}>
+                        <m.div
+                            initial={{
+                                opacity: 0,
+                                y: 100
+                            }}
+                            animate={{
+                                opacity: 1,
+                                y: -1,
+                            }}
+                            transition={{
+                                duration: 1,
+                                ease: "easeInOut",
+                                delay: 1,
+                            }}
+                            rel="preload"
+                            loading="lazy"
+                            decoding="async"
+                            className="home-image"
+                        />
+                    </LazyMotion>
                     {/* <MemoLogo /> */}
                     <p className="heading">Welcome #Spartan</p>
                     <HomeButton />

@@ -1,8 +1,10 @@
 @use '../../../index.scss' as index;
 
+$color : hsl(24, 35%, 43%);
+
 .Navbar-Mobile-Button {
     @include index.prevent-select;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: $color;
     position: fixed;
     border-style: none;
     width: 50px;
@@ -37,26 +39,46 @@
 }
 
 
-.navbar-mobile-menu-button {
+
+
+
+#navbar-mobile-menu-button {
+    @include index.prevent-select;
+    background-color: $color;
+    position: fixed;
+    border-style: none;
+    width: 30px;
+    height: 30px;
+    top: 20px;
+    right: 15px;
+    border-radius: 50%;
     z-index: index.$z-index-6;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    padding: 10px;
+    will-change: transform;
 }
 
 .Navbar-Mobile-Menu-Container {
     @include index.prevent-select;
-    @include index.full-screen;
-    @include index.browngrad;
-   
+    @include index.center;
     text-shadow: 5px 0px 9px index.$black;
-    z-index: index.$z-index-6;
-    overflow: hidden;
+    z-index: index.$z-index-7;
     position: fixed;
     top: 0;
-    @include index.center;
-    text-align: center;
-    will-change: transform, opacity;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 100vw;
+    height: 40vh;
+    transform: scale3d(1, 1, 1);
+    will-change: display, transform, opacity;
 
     .Navbar-Mobile-Menu-Card {
-
+        text-align: center;
 
         .Navbar-Menu-Button {
             border: none;
@@ -87,5 +109,9 @@
         }
 
 
+    }
+
+    .Navbar-Menu-Button-Active {
+        color: index.$yellow;
     }
 }

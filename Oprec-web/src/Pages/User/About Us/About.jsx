@@ -5,6 +5,7 @@ import React, { useEffect, lazy, Suspense } from "react";
 import LoadingScreen from "../../../Reusable/LoadingScreen/LoadingScreen";
 import { useMediaQuery } from "@material-ui/core";
 import AboutCardMobile from "./AboutCardMobile/AboutCardMobile";
+import { setCookie } from "react-use-cookie";
 const AboutSection = lazy(() => import("./AboutCard/AboutSection"));
 const AboutCard = lazy(() => import("./AboutCard/AboutCard"));
 
@@ -13,6 +14,7 @@ export default function About() {
   const isMobile = useMediaQuery("(max-width: 600px)");
   let direction = "left";
   useEffect(() => {
+    setCookie('about', 'about', { path: '/' });
     window.scrollTo(0, 0)
   }, []);
   return (<>
@@ -25,15 +27,14 @@ export default function About() {
               if (index % 2 === 0) direction = "right";
               else direction = "left";
               return (
-                // <AboutSection>
                 <Grid className="GridItem" item xs={12} key={index}>
                   <AboutCardMobile
                     title={item.title}
                     desc={item.data}
                     direction={direction}
+                    logo={item.image}
                   />
                 </Grid>
-                // </AboutSection>
               )
             })
             :
@@ -42,13 +43,12 @@ export default function About() {
               else direction = "left";
               return (
                 <Grid item xs={12} key={index}>
-                  <AboutSection>
-                    <AboutCard
-                      title={item.title}
-                      data={item.data}
-                      direction={direction}
-                    />
-                  </AboutSection>
+                  <AboutCard
+                    title={item.title}
+                    data={item.data}
+                    direction={direction}
+                    image={item.image}
+                  />
                 </Grid>
               )
             })

@@ -71,12 +71,17 @@ $margin-start: 20px;
 
     .Footer-Foot {
         @include index.prevent-select;
-        padding: 20px;
+        padding: 10px;
         text-align: center;
         color: rgba(219, 219, 219, 1);
+        background: rgb(71, 33, 33);
+        background: -moz-linear-gradient(0deg, rgba(71, 33, 33, 1) 0%, rgba(82, 56, 38, 1) 100%);
+        background: -webkit-linear-gradient(0deg, rgba(71, 33, 33, 1) 0%, rgba(82, 56, 38, 1) 100%);
+        background: linear-gradient(0deg, rgba(71, 33, 33, 1) 0%, rgba(82, 56, 38, 1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#472121", endColorstr="#523826", GradientType=1);
         font-family: index.$font2;
-        font-size: $font-size;
-        margin-top: 20px;
+        font-size: 15px;
+        margin-top: 10px;
 
         .purpleText {
             color: yellow;
@@ -98,7 +103,12 @@ $margin-start: 20px;
     display: inline;
     text-decoration: none;
     position: relative;
-    margin: 0%;
+
+    // margin: 0%;
+    .Footer-Link-Card-Sosmed {
+        display: flex;
+        justify-content: left !important;
+    }
 
     .Card-Image {
         border-radius: 50%;
@@ -108,6 +118,11 @@ $margin-start: 20px;
         margin-left: $margin-start;
         transition: 0.5s all;
         pointer-events: all;
+
+        @media screen and (max-width: index.$sm) {
+            width: 35px;
+            height: 35px;
+        }
 
         :hover {
             background-color: index.$white;

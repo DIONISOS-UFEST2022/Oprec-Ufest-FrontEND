@@ -56,12 +56,21 @@ $outline: 2px dashed;
 }
 
 .Modal-Profile {
-    @include index.modalcontainer;
     @include index.center;
-    // flex-direction: column;
-    padding: 20px;
-    opacity: 1 !important;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    background-color: index.$white;
+    height: 400px !important;
+    width: 250px;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: none !important;
+    position: absolute;
+    border-radius: 40px;
+    padding: 30px;
 
 
     .Title {

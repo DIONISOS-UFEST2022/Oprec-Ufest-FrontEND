@@ -9,7 +9,8 @@ import { useState } from 'react';
 
 export default function AudioPlayButton() {
     const [play, { stop, isPlaying }] = useSound(BGM, {
-        volume: 0.25,
+        volume: 0.15,
+        playbackRate: 1,
     });
     const [onplay, setOnplay] = useState("");
     const dispatch = useDispatch();
@@ -23,6 +24,7 @@ export default function AudioPlayButton() {
         }, 3000);
     }, [])
 
+
     function handler() {
         if (userSound === false) {
             play()
@@ -35,13 +37,9 @@ export default function AudioPlayButton() {
         }
     }
     return (<>
-        {/* <Tooltip
-            open={open}
-            title="Best Experince with Sound"> */}
-            <div className='Audio-Play-Button-Wrapper' onClick={handler}>
-                <div className={`AudioPlayButton ${onplay}`} />
-            </div>
-        {/* </Tooltip> */}
+        <div onLoad={() => handler()} className='Audio-Play-Button-Wrapper ripple' onClick={handler}>
+            <div className={`AudioPlayButton ${onplay}`} />
+        </div>
     </>
     )
 }

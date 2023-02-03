@@ -1,14 +1,22 @@
 import "./NavbarButtonAdmin.scss"
+import { useNavigate, useLocation } from "react-router-dom"
 
 export default function NavbarButtonAdmin(props) {
+    const navigate = useNavigate();
+    const location = useLocation();
+    function handler() {
+        navigate(`/admin/${props.state}`);
+    }
     return (
-        <div
+        <button
             className="NavbarButtonAdmin"
             id={props.id}
-            onClick={props.onClick}
-            style={{ color: props.color }}
+            onClick={handler}
+            style={{
+                color: location.pathname === `/admin/${props.state}` ? "red" : "white"
+                }}
         >
             {props.Title}
-        </div>
+        </button >
     )
 }
