@@ -29,8 +29,8 @@
         left: 0;
         right: 0;
         transition: 250ms;
-        animation-direction: alternate-reverse;
-        will-change: translate;
+        // animation-direction: alternate-reverse;
+        // will-change: translate;
 
         @media screen and (max-width: index.$sm) {
             width: 300px;
@@ -64,7 +64,7 @@
     }
 
     :hover {
-        transform: scaleX(1.6);
+        transform: scaleX(1.2);
         word-spacing: 20px;
 
     }

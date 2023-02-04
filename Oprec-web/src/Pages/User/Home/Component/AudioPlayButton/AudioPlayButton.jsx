@@ -37,7 +37,7 @@ export default function AudioPlayButton() {
         }
     }
     return (<>
-        <div onLoad={() => handler()} className='Audio-Play-Button-Wrapper ripple' onClick={handler}>
+        <div onLoad={() => handler()} className='Audio-Play-Button-Wrapper' onClick={handler}>
             <div className={`AudioPlayButton ${onplay}`} />
         </div>
     </>

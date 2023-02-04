@@ -39,19 +39,32 @@
 
 .Modal {
     @include index.modalcontainer;
-    @include index.center;
-    // flex-direction: column;
-    padding: 20px;
+    padding: 40px;
     opacity: 1 !important;
-    display: block;
+    width: 60vw !important;
+    overflow-y: scroll;
 
+    .Name {
+        font-family: index.$font;
 
-    .Title {
+        .Name-Title {
+            font-size: 60px;
+            color: index.$blue;
+        }
+
+        .Name-subTitle {
+            font-size: 30px;
+            font-weight: bolder;
+            color: index.$blue;
+        }
+    }
+
+    .role {
         @include index.center;
         display: block;
         font-family: index.$font;
-        font-size: 30px;
-        font-weight: bolder;
+        font-size: 20px;
+        font-weight: 1000;
         color: index.$blue;
         text-shadow: none !important;
     }
@@ -67,22 +80,16 @@
     }
 
     .NameDesc {
-        @include index.center;
-        flex-direction: column;
+        color: #87181D;
         margin-top: 10px;
         font-family: index.$font;
     }
 
-    .Desc {
-        font-family: index.$font2;
-        font-size: 15px;
-        font-weight: bolder;
-        color: index.$white;
-        text-align: justify;
-        text-align-last: center;
-        overflow-wrap: break-word;
-        word-break: break-all;
-        line-height: 15px;
+    .Jobdesk {
+        color: #87181D;
+        flex-direction: column;
+        margin-top: 10px;
+        font-family: index.$font;
     }
 }
 

@@ -3,12 +3,10 @@ import { useSelector } from 'react-redux'
 import { m, LazyMotion, domAnimation } from 'framer-motion';
 import { selectuserRole } from '../../../../Redux/features/users/userRoleSlice'
 import { NavbarMobileMenuList as Menus } from './NavbarMobileMenuList'
-import { selectPage } from '../../../../Redux/features/page/pageSlice';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Divider } from '../../../MaterialUICoreLazy/MaterialUIMaterialLazy';
 
 function Card(props) {
-    const page = useSelector(selectPage);
     const navigate = useNavigate();
     const handleTouch = () => {
         navigate(`${props.state}`)

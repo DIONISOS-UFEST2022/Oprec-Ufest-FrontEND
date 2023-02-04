@@ -4,7 +4,6 @@ import { LazyMotion, m, domAnimation, useAnimation } from "framer-motion"
 import { useLocation } from 'react-router-dom'
 const NavbarMobileMenu = lazy(() => import('./NavbarMobileMenu/NavbarMobileMenu.jsx'))
 
-
 export default function NavbarMobile() {
     // redux
     const [open, setopen] = useState(true);

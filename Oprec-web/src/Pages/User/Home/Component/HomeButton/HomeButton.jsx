@@ -27,9 +27,9 @@ export default function HomeButton() {
                 animate={{
                     scaleX: 1,
                     transition: {
-                        duration: 0.5,
+                        duration: 0.7,
                         ease: "easeInOut",
-                        delay: 0.5,
+                        delay: 2.2,
                     }
                 }}
             >

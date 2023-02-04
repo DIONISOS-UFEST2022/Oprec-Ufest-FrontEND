@@ -1,10 +1,11 @@
 @use '../../../index.scss' as index;
 
-$color : hsl(24, 35%, 43%);
+// $color : red;
 
 .Navbar-Mobile-Button {
     @include index.prevent-select;
-    background-color: $color;
+    background-color: #f8b632;
+    // @include index.orangegrad;
     position: fixed;
     border-style: none;
     width: 50px;
@@ -44,7 +45,8 @@ $color : hsl(24, 35%, 43%);
 
 #navbar-mobile-menu-button {
     @include index.prevent-select;
-    background-color: $color;
+    // background-color: $color;
+    @include index.orangegrad;
     position: fixed;
     border-style: none;
     width: 30px;

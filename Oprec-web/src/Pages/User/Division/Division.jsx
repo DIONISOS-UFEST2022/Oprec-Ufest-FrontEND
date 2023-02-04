@@ -14,6 +14,7 @@ export default function Division(props) {
             <h1>Our Division</h1>
             <br />
             <DivisonCarousel />
+
         </div>
     </>)
 }

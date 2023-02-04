@@ -456,12 +456,7 @@ M378.000000,476.005432
 	C378.000000,489.933197 378.000000,483.218323 378.000000,476.005432 
 z"/>
 			</svg>
-			<svg height="0" width="0">
-				<filter id='shadow' colorinterpolation-filters="sRGB">
-					<feDropShadow dx="2" dy="2" stdDeviation="3" floodOpacity="0.5" />
-				</filter>
-
-			</svg>
+	
 		</div>
 	)
 }

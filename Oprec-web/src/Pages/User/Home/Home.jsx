@@ -6,6 +6,8 @@ import { m, LazyMotion, domAnimation } from "framer-motion";
 import { useMediaQuery } from "@mui/material";
 import WelcomeAnimate from "./Component/WelcomeAnimate/WelcomeAnimate";
 import { setCookie } from "react-use-cookie";
+import UFESTLOGOWHITE from "./Component/UFESTLOGO/UFESTLOGOWHITE";
+import { CounterTesting } from "./Component/UFESTLOGO/Testing";
 const HomeButton = lazy(() => import("./Component/HomeButton/HomeButton"));
 const UFESTLOGO = lazy(() => import("./Component/UFESTLOGO/UFESTLOGO"));
 const Pilar = lazy(() => import("./pilar"));
@@ -25,7 +27,7 @@ export default function Home() {
         <div className="home">
             {isMobile ?
                 <>
-                    <LazyMotion features={domAnimation}>
+                    {/* <LazyMotion features={domAnimation}>
                         <m.div
                             initial={{
                                 opacity: 0,
@@ -45,10 +47,11 @@ export default function Home() {
                             decoding="async"
                             className="home-image"
                         />
-                    </LazyMotion>
+                    </LazyMotion> */}
                     {/* <MemoLogo /> */}
-                    <p className="heading">Welcome #Spartan</p>
-                    <HomeButton />
+                    <CounterTesting />
+                    {/* <p className="heading">Welcome #Spartan</p> */}
+                    {/* <HomeButton /> */}
                 </>
                 :
                 <>
@@ -56,8 +59,9 @@ export default function Home() {
                         <Pilar />
                     </Suspense>
                     <MemoLogo />
-                    <WelcomeAnimate />
-                    <HomeButton />
+                    <CounterTesting />
+                    {/* <WelcomeAnimate /> */}
+                    {/* <HomeButton /> */}
                 </>
             }
         </div>

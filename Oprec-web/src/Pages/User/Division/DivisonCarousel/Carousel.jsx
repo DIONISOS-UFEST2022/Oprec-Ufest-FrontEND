@@ -24,13 +24,20 @@ function CarouselDetail({ props }) {
             aria-describedby="modal-modal-description"
         >
             <div className='Modal'>
-                <div className='Title'>
-                    {props.name} ({props.division})
+                <div className='Name'>
+                    <span className="Name-Title">{props.name}</span>
+                    <span className="Name-subTitle"> ({props.division})</span>
+                </div>
+                <div className='role'>
+                    &ldquo;{(props.role)}&rdquo;
+                    <br />
+                    &ldquo;{(props.role2)}&rdquo;
                 </div>
                 <div className='NameDesc'>
                     &ldquo;{props.namedesc}&rdquo;
                 </div>
-                <div className='Desc'>
+                <br />
+                <div className='Jobdesk'>
                     {props.jobdesk}
                 </div>
             </div>

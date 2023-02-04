@@ -1,4 +1,5 @@
 import './UFESTLOGO.scss'
+import React from 'react';
 
 function UFESTLOGO() {
 	return (

@@ -1,0 +1,116 @@
+@use 'src/index' as index;
+
+.counter {
+    @include index.center;
+    text-align: center;
+    position: relative;
+    z-index: index.$z-index-3 !important;
+
+    .svgtest {
+        border: 1px solid red;
+        // margin: auto;
+        height: 150px;
+        position: absolute;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 410px;
+
+        .text-path1 {
+
+            text-align: center;
+            font: index.$font;
+            transform-origin: center 40%;
+            display: block;
+            fill-opacity: 0;
+            stroke: url(#gradation-1);
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke: rgb(137, 8, 223);
+            stroke-width: 0px;
+            $nth: 1;
+            $delay: 0;
+
+            @while $nth <30 {
+                &:nth-child(#{$nth}) {
+                    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+                    animation: textcounter 2.0s linear forwards;
+                    animation-delay:#{$delay}s;
+                    stroke-dasharray: 800;
+                    stroke-dashoffset: 800;
+                    filter: url(#shadow);
+
+                }
+
+                $nth: $nth+1;
+                $delay: $delay+0.05;
+            }
+
+            // $nth: 11;
+            // $delay: 0;
+        }
+
+        @keyframes textcounter {
+            0% {
+                stroke-dashoffset: 800;
+                stroke-width: 3px;
+            }
+
+            50% {
+                stroke-dashoffset: 1600;
+                stroke-width: 0.1px;
+            }
+
+            50.1% {
+                stroke-dashoffset: 800;
+            }
+
+            80% {
+                stroke-width: 2px;
+                fill: #d2b;
+                fill-opacity: 0;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+                stroke: index.$blue;
+                stroke-width: 0.5;
+                box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+                fill: index.$yellow;
+                fill-opacity: 1;
+                stroke-dasharray: 400;
+            }
+        }
+
+        @keyframes dash1_en {
+            0% {
+                stroke-dashoffset: 200;
+                stroke-width: 2px;
+            }
+
+            50% {
+                stroke-dashoffset: 400;
+                stroke-width: 0.1px;
+            }
+
+            50.1% {
+                stroke-dashoffset: 200;
+            }
+
+            80% {
+                stroke-width: 1px;
+                fill: #d2b;
+                fill-opacity: 0;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+                stroke: index.$blue;
+                stroke-width: 0.5;
+                fill: index.$yellow;
+                fill-opacity: 1;
+            }
+        }
+    }
+}

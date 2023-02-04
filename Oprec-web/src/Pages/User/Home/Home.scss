@@ -9,6 +9,7 @@
     will-change: height;
     height: 100vh;
     padding-bottom: 10vh;
+    background-color: black;
 
     &::before {
         background-image: url('./../../../Asset/Image/Background/Homebg.webp');
@@ -22,14 +23,15 @@
         width: 100%;
         height: 100%;
         background-color: index.$black;
-        filter: blur(1px) brightness(0.8);
-        animation: enteringbg 2s ease-in-out forwards;
-        transform: scale(2);
-
+        opacity: 0;
+        // filter: blur(1px) brightness(0.8);
+        animation: enteringbg 0.3s ease-in forwards;
+        // transform: scale(2);
+        animation-delay: 2.2s;
 
         @keyframes enteringbg {
             to {
-                transform: scale(1);
+                opacity: 1;
             }
         }
     }

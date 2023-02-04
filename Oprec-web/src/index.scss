@@ -1,11 +1,11 @@
 // cursor
 
 
-// #root {
-//     // cursor: url("/Asset/Image/cursor.webp"), auto !important;
-//     // -webkit-animation: cursor 400ms infinite;
-//     // animation: cursor 400ms infinite;
-// }
+#root {
+    cursor: url("/Asset/Image/cursor.webp"), auto !important;
+    // -webkit-animation: cursor 400ms infinite;
+    // animation: cursor 400ms infinite;
+}
 
 @-webkit-keyframes cursor {
     0% {
@@ -94,9 +94,9 @@ $purple: rgb(181, 21, 255);
 
 @mixin orangegrad {
     background: rgb(245, 205, 51);
-    background: -moz-linear-gradient(0deg, rgba(245, 205, 51, 1) 0%, rgba(252, 159, 50, 1) 46%);
-    background: -webkit-linear-gradient(0deg, rgba(245, 205, 51, 1) 0%, rgba(252, 159, 50, 1) 46%);
-    background: linear-gradient(0deg, rgba(245, 205, 51, 1) 0%, rgba(252, 159, 50, 1) 46%);
+    background: -moz-linear-gradient(180deg, rgba(245, 205, 51, 1) 0%, rgba(252, 159, 50, 1) 100%);
+    background: -webkit-linear-gradient(180deg, rgba(245, 205, 51, 1) 0%, rgba(252, 159, 50, 1) 100%);
+    background: linear-gradient(180deg, rgba(245, 205, 51, 1) 0%, rgba(252, 159, 50, 1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f5cd33", endColorstr="#fc9f32", GradientType=1);
 }
 
@@ -219,7 +219,6 @@ $text-shadow: 2px 3px 9px rgba(0, 0, 0, 1);
 // Modal Container
 @mixin modalcontainer {
     @include orangegrad();
-    // background-color: ;
     height: 400px !important;
     width: 250px;
     margin: auto;
