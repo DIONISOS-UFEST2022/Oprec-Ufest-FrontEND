@@ -16,11 +16,11 @@ class VerifyEmailController extends Controller
             event(new Verified($user));
             return request()->wantsJson()
                 ? new JsonResponse('', 204)
-                : redirect(url(env('APP_URL'), 'me/dashboard?verified=1'));
+                : redirect(url(env('APP_FRONTEND_URL'), '?verified=1'));
         }
         return request()->wantsJson()
             ? new JsonResponse('', 204)
-            : redirect(url(env('APP_URL'), 'me/dashboard?verified=1'));
+            : redirect(url(env('APP_FRONTEND_URL'), '?verified=1'));
     }
 
     public function resend()

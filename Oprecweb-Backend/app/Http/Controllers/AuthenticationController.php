@@ -27,11 +27,10 @@ class AuthenticationController extends Controller
             ]);
         }
 
-
         return response()->json([
             'success' => true,
+            'user' => new UserResource($user),
             'login_token' => $user->createToken('userLogin')->plainTextToken,
-            'role' => $user->role_id,
         ], 201);
     }
 

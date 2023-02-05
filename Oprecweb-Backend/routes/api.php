@@ -23,33 +23,30 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::post('/email/verification-notification', [VerifyEmailController::class, 'resend'])
-        ->name('verification.send');
+    Route::post('/email/verification-notification', [VerifyEmailController::class, 'resend'])->name('verification.send');
     Route::get('/logout', [AuthenticationController::class, 'logout']);
     Route::get('/me', [AuthenticationController::class, 'me']);
+
     Route::middleware(['admin'])->group(function () {
         Route::apiResource('users', UserController::class);
+        Route::get('/panitia/div/{division}', [PanitiaController::class, 'indexFilterByDiv']);
         Route::delete('/panitia/deleteAll', [PanitiaController::class, 'delete_all']);
         Route::apiResource('panitia', PanitiaController::class);
         Route::apiResource('announcement', AnnouncementController::class);
         Route::apiResource('users', UserController::class);
         Route::get('/spreadsheet', [GoogleSheetController::class, 'init']);
     });
+
     Route::post('/panitia/insertData', [PanitiaController::class, 'store'])->middleware('verified');
     Route::get('/announcement', [AnnouncementController::class, 'index']);
 });
 
 Route::get('/test', [MahasiswaController::class, 'index']);
-Route::post('/login', [AuthenticationController::class, 'login']);
+Route::post('/login', [AuthenticationController::class, 'login'])->name('login');
 Route::post('/register', [UserController::class, 'store']);
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendToken']);
-Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'getToken'])->name("password.reset");
+Route::get('/password/reset/{token}', [ForgotPasswordController::class, 'getToken'])->name("password.reset");
 Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword']);
-Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, 'verify'])
-    ->middleware(['signed'])
-    ->name('verification.verify');
+Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, 'verify'])->middleware(['signed'])->name('verification.verify');

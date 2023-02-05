@@ -32,6 +32,24 @@ class PanitiaController extends Controller
         ], 201);
     }
 
+    public function indexFilterByDiv($division)
+    {
+        $panitia = panitia::where('division_1', $division)
+            ->orWhere('division_2', $division)
+            ->orderBy('is_accepted', 'DESC')
+            ->get();
+
+        if (!$panitia) {
+            return response()->json([
+                'success' => false,
+            ], 409);
+        }
+        return response()->json([
+            'success' => true,
+            'data' => PanitiaResource::collection($panitia),
+        ], 201);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -63,7 +81,6 @@ class PanitiaController extends Controller
             'phone_number' => 'required|numeric:11|unique:panitia',
             'reason_1' => 'required|max:1000|string',
             'reason_2' => 'required|max:1000|string',
-            'portofolio' => 'url',
             'id_line' => 'required',
             'instagram_account' => 'required|url',
             'city' => 'required',
@@ -78,6 +95,9 @@ class PanitiaController extends Controller
             $panitia->vaccine_certificate = $filename . '.' . $extension;
         } else {
             $panitia->vaccine_certificate = "none";
+        }
+        if (!$request->portofolio) {
+            $panitia->portofolio = "none";
         }
 
         $panitia->is_accepted = 0;
