@@ -4,8 +4,9 @@
     @include index.background("./../../../Asset/Image/Background/Homebg.webp");
     @include index.center;
     background-attachment: local;
-    height: 100%;
-    min-height: 120vh;
+    height: 120%;
+    min-height: 100vh;
+    padding-top: 20px;
 
     .form {
         @include index.form-layout;

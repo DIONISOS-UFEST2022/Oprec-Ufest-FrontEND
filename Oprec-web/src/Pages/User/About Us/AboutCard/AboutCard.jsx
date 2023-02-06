@@ -17,7 +17,7 @@ export default function AboutCard(props) {
             >
                 <Grid item className="gridItem" xs={5}
                 >
-                    <img src={props.image} className={`About-Image ${direction}`} />
+                    <img src={props.image} decoding="async" className={`About-Image ${direction}`} />
                 </Grid>
                 <Grid item className="gridItem" xs={7}>
                     <p className="About-Title"

@@ -3,12 +3,22 @@
 #Register {
     @include index.background("./../../../Asset/Image/Background/Homebg.webp");
     @include index.center;
-    height: 100%;
-    min-height: 120vh;
     background-attachment: local;
+    height: 120%;
+    min-height: 100vh;
+    padding-top: 20px;
+
 
     .form {
         @include index.form-layout;
+
+        @media screen and (max-width: index.$sm) {
+            width: 60%;
+            height: auto;
+            width: 100%;
+            margin-inline: 20px;
+        }
+
 
         .Title {
             @include index.prevent-select;
@@ -25,7 +35,7 @@
             }
         }
 
-    
+
 
         .Purple {
             color: #c208b3 !important;

@@ -1,63 +1,11 @@
 // cursor
 
 
-#root {
-    cursor: url("/Asset/Image/cursor.webp"), auto !important;
-    // -webkit-animation: cursor 400ms infinite;
-    // animation: cursor 400ms infinite;
+* {
+    cursor: url("/Asset/Image/cursor.png"), pointer !important;
 }
 
-@-webkit-keyframes cursor {
-    0% {
-        cursor: url("/Asset/Image/cursor.png"), auto;
-    }
 
-    20% {
-        cursor: url("/Asset/Image/cursor.webp"), auto;
-    }
-
-    40% {
-        cursor: url("/Asset/Image/cursor.webp"), auto;
-    }
-
-    60% {
-        cursor: url("/Asset/Image/cursor.png"), auto;
-    }
-
-    80% {
-        cursor: url("/Asset/Image/cursor.png"), auto;
-    }
-
-    100% {
-        cursor: url("/Asset/Image/cursor.webp"), auto;
-    }
-}
-
-@keyframes cursor {
-    0% {
-        cursor: url("/Asset/Image/cursor.png"), auto;
-    }
-
-    20% {
-        cursor: url("/Asset/Image/cursor.webp"), auto;
-    }
-
-    40% {
-        cursor: url("/Asset/Image/cursor.webp"), auto;
-    }
-
-    60% {
-        cursor: url("/Asset/Image/cursor.png"), auto;
-    }
-
-    80% {
-        cursor: url("/Asset/Image/cursor.png"), auto;
-    }
-
-    100% {
-        cursor: url("/Asset/Image/cursor.webp"), auto;
-    }
-}
 
 @font-face {
     font-family: 'Rocket-Vintage';
@@ -101,11 +49,21 @@ $purple: rgb(181, 21, 255);
 }
 
 @mixin browngrad {
-    background: rgb(178, 138, 103);
-    background: -moz-linear-gradient(0deg, rgba(178, 138, 103, 1) 0%, rgba(146, 100, 69, 1) 100%);
-    background: -webkit-linear-gradient(0deg, rgba(178, 138, 103, 1) 0%, rgba(146, 100, 69, 1) 100%);
-    background: linear-gradient(0deg, rgba(178, 138, 103, 1) 0%, rgba(146, 100, 69, 1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#b28a67", endColorstr="#926445", GradientType=1);
+    background: rgb(0, 0, 0);
+    background: -moz-linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(36, 10, 11, 1) 20%, rgba(41, 10, 11, 1) 80%, rgba(51, 22, 9, 1) 100%);
+    background: -webkit-linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(36, 10, 11, 1) 20%, rgba(41, 10, 11, 1) 80%, rgba(51, 22, 9, 1) 100%);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(36, 10, 11, 1) 20%, rgba(41, 10, 11, 1) 80%, rgba(51, 22, 9, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000", endColorstr="#331609", GradientType=1);
+}
+
+@mixin goldgrad {
+    background: rgb(176, 114, 21);
+    background: -moz-linear-gradient(90deg, rgba(176, 114, 21, 1) 0%, rgba(245, 214, 63, 1) 5%, rgba(255, 241, 173, 1) 20%, rgba(245, 214, 63, 1) 35%, rgba(255, 198, 113) 50%, rgba(255, 198, 113) 65%, rgba(245, 214, 63, 1) 70%, rgba(255, 241, 173, 1) 80%, rgba(245, 214, 63, 1) 95%, rgba(245, 172, 63, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(176, 114, 21, 1) 0%, rgba(245, 214, 63, 1) 5%, rgba(255, 241, 173, 1) 20%, rgba(245, 214, 63, 1) 35%, rgba(255, 198, 113) 50%, rgb(255, 198, 113) 65%, rgba(245, 214, 63, 1) 70%, rgba(255, 241, 173, 1) 80%, rgba(245, 214, 63, 1) 95%, rgba(245, 172, 63, 1) 100%);
+    background: linear-gradient(90deg, rgba(176, 114, 21, 1) 0%, rgba(245, 214, 63, 1) 5%, rgba(255, 241, 173, 1) 20%, rgba(245, 214, 63, 1) 35%, rgba(255, 198, 113) 50%, rgba(255, 198, 113) 65%, rgba(245, 214, 63, 1) 70%, rgba(255, 241, 173, 1) 80%, rgba(245, 214, 63, 1) 95%, rgba(245, 172, 63, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#b07215", endColorstr="#f5ac3f", GradientType=1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 // Media Queries
@@ -277,11 +235,14 @@ $text-shadow: 2px 3px 9px rgba(0, 0, 0, 1);
 
 
 .error {
-    margin: 0px 10px 10px 0px;
+    // margin: 0px 30px 10px 0px;
+    // margin: 30px;
+    margin-top: 10px;
+    margin-bottom: 30px;
     text-align: left;
     font-size: 13px;
     color: red;
-    height: 13px;
+    height: 0px;
     user-select: none;
     font-family: $font2;
     font-weight: 400;

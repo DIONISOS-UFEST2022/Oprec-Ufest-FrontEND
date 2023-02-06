@@ -9,13 +9,16 @@
     will-change: height;
     height: 100vh;
     padding-bottom: 10vh;
-    background-color: black;
+    overflow: hidden;
+    background: rgb(0, 0, 0);
 
     &::before {
+        filter: brightness(0.6) contrast(150%);
         background-image: url('./../../../Asset/Image/Background/Homebg.webp');
         background-size: cover;
-        background-position: center;
+        background-position: bottom;
         background-attachment: local;
+        // transform: scale(4);
         content: '';
         position: absolute;
         top: 0;
@@ -24,9 +27,7 @@
         height: 100%;
         background-color: index.$black;
         opacity: 0;
-        // filter: blur(1px) brightness(0.8);
         animation: enteringbg 0.3s ease-in forwards;
-        // transform: scale(2);
         animation-delay: 2.2s;
 
         @keyframes enteringbg {
@@ -36,11 +37,6 @@
         }
     }
 
-    @media screen and (max-width: index.$sm) {
-        height: 120%;
-        padding-top: 20%;
-        padding-bottom: 20%;
-    }
 
     h1 {
         font-size: 100px;
@@ -49,16 +45,22 @@
     }
 
     .home-image {
-        @include index.background('./../../../Asset/Image/Ufest Logo/ufestlogocolor.webp');
+        // @include index.background('./../../../Asset/Image/Ufest Logo/ufestlogocolor.webp');
+        background-image: url('./../../../Asset/Image/Ufest Logo/ufestlogocolor.webp');
+        background-size: cover;
+        background-position: center;
         @include index.prevent-select;
         height: 300px;
         width: 300px;
-        background-size: 140%;
-        background-position: center;
-        transform-origin: center;
+        background-size: 130%;
+        transform-origin: center 0;
+        // background-position: center;
+        // transform-origin: center;
         z-index: 1;
-        filter: drop-shadow(0px 0px 7px index.$white);
+        // filter: drop-shadow(0px 0px 7px index.$white);
         // border: 10px solid index.$yellow;
+        -webkit-filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.5));
+        filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.5));
     }
 
     @media screen and (max-width: index.$sm) {
@@ -97,8 +99,10 @@
         position: absolute;
         width: 80vh;
         height: 110vh;
-        bottom: -4vh;
-        transform: scale(1.15) !important;
+        bottom: 0px;
+        transform: scale(1.20) !important;
+        -webkit-filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.5));
+        filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.5));
 
         &.left {
             @include index.image('./../../../Asset/Image/Background/pilarLeft.webp');

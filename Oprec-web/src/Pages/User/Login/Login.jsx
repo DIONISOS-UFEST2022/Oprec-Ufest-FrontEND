@@ -47,33 +47,41 @@ export default function Login() {
     return (
         <Formik
             validationSchema={Loginschema}
-            initialValues={{ name: "", email: "", password: "" }}
+            initialValues={{
+                email: "",
+                password: ""
+            }}
             onSubmit={(values) => {
                 Setloading(true);
                 async function login() {
                     try {
-                        await postRequest('login', values)
-                            .then((res) => {
-                                if (res.data.success === true) {
-                                    if (res.data.role === 1) {
-                                        dispatch(userRoleAdded("admin"));
-                                        localStorage.setItem('LoginID', res.data.login_token);
-                                        localStorage.setItem('Email', res.data.user.email);
-                                        Setloading(false);
-                                        navigate('/admin');
-                                    } else if (res.data.role === 2) {
-                                        console.log(res)
-                                        dispatch(userRoleAdded("user"));
-                                        localStorage.setItem('LoginID', res.data.login_token);
-                                        // localStorage.setItem('Email', res.data.user.email);
-                                        Setloading(false);
-                                        navigate('/home');
-                                    }
+                        await postRequest('login', {
+                            email: values.email,
+                            password: values.password
+                        }).then((res) => {
+                            if (res.status === 201) {
+                                if (res.data.user.role_id === 1) {
+                                    dispatch(userRoleAdded("admin"));
+                                    localStorage.setItem('LoginID', res.data.login_token);
+                                    localStorage.setItem('Email', res.data.user.email);
+                                    Setloading(false);
+                                    navigate('/admin/database');
+                                } else if (res.data.user.role_id === 2) {
+                                    dispatch(userRoleAdded("user"));
+                                    localStorage.setItem('LoginID', res.data.login_token);
+                                    localStorage.setItem('Email', res.data.user.email);
+                                    Setloading(false);
+                                    navigate('/home');
+                                    console.log('this is user');
                                 } else {
                                     Setloading(false);
                                     Seterror(true);
                                 }
-                            })
+                            } else {
+                                Setloading(false);
+                                Seterror(true);
+                            }
+                        })
                     } catch (error) {
                         Setloading(false);
                         Seterror(true);
@@ -146,7 +154,8 @@ export default function Login() {
                                         <CustomButton
                                             type="submit"
                                             disabled={!(errors.email === undefined && errors.password === undefined) || (loading === true)}
-
+                                            // onClick={onSubmit}
+                                            onClick={handleSubmit}
                                         >
                                             {loading ? (<CircularProgress
                                                 size={24}

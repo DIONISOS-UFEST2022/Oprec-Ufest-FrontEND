@@ -1,5 +1,5 @@
 import React from 'react'
-import "./UFESTLOGO.scss"
+import "./UFESTLOGOWHITE.scss"
 
 function UFESTLOGOWHITE() {
     return (

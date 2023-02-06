@@ -54,8 +54,4 @@ function AboutCardMobile(props) {
     )
 }
 
-
-
-
-
 export default AboutCardMobile;

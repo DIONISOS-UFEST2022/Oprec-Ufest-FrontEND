@@ -4,8 +4,8 @@
 
 .Navbar-Mobile-Button {
     @include index.prevent-select;
-    background-color: #f8b632;
-    // @include index.orangegrad;
+    // background-color: #f8b632;
+    background-color: rgb(0, 255, 255, 0);
     position: fixed;
     border-style: none;
     width: 50px;
@@ -45,8 +45,12 @@
 
 #navbar-mobile-menu-button {
     @include index.prevent-select;
-    // background-color: $color;
     @include index.orangegrad;
+    // background: rgb(176, 114, 21);
+    // background: -moz-linear-gradient(90deg, rgba(176, 114, 21, 1) 0%, rgba(245, 214, 63, 1) 5%, rgba(255, 241, 173, 1) 20%, rgba(245, 214, 63, 1) 35%, rgba(255, 198, 113) 50%, rgba(255, 198, 113) 65%, rgba(245, 214, 63, 1) 70%, rgba(255, 241, 173, 1) 80%, rgba(245, 214, 63, 1) 95%, rgba(245, 172, 63, 1) 100%);
+    // background: -webkit-linear-gradient(90deg, rgba(176, 114, 21, 1) 0%, rgba(245, 214, 63, 1) 5%, rgba(255, 241, 173, 1) 20%, rgba(245, 214, 63, 1) 35%, rgba(255, 198, 113) 50%, rgb(255, 198, 113) 65%, rgba(245, 214, 63, 1) 70%, rgba(255, 241, 173, 1) 80%, rgba(245, 214, 63, 1) 95%, rgba(245, 172, 63, 1) 100%);
+    // background: linear-gradient(90deg, rgba(176, 114, 21, 1) 0%, rgba(245, 214, 63, 1) 5%, rgba(255, 241, 173, 1) 20%, rgba(245, 214, 63, 1) 35%, rgba(255, 198, 113) 50%, rgba(255, 198, 113) 65%, rgba(245, 214, 63, 1) 70%, rgba(255, 241, 173, 1) 80%, rgba(245, 214, 63, 1) 95%, rgba(245, 172, 63, 1) 100%);
+    // filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#b07215", endColorstr="#f5ac3f", GradientType=1);
     position: fixed;
     border-style: none;
     width: 30px;
@@ -78,6 +82,10 @@
     height: 40vh;
     transform: scale3d(1, 1, 1);
     will-change: display, transform, opacity;
+
+
+
+
 
     .Navbar-Mobile-Menu-Card {
         text-align: center;

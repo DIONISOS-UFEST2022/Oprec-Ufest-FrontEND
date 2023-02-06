@@ -1,5 +1,11 @@
 import React from 'react'
+import Sparkles from '../../../../../Reusable/Animation/Sparkle/Sparkle';
 import "./Testing.scss"
+// import { useDispatch, useSelector } from 'react-redux';
+// import { mouseMoved } from '../../../../../Redux/features/page/pageSlice';
+// import { selectMouse } from '../../../../../Redux/features/page/pageSlice';
+// import { useAnimationFrame } from '../../../../../Reusable/Function/useAnimationFrame';
+// import { motion } from 'framer-motion';
 
 const gap = 1.7;
 
@@ -54,42 +60,19 @@ const word = [
     },
     {
         letter: "r",
-        x: 200 * gap,
+        x: 202 * gap,
     },
     {
         letter: "t",
-        x: 213 * gap,
+        x: 216 * gap,
     },
     {
         letter: "a",
-        x: 224 * gap,
+        x: 226 * gap,
     },
 ]
-const useAnimationFrame = callback => {
-    const requestRef = React.useRef();
-    const previousTimeRef = React.useRef();
-
-    const animate = time => {
-        if (previousTimeRef.current != undefined) {
-            const deltaTime = time - previousTimeRef.current;
-            callback(deltaTime)
-        }
-        previousTimeRef.current = time;
-        requestRef.current = requestAnimationFrame(animate);
-    }
-
-    React.useEffect(() => {
-        requestRef.current = requestAnimationFrame(animate);
-        return () => cancelAnimationFrame(requestRef.current);
-    }, []); // Make sure the effect runs only once
-}
 
 export const CounterTesting = () => {
-    const [count, setCount] = React.useState(0)
-
-    useAnimationFrame(deltaTime => {
-        setCount(prevCount => (prevCount + deltaTime * 0.01) % 10)
-    })
     const [x, setX] = React.useState(0)
     const text = word.map((letter, index) => {
         return <text
@@ -98,35 +81,44 @@ export const CounterTesting = () => {
             fontFamily='Rocket-Vintage'
             x={letter.x}
             y="100"
-            fill="#f5d63f"
+            // fill="#f5d63f"
+            fill="url(#rainbow)"
             opacity={1}
             stroke="none"
-            font-size="70"
+            fontSize="70"
             fontWeight={"1000"}
         >
             {letter.letter}
         </text>
     })
-    return <div
-        className='counter'>
-        <svg className='svgtest'
-        >
-            {text}
+    return (<>
+        <div
+            className='counter'>
 
-        </svg>
-        <svg height="0" width="0">
-            <filter
-                id='shadow'
-                colorinterpolation-filters="sRGB"
+            <svg className='svgtest'
             >
-                <feDropShadow
-                    dx="2"
-                    dy="2"
-                    stdDeviation="3"
-                    floodOpacity="0.5"
-                />
-            </filter>
-        </svg>
-    </div>
 
+                <defs>
+                    <linearGradient
+                        id="rainbow" x1="0%" y1="0%" x2="100%" y2="0%"
+                        gradientUnits="userSpaceOnUse"
+                    >
+                        <stop stop-color="#b07215" offset="0%" />
+                        <stop stop-color="#f5d63f" offset="5%" />
+                        <stop stop-color="#fff1ad" offset="20%" />
+                        <stop stop-color="#f5d63f" offset="35%" />
+                        <stop stop-color="#f5ac3f" offset="50%" />
+                        {/*  */}
+                        <stop stop-color="#f5ac3f" offset="65%" />
+                        <stop stop-color="#f5d63f" offset="70%" />
+                        <stop stop-color="#fff1ad" offset="80%" />
+                        <stop stop-color="#f5d63f" offset="95%" />
+                        <stop stop-color="#f5ac3f" offset="100%" />
+                        {/* <stop stop-color="" offset="100%" /> */}
+                    </linearGradient>
+                </defs>
+                {text}
+            </svg>
+        </div>
+    </>)
 }

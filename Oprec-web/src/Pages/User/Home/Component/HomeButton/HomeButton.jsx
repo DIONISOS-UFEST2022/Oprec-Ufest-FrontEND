@@ -1,16 +1,17 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { selectuserRole } from '../../../../../Redux/features/users/userRoleSlice';
-import { pageChanged } from '../../../../../Redux/features/page/pageSlice';
 import './HomeButton.scss';
 import ButtonIMG from "./../../../../../Asset/Image/OtherIcon/Button.webp";
 import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { selectPageLoading } from '../../../../../Redux/features/users/userSoundSlice';
 
 export default function HomeButton() {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     const userRole = useSelector(selectuserRole);
+    const loading = useSelector(selectPageLoading);
     function handler() {
+        console.log(loading);
         if (userRole === "user") {
             navigate('/join');
         } else {
@@ -22,14 +23,13 @@ export default function HomeButton() {
             <m.div className="HomeButton"
                 onClick={handler}
                 initial={{
-                    scaleX: 0,
+                    opacity: 0,
                 }}
                 animate={{
-                    scaleX: 1,
+                    opacity: 1,
                     transition: {
-                        duration: 0.7,
-                        ease: "easeInOut",
-                        delay: 2.2,
+                        delay: 3,
+                        duration: 1
                     }
                 }}
             >

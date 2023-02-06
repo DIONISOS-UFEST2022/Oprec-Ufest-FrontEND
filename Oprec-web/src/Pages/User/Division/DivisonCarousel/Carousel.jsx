@@ -54,7 +54,10 @@ export default function DivisonCarousel(props) {
             <div id="Carousel">
                 <Swiper
                     // direction="horizontal"
-                    // slidesPerView={1}
+                    slidesPerView={
+                        window.innerWidth > 768 ? 3 : 1
+
+                    }
                     // freeMode={true}
                     // pagination={{ clickable: true }}
                     // mousewheel={true}
@@ -70,12 +73,10 @@ export default function DivisonCarousel(props) {
                         sensitivity: 1,
                     }}
                     parallax={true}
-                    slidesPerView={'auto'}
-                    spaceBetween={30}
+                    // spaceBetween={30}
                     pagination={{
                         clickable: true,
                     }}
-                    // modules={[Pagination]}
                     className="Carousel-Swiper"
                     swipeHandler={".Carousel-Swiper-Slide"}
                     scrollbar={{

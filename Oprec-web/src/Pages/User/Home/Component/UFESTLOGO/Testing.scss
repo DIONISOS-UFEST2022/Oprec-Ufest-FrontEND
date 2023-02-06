@@ -5,50 +5,50 @@
     text-align: center;
     position: relative;
     z-index: index.$z-index-3 !important;
+    height: 150px;
+    width: 310px;
 
     .svgtest {
-        border: 1px solid red;
-        // margin: auto;
-        height: 150px;
         position: absolute;
         text-align: center;
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 410px;
+        width: 420px;
+        -webkit-filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.5));
+        filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.5));
+
+        @media screen and (max-width: 600px) {
+            transform: scale(0.7);
+        }
 
         .text-path1 {
-
+            @include index.prevent-select;
             text-align: center;
             font: index.$font;
             transform-origin: center 40%;
             display: block;
             fill-opacity: 0;
-            stroke: url(#gradation-1);
+            // stroke: url(#gradation-1);
             stroke-linecap: round;
             stroke-linejoin: round;
             stroke: rgb(137, 8, 223);
             stroke-width: 0px;
             $nth: 1;
-            $delay: 0;
+            $delay: 0.5;
+            text-shadow: 1px 2px 5px rgba(0, 0, 0, 0.5);
 
-            @while $nth <30 {
+            @while $nth <20 {
                 &:nth-child(#{$nth}) {
-                    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
                     animation: textcounter 2.0s linear forwards;
                     animation-delay:#{$delay}s;
                     stroke-dasharray: 800;
                     stroke-dashoffset: 800;
-                    filter: url(#shadow);
-
                 }
 
                 $nth: $nth+1;
                 $delay: $delay+0.05;
             }
-
-            // $nth: 11;
-            // $delay: 0;
         }
 
         @keyframes textcounter {
@@ -75,42 +75,26 @@
             100% {
                 stroke-dashoffset: 0;
                 stroke: index.$blue;
-                stroke-width: 0.5;
-                box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-                fill: index.$yellow;
+                // stroke-width: 0.5;
+                // fill: index.$yellow;
                 fill-opacity: 1;
                 stroke-dasharray: 400;
             }
         }
 
-        @keyframes dash1_en {
-            0% {
-                stroke-dashoffset: 200;
-                stroke-width: 2px;
-            }
-
-            50% {
-                stroke-dashoffset: 400;
-                stroke-width: 0.1px;
-            }
-
-            50.1% {
-                stroke-dashoffset: 200;
-            }
-
-            80% {
-                stroke-width: 1px;
-                fill: #d2b;
-                fill-opacity: 0;
-            }
-
-            100% {
-                stroke-dashoffset: 0;
-                stroke: index.$blue;
-                stroke-width: 0.5;
-                fill: index.$yellow;
-                fill-opacity: 1;
-            }
-        }
     }
+
+}
+
+.mousebody {
+    background-color: #d2b;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: index.$z-index-7 !important;
 }

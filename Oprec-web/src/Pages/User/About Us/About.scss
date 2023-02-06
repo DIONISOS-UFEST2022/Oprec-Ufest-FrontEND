@@ -1,12 +1,22 @@
 @use "src/index" as index;
 
-
 #About {
-    @include index.background("./../../../Asset/Image/Background/Homebg.webp");
     @include index.center;
     flex-direction: column;
     padding-top: 10vh;
     min-height: 100vh;
+    position: relative;
+
+    &::after {
+        content: "";
+        @include index.background("./../../../Asset/Image/Background/Homebg.webp");
+        position: fixed;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
 
 
     .GridItem {

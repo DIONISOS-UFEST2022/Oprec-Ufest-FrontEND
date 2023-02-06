@@ -5,6 +5,43 @@ import { selectuserRole } from '../../../../Redux/features/users/userRoleSlice'
 import { NavbarMobileMenuList as Menus } from './NavbarMobileMenuList'
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Divider } from '../../../MaterialUICoreLazy/MaterialUIMaterialLazy';
+// import { MedsosList } from '../../../Footer/medsos';
+import "./NavbarMobileMenu.scss";
+// import icon_youtube from "./../../Asset/Image/OtherIcon/icon-youtube.svg";
+// import icon_email from "./../../Asset/Image/OtherIcon/icon-email.svg";
+// import icon_instagram from "./../../Asset/Image/OtherIcon/icon-instagram.svg";
+// import icon_line from "./../../Asset/Image/OtherIcon/icon-line.svg";
+// import icon_tiktok from "./../../Asset/Image/OtherIcon/icon-tiktok.svg";
+// import icon_website from "./../../Asset/Image/OtherIcon/icon-website.svg";
+
+import icon_youtube from './../../../../Asset/Image/OtherIcon/icon-youtube.svg';
+import icon_tiktok from './../../../../Asset/Image/OtherIcon/icon-tiktok.svg';
+import icon_line from './../../../../Asset/Image/OtherIcon/icon-line.svg';
+import icon_instagram from './../../../../Asset/Image/OtherIcon/icon-instagram.svg';
+
+const MedsosList = [
+    {
+        name: "Instagram",
+        state: "https://www.instagram.com/itb_sparta/",
+        icon: "fab fa-instagram",
+    },
+    {
+        name: "Facebook",
+        state: "https://www.facebook.com/itbsparta/",
+        icon: "fab fa-facebook-f",
+    },
+    {
+        name: "Twitter",
+        state: "https://twitter.com/itbsparta",
+        icon: "fab fa-twitter",
+    },
+    {
+        name: "Youtube",
+        state: "https://www.youtube.com/channel/UCY8YJ2J8Q5ZQ1ZQZ1ZQZ1ZQ",
+        icon: "fab fa-youtube",
+    },
+]
+
 
 function Card(props) {
     const navigate = useNavigate();
@@ -12,7 +49,7 @@ function Card(props) {
         navigate(`${props.state}`)
     }
     var location = useLocation();
-    return (
+    return (<>
         <Grid item
             xs={12}
             className="Navbar-Mobile-Menu-Card"
@@ -39,6 +76,9 @@ function Card(props) {
                     : ""}
             </button>
         </Grid >
+
+        <Divider />
+    </>
     )
 }
 
@@ -50,31 +90,58 @@ export default function NavbarMobileMenu(props) {
                 animate={props.animate}
             >
                 <Grid container className='Navbar-Mobile-Menu'>
-                    {/* <Grid item xs={12} className='Navbar-Mobile-Menu-Header'>
-                        <h1>UMN FESTIVAL</h1>
-                    </Grid> */}
+
                     {
                         Menus.filter(
                             (item) => {
                                 if (roleselector === 'guest') {
                                     return item.name !== 'Join';
                                 } else if (roleselector === 'user') {
-                                    return item.state !== 'Login' && item.state !== 'Register';
+                                    return item.state !== 'login' && item.state !== 'register';
                                 } else if (roleselector === 'admin') {
-                                    return item.state !== 'Login' && item.state !== 'Register';
+                                    return item.state !== 'login' && item.state !== 'join' && item.state !== 'r egister';
                                 }
                             }
                         ).map((item, index) => {
-                            return (<>
-                                <Card onTouch={
-                                    () => {
-                                    }} key={index} name={item.name} link={item.link} onClick={props.onClick} state={item.state} />
-                                <Divider />
-                            </>
+                            return (
+                                <Card key={index} name={item.name} link={item.link} onClick={props.onClick} state={item.state} />
+
                             )
                         })}
+                    <Grid item xs={3} className="Social-Media-Navbar" >
+                        <a className="Social-Media-Link-Card" href={'https://www.youtube.com/channel/UCnXYSFlUeQn8dFDtYo4HABQ'}>
+                            <img loading="lazy" alt="social media icon"
+                                className="Card-Image"
+                                decoding='async'
+                                src={icon_youtube} />
+                        </a>
+                    </Grid>
+                    <Grid item xs={3} className="Social-Media-Navbar" >
+                        <a className="Social-Media-Link-Card" href={'https://www.tiktok.com/@umnfestival'}>
+                            <img loading="lazy" alt="social media icon"
+                                className="Card-Image"
+                                decoding='async'
+                                src={icon_tiktok} />
+                        </a>
+                    </Grid>
+                    <Grid item xs={3} className="Social-Media-Navbar" >
+                        <a className="Social-Media-Link-Card" href={'https://page.line.me/?accountId=877tuixh'}>
+                            <img loading="lazy" alt="social media icon"
+                                className="Card-Image"
+                                decoding='async'
+                                src={icon_line} />
+                        </a>
+                    </Grid>
+                    <Grid item xs={3} className="Social-Media-Navbar" >
+                        <a className="Social-Media-Link-Card" href={'https://www.instagram.com/umnfestival/'}>
+                            <img loading="lazy" alt="social media icon"
+                                className="Card-Image"
+                                decoding='async'
+                                src={icon_instagram} />
+                        </a>
+                    </Grid>
                 </Grid>
             </m.div>
-        </LazyMotion>
+        </LazyMotion >
     )
 }

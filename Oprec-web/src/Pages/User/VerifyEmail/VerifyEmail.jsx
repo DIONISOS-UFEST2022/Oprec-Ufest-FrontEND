@@ -37,6 +37,7 @@ function VerifyEmail() {
             setSent(false);
             setError(true);
             console.log(localStorage.getItem('Email'));
+            setLoading(false);
 
         }
     }

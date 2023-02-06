@@ -16,10 +16,17 @@ export default function Admin() {
         <Suspense fallback={<LoadingScreen />}>
         </Suspense>
         <Routes>
-            <Route path="/" element={<ProtectedRoute user="admin"><NavbarAdmin /><Outlet /></ProtectedRoute>}>
+            <Route path="/" element={<>
+                <ProtectedRoute user="admin">
+                    <NavbarAdmin />
+                    <Outlet />
+                </ProtectedRoute>
+            </>
+            }>
                 <Route path="database" element={<Suspense fallback="Loading..."><Database /></Suspense>} />
                 <Route path="division" element={<Suspense fallback="Loading..."><Division /></Suspense>} />
                 <Route path="feature" element={<Suspense fallback="Loading..."><Feature /></Suspense>} />
+
             </Route>
         </Routes>
     </div>

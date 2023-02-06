@@ -1,138 +1,111 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Table } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
+import { Box, Table } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
 import { TableBody } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
 import { TableCell } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
 import { TableContainer } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
 import { TableHead } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
 import { TableRow } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
 import { Paper } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
-// import { Button } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
-// import { Typography } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { selectuserToken } from '../../../../Redux/features/users/userRoleSlice';
+import { Button } from '../../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
+// import { Modal } from '@mui/joy';
+
 // URL
-import { URL } from '../../../../Reusable/Service/URL';
-// import { Modal } from '@mui/material';
+import { getRequest } from '../../../../Reusable/Service/AxiosClient';
+import { Modal } from '@mui/material';
+import "./DivisionMenuDetail.scss";
+import CustomButton from '../../../../Reusable/CustomComponent/CustomButton';
 
+function DetailModal({ status, props }) {
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
-// function DetailModal() {
-//     const [open, setOpen] = useState('');
-//     return (
-//         <>
-//             <Button variant="outlined" color="neutral" onClick={() => setOpen('center')}>
-//                 More Detail
-//             </Button>
-//             <Modal open={!!open} onClose={() => setOpen('')}>
-//                 <ModalDialog
-//                     aria-labelledby="layout-modal-title"
-//                     aria-describedby="layout-modal-description"
-//                     layout={open || undefined}
-//                 >
-//                     <ModalClose />
-//                     <Typography
-//                         id="layout-modal-title"
-//                         component="h2"
-//                         level="inherit"
-//                         fontSize="1.25em"
-//                         mb="0.25em"
-//                     >
-//                         Modal Dialog
-//                     </Typography>
-//                     <Typography id="layout-modal-description" textColor="text.tertiary">
-//                         This is a <code>{open}</code> modal dialog. Press <code>esc</code> to
-//                         close it.
-//                     </Typography>
-//                 </ModalDialog>
-//             </Modal>
-//         </>
-//     );
-// }
+    return (
+        <div>
+            <CustomButton onClick={handleOpen}>Detail</CustomButton>
+            <Modal
+                sx={{
+                }}
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <div className='Modal'>
+                    <div className='Name'>
+                        {props.name} ({props.nim})
+                    </div>
+                    <div className='reason_1'>
+                        Apa yang kamu ketahui tentang UFEST? &ldquo;{props.reason_1}&rdquo;
+                        <br />
+                    </div>
+                    <div className='reason_2'>
 
-
-
-function createData(name, calories, fat, carbs, protein, price) {
-    return {
-        name,
-        calories,
-        fat,
-        carbs,
-        protein,
-        price,
-        history: [
-            {
-                date: '2020-01-05',
-                customerId: '11091700',
-                amount: 3,
-            },
-            {
-                date: '2020-01-02',
-                customerId: 'Anonymous',
-                amount: 1,
-            },
-        ],
-    };
+                        {props.reason_2}
+                    </div>
+                    <br />
+                    <div className='Instagram'>
+                        <a href={props.instagram_account} >Instagram Link</a>
+                    </div>
+                    <div className=' portfolio'>
+                        <a href={props.portofolio}>Link Portofolio</a>
+                    </div>
+                    <div className='accept'>
+                        <Button onClick={handleClose}>
+                            {props.is_accepted === 1 ? 'Di terima' : "Di tolak"}
+                        </Button>
+                    </div>
+                </div>
+            </Modal>
+        </div>
+    );
 }
 
-function Row(props) {
-    const { row } = props;
+function Row({ status, props }) {
     const [open, setOpen] = useState(false);
 
     return (
         <>
-            <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-                <TableCell align="left">{row.id}</TableCell>
-                <TableCell align="left">{row.name}</TableCell>
-                <TableCell align="left">{row.email}</TableCell>
-                <TableCell align="left">{row.status}</TableCell>
-                <TableCell align="left"></TableCell>
+            <TableRow>
+                <TableCell align="left">{props.id}</TableCell>
+                <TableCell align="left">{props.name}</TableCell>
+                <TableCell align="left">{props.email}</TableCell>
+                <TableCell align="left">{status}</TableCell>
+                {/* <TableCell align="left">{props.division_1}</TableCell> */}
+                <TableCell align="left">
+                    <DetailModal props={props} status={status} />
+                </TableCell>
             </TableRow>
 
         </>
     );
 }
 
-Row.propTypes = {
-    row: PropTypes.shape({
-        calories: PropTypes.number.isRequired,
-        carbs: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        history: PropTypes.arrayOf(
-            PropTypes.shape({
-                amount: PropTypes.number.isRequired,
-                customerId: PropTypes.string.isRequired,
-                date: PropTypes.string.isRequired,
-            }),
-        ).isRequired,
-        name: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        protein: PropTypes.number.isRequired,
-    }).isRequired,
-};
 
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 3.99),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 4.99),
-    createData('Eclair', 262, 16.0, 24, 6.0, 3.79),
-    createData('Cupcake', 305, 3.7, 67, 4.3, 2.5),
-    createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5),
-];
 
-export default function DivisionMenu() {
-    const token = useSelector(selectuserToken);
+export default function DivisionMenu(props) {
+    // const token = useSelector(selectuserToken);
     const [userData, SetuserData] = useState([]);
     useEffect(() => {
-        axios.get(`${URL}/api/users`, {
-            headers:
-                { Authorization: `Bearer ${token}` }
-        })
-            .then((result) => {
-                SetuserData(result.data.data);
-            })
-            .catch((err) => {
+        // await getRequest
+        async function getData() {
+            try {
+                await getRequest('panitia')
+                    .then((result) => {
+                        console.log(props.name);
+                        console.log(result.data.data);
+                        SetuserData(result.data.data);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
+            }
+            catch (err) {
                 console.log(err);
-            })
+            }
+        }
+        getData();
     }, []);
     return (
         <TableContainer component={Paper} className="DivisionMenu">
@@ -152,9 +125,15 @@ export default function DivisionMenu() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {userData.map((row) => (
-                        <Row key={row.id} row={row} />
-                    ))}
+                    {userData.filter((row) => row.division_1 === props.name).map((row) => {
+                        let status = "";
+                        if (row.is_accepted === 1) {
+                            status = "Di Terima"
+                        } else {
+                            status = "Di Tolak"
+                        }
+                        return (<Row key={row.id} props={row} status={status} />)
+                    })}
                 </TableBody>
             </Table>
         </TableContainer>

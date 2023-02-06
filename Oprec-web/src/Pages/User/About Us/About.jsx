@@ -1,23 +1,30 @@
-import { Grid } from "../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy";
-import { AboutData } from "./AboutData";
-import "./About.scss"
+// React
 import React, { useEffect, lazy, Suspense } from "react";
-import LoadingScreen from "../../../Reusable/LoadingScreen/LoadingScreen";
+// Styling  & Animation 
+import "./About.scss"
 import { useMediaQuery } from "@material-ui/core";
-import AboutCardMobile from "./AboutCardMobile/AboutCardMobile";
+// MUI
+import { Grid } from "../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy";
+// Cookies
 import { setCookie } from "react-use-cookie";
 const AboutSection = lazy(() => import("./AboutCard/AboutSection"));
+// Components
+import { AboutData } from "./AboutData";
+import LoadingScreen from "../../../Reusable/LoadingScreen/LoadingScreen";
+// import AboutCardMobile from "./AboutCardMobile/AboutCardMobile";
+// Component Lazy Loading
 const AboutCard = lazy(() => import("./AboutCard/AboutCard"));
+const AboutCardMobile = lazy(() => import("./AboutCardMobile/AboutCardMobile"));
 
 
 export default function About() {
-  const isMobile = useMediaQuery("(max-width: 600px)");
+  const isMobile = useMediaQuery("(max-width: 700px)");
   let direction = "left";
   useEffect(() => {
     setCookie('about', 'about', { path: '/' });
     window.scrollTo(0, 0)
   }, []);
-  return (<>
+  return (
     <div id="About">
       <div className="Title" >What is UMN Festival 2023?</div>
       <Suspense fallback={<LoadingScreen />}>
@@ -43,12 +50,14 @@ export default function About() {
               else direction = "left";
               return (
                 <Grid item xs={12} key={index}>
-                  <AboutCard
-                    title={item.title}
-                    data={item.data}
-                    direction={direction}
-                    image={item.image}
-                  />
+                  <AboutSection>
+                    <AboutCard
+                      title={item.title}
+                      data={item.data}
+                      direction={direction}
+                      image={item.image}
+                    />
+                  </AboutSection>
                 </Grid>
               )
             })
@@ -56,6 +65,5 @@ export default function About() {
         </Grid>
       </Suspense>
     </div>
-  </>
   )
 }
