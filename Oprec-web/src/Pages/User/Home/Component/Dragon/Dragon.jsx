@@ -1,6 +1,6 @@
 import "./Dragon.scss"
 
-export default function () {
+export default function Dragon () {
     return (
         <div id="dragonwrap">
             <div id='dragon'>

@@ -1,55 +1,41 @@
 import "./AboutCardMobile.scss"
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
+// import { useState } from "react";
+import { useRef } from "react";
+import { m, useScroll, useTransform, useInView, LazyMotion, domAnimation } from "framer-motion";
+import Sparkles from "../../../../Reusable/Animation/Sparkle/Sparkle";
+import { useMediaQuery } from "@mui/material";
 
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '200px',
-    bgcolor: 'background.paper',
-    borderRadius: '20px',
-    boxShadow: 24,
-    p: 4,
-};
-
-
-
-function AboutCardMobile(props) {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+function AboutCardMobile(props, id) {
+    const isMobile = useMediaQuery("(max-width: 700px)");
+    const ref = useRef(null);
+    const isInView = useInView(ref);
+    const { scrollYProgress } = useScroll();
+    const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
     return (
         <>
-            <Modal
-                sx={{
-                }}
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box>
-                    <div className='Modal'>
-                        <div className='Title'>
+            <LazyMotion features={domAnimation}>
+                <m.div
+                    style={{
+                        transform: isInView ? "none" : "translateX(-200px)",
+                        opacity: isInView ? 1 : 0,
+                        transition: "all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1) 0.5s"
+                    }}
+                    ref={ref}
+                    className='About-Card-Mobile'>
+                    <img src={props.logo} className="Image" />
+                    <div className='Title'>
+                        <Sparkles>
                             {props.title}
-                        </div>
+                        </Sparkles>
                     </div>
-                </Box>
-            </Modal>
-            <div onClick={handleOpen} className='About-Card-Mobile'>
-                <img src={props.logo} className="Image" />
-                <div className='Title'>
-                    {props.title}
-                </div>
-                <p className='Desc'>
-                    {props.desc}
-                </p>
-            </div>
+                    <p className='Desc'>
+                        <span className="quo">&ldquo;</span>
+                        {props.desc}
+                        <span className="quo">&rdquo;</span>
+                    </p>
+                </m.div>
+            </LazyMotion>
         </>
     )
 }

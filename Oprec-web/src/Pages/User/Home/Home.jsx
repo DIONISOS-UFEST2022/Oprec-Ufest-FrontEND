@@ -1,29 +1,23 @@
 // react
-import { Suspense, lazy, useEffect, useState, useMemo, useCallback } from "react";
+import { Suspense, lazy, useEffect, useState, useCallback } from "react";
 // styling
 import "./Home.scss";
 import { m, LazyMotion, domAnimation } from "framer-motion";
 import { useMediaQuery } from "@mui/material";
 import { setCookie } from "react-use-cookie";
-import UFESTLOGOWHITE from "./Component/UFESTLOGO/UFESTLOGOWHITE";
-import { CounterTesting } from "./Component/UFESTLOGO/Testing";
-import { userSoundControl } from "../../../Redux/features/users/userSoundSlice";
-import BGM from "../../../Asset/Sound/bgm.mp3";
-import useSound from "use-sound";
-import { useDispatch, useSelector } from "react-redux";
-import { pageLoading } from "../../../Redux/features/users/userSoundSlice";
-import { selectPageLoading } from "../../../Redux/features/users/userSoundSlice";
+import { CounterTesting } from "./Component/UFESTLOGO/WordAnimate/Testing";
 const HomeButton = lazy(() => import("./Component/HomeButton/HomeButton"));
 const UFESTLOGO = lazy(() => import("./Component/UFESTLOGO/UFESTLOGO"));
-const Pilar = lazy(() => import("./pilar"));
+const PilarHome = lazy(() => import("./pilar"));
+
 
 
 
 // start from here
 export default function Home(props) {
     const [isMobile] = useState(useMediaQuery("(max-width: 700px)"));
-    const dispatch = useDispatch();
-    let loading = useSelector(selectPageLoading);
+    // const dispatch = useDispatch();
+    // let loading = useSelector(selectPageLoading);
     useEffect(() => {
         setCookie('home', 'home', { path: '/' });
         window.scrollTo(0, 0)
@@ -32,6 +26,9 @@ export default function Home(props) {
         return <UFESTLOGO />
     }, [])
 
+    const MemoTag = useCallback(() => {
+        return <CounterTesting choice={'welcome'} />
+    }, [])
 
     return (
         <div className="home">
@@ -45,16 +42,16 @@ export default function Home(props) {
                             className="home-image"
                         />
                     </LazyMotion>
-                    <CounterTesting />
+                    <MemoTag />
                     <HomeButton />
                 </>
                 :
                 <>
                     <Suspense fallback={""}>
-                        <Pilar />
+                        <PilarHome />
                     </Suspense>
                     <MemoLogo />
-                    <CounterTesting />
+                    <MemoTag />
                     <HomeButton />
                 </>
             }

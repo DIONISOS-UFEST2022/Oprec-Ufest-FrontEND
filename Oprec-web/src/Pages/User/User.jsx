@@ -4,7 +4,7 @@ import { selectPage } from '../../Redux/features/page/pageSlice';
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Suspense, lazy, useCallback, useRef } from "react";
 import LoadingScreen from "../../Reusable/LoadingScreen/LoadingScreen";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import { selectuserRole } from "../../Redux/features/users/userRoleSlice";
 import { Outlet } from "react-router-dom";
 import VerifyEmail from "./VerifyEmail/VerifyEmail";
@@ -12,6 +12,7 @@ import ProtectedRoute from "../../Route/ProtectedRoute";
 import ProtectedRoutePath from "../../Route/ProtectedRoutePath";
 import { LazyMotion, domAnimation, m } from 'framer-motion';
 import EnterAnimation from "../../Reusable/Animation/EnterAnimation/EnterAnimation";
+import ComingSoon from "./ComingSoon/ComingSoon";
 const NavbarUser = lazy(() => import("../../Reusable/NavbarUser/Navbar"));
 const NavbarMobile = lazy(() => import("../../Reusable/NavbarUser/NavbarMobile/NavbarMobile"));
 const Footer = lazy(() => import("../../Reusable/Footer/Footer"));
@@ -76,6 +77,7 @@ export default function User(props) {
                             <ProtectedRoute user={"guest"}>
                                 <Suspense fallback={<LoadingScreen />}>
                                     <Login />
+                                    {/* <ComingSoon /> */}
                                 </Suspense>
                             </ProtectedRoute>
                         } />
@@ -97,6 +99,9 @@ export default function User(props) {
                                     <Join />
                                 </Suspense>
                             </ProtectedRoute>} />
+                        <Route path="/comingsoon" element={<ComingSoon />} />
+                        <Route path="*" element={<Navigate to="/" />} />
+
                     </Route>
                 </Routes>
             </m.div>

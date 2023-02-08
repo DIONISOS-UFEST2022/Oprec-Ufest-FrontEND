@@ -8,13 +8,12 @@ localStorage.getItem('LoginID') ? axiosClient.defaults.headers = {
     Authorization: `Bearer ${localStorage.getItem('LoginID')}`,
     'Content-Type': 'multipart/form-data',
     'Accept': 'application/json',
-    // "Access-Control-Allow-Origin": "*", // Required for CORS support to work
 }
     :
     axiosClient.defaults.headers = {
-        Authorization: `Bearer ${localStorage.getItem('LoginID')}`,
+        // Authorization: `Bearer ${localStorage.getItem('LoginID')}`,
         'Content-Type': 'multipart/form-data',
-        'Accept': 'application/json',
+        'Accept': 'application/json', 
     };
 
 

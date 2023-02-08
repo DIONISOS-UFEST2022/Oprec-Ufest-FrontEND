@@ -1,5 +1,5 @@
 import "./Navbar.scss";
-import React, { lazy, Fragment, useEffect, useCallback } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectuserRole } from "../../Redux/features/users/userRoleSlice";
 import { pageChanged } from "../../Redux/features/page/pageSlice";
@@ -10,26 +10,37 @@ import { Grid } from "../MaterialUICoreLazy/MaterialUICoreLazy";
 import { Container } from "../MaterialUICoreLazy/MaterialUICoreLazy";
 import Profile from "./Profile/Profile";
 import Sparkles from "../Animation/Sparkle/Sparkle";
-import { setCookie } from "react-use-cookie";
 import { getRequest } from "../Service/AxiosClient";
 import { userRoleAdded } from "../../Redux/features/users/userRoleSlice";
-import { domAnimation, m, LazyMotion, AnimatePresence } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-import EnterAnimation from "../Animation/EnterAnimation/EnterAnimation";
 import styled from "styled-components";
-
-const AudioPlayButton = lazy(() => import("../../Pages/User/Home/Component/AudioPlayButton/AudioPlayButton"));
-
+import Logo from "./../../Asset/Image/Ufest Logo/ufestlogowhite.webp"
 
 const StyledContainer = styled(Container)`
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    transform: translateY(-5px);
-    @media (max-width: 960px) {
-        display: none;
-    }
+
 `;
+
+const GridContainer = styled(Grid)(({ theme }) => ({
+    display: 'flex',
+    // justifyContent: 'space-between',
+    alignItems: 'center',
+    // border: '2px solid black',
+    gap: '10px',
+    paddingRight: '10px',
+}));
+
+const GridItem = styled(Grid)(({ theme }) => ({
+    display: 'flex',
+    // justifyContent: 'center',
+    alignItems: 'center',
+    background: 'transparent',
+    // border: '2px solid black',
+    // borderRight: '2px solid white',
+    // width: '100%',
+    position: 'relative',
+    margin: '0px',
+    padding: '0px',
+
+}));
 
 
 
@@ -47,78 +58,50 @@ export default function NavbarUser(props) {
     }
     const userRole = useSelector(selectuserRole);
     const user = useSelector(selectuserRole);
-    const Animation = useCallback(() => {
-        return <EnterAnimation />
-    }, [])
 
     return (
         <>
-            {/* <EnterAnimation className="NavbarUser-wrap"> */}
-            <Grid container className="NavbarUser" justifyContent="flex-start">
-                <Grid item xs={2} sm={2} md={3} lg={2}
-                    style={{ display: "flex", justifyContent: "flex-start" }}
-                >
-                    <StyledContainer className="GradientText">
-                        <Sparkles>
-                            UMN FESTIVAL 2023
-                        </Sparkles>
-                    </StyledContainer>
-                </Grid>
+            <GridContainer container className="NavbarUser">
+                {/* <GridItem item xs={2} sm={2} md={3} lg={1}> */}
+                <img
+                    src={Logo}
+                    alt="Logo"
+                    className="Logo"
+                />
+                {/* </GridItem> */}
+                <GridItem item xs={1} sm={1} md={4} lg={userRole === 'user' ? 5 : 3} xl={'auto'}></GridItem>
 
-
-                <Grid item xs={1} sm={1} md={4} lg={userRole === 'user' ? 5 : 6} xl={5}
-                    style={{ display: "flex", justifyContent: "flex-start" }}
-                    className="center"
-                >
-                </Grid>
-
-                <Grid item md={1} lg={'auto'} xl={'auto'}></Grid>
-                {user === "user" ?
-                    <Grid item md={1}>
-                        <NavbarButton state="join" Title={"JOIN US!"} />
-                    </Grid>
-                    : ""}
-                <Grid item md={1} lg={1}>
-                    <NavbarButton state="home" Title={"Home"} onClick={
-                        () => {
-                            dispatch(pageChanged("home"))
-                            setCookie('home', 'home', { path: '/' });
-                        }} />
-                </Grid>
-                <Grid item md={1} lg={1}>
-                    <NavbarButton state="about" Title={"About"} onClick={
-                        () => {
-                            dispatch(pageChanged("about"))
-                            setCookie('about', 'about', { path: '/' });
-                        }
-                    } />
-                </Grid>
-                <Grid item md={1} lg={1}>
-                    <NavbarButton state="division" Title={"Division"} onClick={() => {
-                        dispatch(pageChanged("division"));
-                        setCookie('division', 'division', { path: '/' });
-                    }} />
-                </Grid>
+                <GridItem item md={'auto'} lg={'auto'}>
+                    <NavbarButton state="home" Title={"Home"} />
+                </GridItem>
+                <GridItem item md={'auto'} lg={'auto'}>
+                    <NavbarButton state="about" Title={"About"} />
+                </GridItem>
+                <GridItem item md={'auto'} lg={'auto'}>
+                    <NavbarButton state="division" Title={"Division"} />
+                </GridItem>
                 {user === "user" ? "" :
-                    <Grid item md={1} lg={1}>
-                        <NavbarButton state="login" Title={"Login"} onClick={() => {
-                            dispatch(pageChanged("login"));
-                            dispatch(pageChanged("login"));
-                        }} />
-                    </Grid>
+                    <GridItem item md={'auto'} lg={'auto'}>
+                        <NavbarButton state="login" Title={"Login"} />
+                    </GridItem>
                 }
-
                 {user === "user" ?
-                    <Grid item md={1} lg={1}>
+                    <GridItem item md={'auto'}>
+                        <Sparkles>
+                            <NavbarButton state="join" Title={"Recruitment"} />
+                        </Sparkles>
+                    </GridItem>
+                    : ""}
+                {user === "user" ?
+                    <GridItem item md={'auto'} lg={'auto'}>
                         <Profile>
                             <NavbarButton Title={"Log Out"} onClick={asyncLogout} />
                         </Profile>
-                    </Grid>
+                    </GridItem>
 
                     : ""
                 }
-            </Grid>
-            {/* </EnterAnimation > */}
+            </GridContainer>
         </>
 
     )

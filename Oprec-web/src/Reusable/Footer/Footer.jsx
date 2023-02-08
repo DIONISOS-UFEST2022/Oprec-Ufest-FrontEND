@@ -1,17 +1,14 @@
 import { Grid as MuiGrid } from '../MaterialUICoreLazy/MaterialUICoreLazy';
-import "./Footer.scss"
-
+import "./Footer.scss";
 import Sparkles from "../Animation/Sparkle/Sparkle";
 import Logo from "./../../Asset/Image/Ufest Logo/ufestlogowhite.webp"
 import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { MedsosList } from './medsos';
-import Divider from '@mui/material/Divider';
 import styled from 'styled-components';
 
 
 const Grid = styled(MuiGrid)(({ theme }) => ({
     width: '100%',
-    // position: 'relative',
 }));
 
 const GridItem = styled(MuiGrid)(({ theme }) => ({
@@ -19,7 +16,6 @@ const GridItem = styled(MuiGrid)(({ theme }) => ({
     position: 'relative',
     margin: '20px',
     padding: '20px',
-    // height: '100%',
 }));
 
 const GridItem2 = styled(MuiGrid)(({ theme }) => ({
@@ -54,7 +50,6 @@ export default function Footer() {
                 <GridItem item md={4} xs={12}>
                     <div className="Footer-Section">
                         <div className='Logo-Wrap'>
-                            {/* <UFESTLOGOWHITE /> */}
                             <img loading="lazy" alt="UMN FESTIVAL 2023 Logo" className="UFEST-LOGO" src={Logo} />
                         </div>
                     </div>
@@ -101,19 +96,17 @@ export default function Footer() {
                         </GridItem2>
 
                     </div>
-                    {/* <div className="divider" /> */}
                 </GridItem>
                 <Grid item xs={12}>
 
                     <div className="Footer-Foot">
-                        <div class="curve"></div>
+                        <div className="curve"></div>
                         © UMN FESTIVAL 2023
                         <br />
                         Managed by <Sparkles><span className="purpleText">Coeus</span></Sparkles> UMN Festival 2023
                     </div>
                 </Grid>
             </Grid >
-            {/* </m.div> */}
         </LazyMotion>
     )
 }

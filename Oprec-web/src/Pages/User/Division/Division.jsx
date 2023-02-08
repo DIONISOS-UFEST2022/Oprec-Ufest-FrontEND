@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import "./Division.scss"
 import DivisonCarousel from "./DivisonCarousel/Carousel"
 import { setCookie } from "react-use-cookie";
+import Pilar from "../../../Reusable/ComponentItems/Pilar/Pilar";
 
 
 export default function Division(props) {
@@ -11,6 +12,7 @@ export default function Division(props) {
     }, [])
     return (<>
         <div className="Division">
+            <Pilar />
             <h1>Our Division</h1>
             <DivisonCarousel />
 

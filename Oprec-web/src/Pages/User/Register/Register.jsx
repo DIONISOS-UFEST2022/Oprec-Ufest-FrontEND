@@ -21,6 +21,7 @@ import CustomButton from "../../../Reusable/CustomComponent/CustomButton";
 import axios from "axios";
 import VerifyEmail from "../VerifyEmail/VerifyEmail";
 import { useLocation } from "react-router-dom";
+import Pilar from "../../../Reusable/ComponentItems/Pilar/Pilar";
 
 export default function Register() {
     // use dispatch to change page
@@ -53,16 +54,17 @@ export default function Register() {
                             email: values.email,
                         })
                             .then((response) => {
+                                console.log(response);
                                 if (response.data.success === true) {
                                     console.log(response.data);
                                     localStorage.setItem('LoginID', response.data.login_token);
-                                    localStorage.setItem('Email', response.data.user.email);
+                                    localStorage.setItem('Email', response.data.users.email);
                                     dispatch(userTokenAdded(response.data.login_token));
-                                    dispatch(userRoleAdded(response.data.user.role));
+                                    dispatch(userRoleAdded(response.data.users.role_id));
                                     dispatch(userDataAdded({
-                                        name: response.data.user.name,
-                                        nim: response.data.user.nim,
-                                        email: response.data.user.email,
+                                        name: response.data.users.name,
+                                        nim: response.data.users.nim,
+                                        email: response.data.users.email,
                                     }));
                                     navigate('/register/verify', {
                                         state: { previousPath: pathname }
@@ -97,6 +99,7 @@ export default function Register() {
                 handleSubmit
             }) => (
                 <div id="Register">
+                    <Pilar />
                     <div className="form">
                         <motion.div
                             initial={{ opacity: 0, x: 100 }}

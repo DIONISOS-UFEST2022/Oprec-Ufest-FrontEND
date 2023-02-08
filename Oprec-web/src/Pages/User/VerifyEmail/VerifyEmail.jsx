@@ -5,24 +5,37 @@ import { postRequest } from '../../../Reusable/Service/AxiosClient';
 import CustomButton from '../../../Reusable/CustomComponent/CustomButton';
 import { useLocation } from 'react-router-dom';
 import { CircularProgress } from '../../../Reusable/MaterialUICoreLazy/MaterialUICoreLazy';
+import axios from 'axios';
 
 function VerifyEmail() {
     const pathname = useLocation();
+    let email;
+    let ID;
     useEffect(() => {
         console.log(pathname);
-        window.scrollTo(0, 0)
+        window.scrollTo(0, 0);
+        email = localStorage.getItem('Email');
+        ID = localStorage.getItem('LoginID');
+        console.log(email);
     }, [])
 
     const [sent, setSent] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
-    let email = localStorage.getItem('Email');
+
     async function verifyEmail() {
         setLoading(true);
         try {
 
-            await postRequest('email/verification-notification', { email: email })
+            await axios.post('https://databaseufest.aureliusivan.my.id/api/email/verification-notification', { email: email }, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${ID}`
+                }
+            })
                 .then((res) => {
+                    console.log(res);
                     if (res.status === 200) {
                         setSent(true);
                         setError(false);

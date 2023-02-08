@@ -5,43 +5,11 @@ import { selectuserRole } from '../../../../Redux/features/users/userRoleSlice'
 import { NavbarMobileMenuList as Menus } from './NavbarMobileMenuList'
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Divider } from '../../../MaterialUICoreLazy/MaterialUIMaterialLazy';
-// import { MedsosList } from '../../../Footer/medsos';
 import "./NavbarMobileMenu.scss";
-// import icon_youtube from "./../../Asset/Image/OtherIcon/icon-youtube.svg";
-// import icon_email from "./../../Asset/Image/OtherIcon/icon-email.svg";
-// import icon_instagram from "./../../Asset/Image/OtherIcon/icon-instagram.svg";
-// import icon_line from "./../../Asset/Image/OtherIcon/icon-line.svg";
-// import icon_tiktok from "./../../Asset/Image/OtherIcon/icon-tiktok.svg";
-// import icon_website from "./../../Asset/Image/OtherIcon/icon-website.svg";
-
 import icon_youtube from './../../../../Asset/Image/OtherIcon/icon-youtube.svg';
 import icon_tiktok from './../../../../Asset/Image/OtherIcon/icon-tiktok.svg';
 import icon_line from './../../../../Asset/Image/OtherIcon/icon-line.svg';
 import icon_instagram from './../../../../Asset/Image/OtherIcon/icon-instagram.svg';
-
-const MedsosList = [
-    {
-        name: "Instagram",
-        state: "https://www.instagram.com/itb_sparta/",
-        icon: "fab fa-instagram",
-    },
-    {
-        name: "Facebook",
-        state: "https://www.facebook.com/itbsparta/",
-        icon: "fab fa-facebook-f",
-    },
-    {
-        name: "Twitter",
-        state: "https://twitter.com/itbsparta",
-        icon: "fab fa-twitter",
-    },
-    {
-        name: "Youtube",
-        state: "https://www.youtube.com/channel/UCY8YJ2J8Q5ZQ1ZQZ1ZQZ1ZQ",
-        icon: "fab fa-youtube",
-    },
-]
-
 
 function Card(props) {
     const navigate = useNavigate();
@@ -95,7 +63,7 @@ export default function NavbarMobileMenu(props) {
                         Menus.filter(
                             (item) => {
                                 if (roleselector === 'guest') {
-                                    return item.name !== 'Join';
+                                    return item.state !== 'join';
                                 } else if (roleselector === 'user') {
                                     return item.state !== 'login' && item.state !== 'register';
                                 } else if (roleselector === 'admin') {

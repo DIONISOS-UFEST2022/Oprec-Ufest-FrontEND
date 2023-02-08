@@ -1,9 +1,8 @@
 import React from 'react'
 import "./Home.scss"
 import { m, domAnimation, LazyMotion } from "framer-motion";
-import { Fragment } from 'react';
 
-function Pilar() {
+function PilarHome() {
     return (
         <LazyMotion features={domAnimation}>
             <m.div
@@ -39,4 +38,4 @@ function Pilar() {
     )
 }
 
-export default Pilar;
+export default PilarHome;

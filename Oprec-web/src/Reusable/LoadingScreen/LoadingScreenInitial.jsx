@@ -24,14 +24,14 @@ export function LoadingScreenInitial(props) {
             <p className="Caption">
                 Allow Sound ?
             </p>
-            <CustomButton onClick={Yes}>
-                Sure!
-            </CustomButton>
-            <br />
-            <CustomButton onTouchEnd={Handler} onClick={Handler}>
-                No
-            </CustomButton>
-            <br />
+            <div className='btn-choice'>
+                <CustomButton onClick={Yes}>
+                    Sure!
+                </CustomButton>
+                <CustomButton onTouchEnd={Handler} onClick={Handler}>
+                    No
+                </CustomButton>
+            </div>
         </div>
 
     )

@@ -22,9 +22,10 @@ import { userRoleAdded } from "../../../Redux/features/users/userRoleSlice";
 import { m, domAnimation, LazyMotion } from "framer-motion";
 // URL
 import { postRequest } from "../../../Reusable/Service/AxiosClient";
-import { getRequest } from "../../../Reusable/Service/AxiosClient";
+// import { getRequest } from "../../../Reusable/Service/AxiosClient";
 import { useNavigate, Navigate } from "react-router-dom";
 import { setCookie } from "react-use-cookie";
+import Pilar from "../../../Reusable/ComponentItems/Pilar/Pilar";
 
 
 
@@ -97,6 +98,7 @@ export default function Login() {
                 handleChange,
             }) => (
                 <div id="Login">
+                    <Pilar />
                     {error === true && loading === false ?
                         <>
                             <Alert severity="error" sx={{

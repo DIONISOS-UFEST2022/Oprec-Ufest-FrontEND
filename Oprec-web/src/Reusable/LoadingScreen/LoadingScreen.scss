@@ -47,4 +47,9 @@
         color: index.$white;
         text-shadow: 5px 0px 9px index.$black;
     }
+
+    .btn-choice {
+        @include index.center;
+        gap: 10px;
+    }
 }

@@ -56,13 +56,15 @@ export default function DivisonCarousel(props) {
                     // direction="horizontal"
                     slidesPerView={
                         window.innerWidth > 768 ? 3 : 1
-
                     }
                     // freeMode={true}
                     // pagination={{ clickable: true }}
                     // mousewheel={true}
-                    modules={[Pagination, Mousewheel, FreeMode]}
-                    slideToClickedSlide={true}
+                    modules={[
+                        Pagination,
+                        Mousewheel,
+                        FreeMode]}
+                    // slideToClickedSlide={true}
                     direction="horizontal"
                     keyboard={{
                         enabled: true,

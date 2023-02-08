@@ -9,30 +9,21 @@ $outline: 2px dashed;
 
 .Profile-Button {
     @include index.prevent-select;
-    @include index.center;
-    text-transform: uppercase;
     background-color: $primary-color;
     text-shadow: index.$text-shadow;
-    width: 100px;
-    border: 0;
+    width: 40px;
+    height: 40px;
+    border: 3px solid index.$yellow;
     border-radius: 60px;
     transition: all 0.3 ease;
     -webkit-transition: all 0.3 ease;
     padding: 10px;
     pointer-events: all;
     cursor: pointer;
-    font-family: index.$font ;
-    font-size: 20px;
-    height: 40px;
-    color: #FFFFFF;
-    border: 3px solid index.$white;
-    outline: $outline $primary-color;
     transition: 0.1s all;
 
     &:hover {
-        background-color: $secondary-color !important;
-        outline: $outline $secondary-color;
-        font-size: 23px;
+        opacity: 0.8;
     }
 
     &:disabled {

@@ -15,9 +15,10 @@ import { selectCanPlay, userCanPlay } from "./Redux/features/users/userSoundSlic
 // import { LoadingScreenInitial } from "./Reusable/LoadingScreen/LoadingScreen";
 import { LoadingScreenInitial } from "./Reusable/LoadingScreen/LoadingScreenInitial";
 import { getCookie } from "react-use-cookie";
-import { useLocation } from "react-router-dom";
+import { useLocation, Navigate } from "react-router-dom";
 import useSound from "use-sound";
 import BGM from "./Asset/Sound/BGM.mp3";
+import ComingSoon from "./Pages/User/ComingSoon/ComingSoon";
 // const Join = lazy(() => import("./Pages/User/Join/Join"));
 const User = lazy(() => import("./Pages/User/User"));
 const Admin = lazy(() => import("./Pages/Admin/Admin"));
@@ -98,7 +99,10 @@ function App() {
               </ProtectedRoute>
             </>
             } />
+
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
+
         }
       </Suspense>
     </div>

@@ -12,6 +12,7 @@
     .form {
         @include index.form-layout;
         margin-top: 10vh;
+        
 
         @media screen and (max-width: index.$sm) {
             height: auto;

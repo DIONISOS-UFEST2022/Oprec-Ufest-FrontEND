@@ -15,7 +15,7 @@ export const NavbarMobileMenuList = [
         state: 'division',
     },
     {
-        name: 'Join',
+        name: 'Recruitment',
         link: '/join',
         state: 'join',
     },

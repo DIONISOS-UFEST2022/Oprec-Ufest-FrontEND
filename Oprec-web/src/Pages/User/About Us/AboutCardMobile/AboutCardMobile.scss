@@ -13,12 +13,15 @@
     padding-top: 60px;
     background: rgba(13, 24, 51, 0.36);
     border-radius: 36px;
+    max-width: 500px;
+    min-height: 30vh;
 
     .Title {
+        // @include index.goldgrad;
+        color: index.$yellow;
         height: 10px !important;
         font-family: index.$font;
         font-size: 40px !important;
-        color: index.$yellow;
         text-shadow: 2px 0px 9px rgba(0, 0, 0, 1);
         margin-bottom: 25px !important;
     }
@@ -39,15 +42,24 @@
 
     .Desc {
         font-family: index.$font2;
-        font-size: 12px;
+        font-size: 17px;
         font-weight: bolder;
         color: index.$white;
         text-align: justify;
         text-align-last: center;
         overflow-wrap: break-word;
         // word-break: break-all;
-        line-height: 15px;
+        line-height: 18px;
         hyphens: auto;
+
+        @media screen and (max-width: 500px) {
+            font-size: 14px;
+        }
+
+        .quo {
+            color: index.$yellow;
+            font-size: 17px;
+        }
     }
 }
 

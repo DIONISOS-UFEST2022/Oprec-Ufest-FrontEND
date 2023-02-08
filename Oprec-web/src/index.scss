@@ -62,6 +62,8 @@ $purple: rgb(181, 21, 255);
     background: -webkit-linear-gradient(90deg, rgba(176, 114, 21, 1) 0%, rgba(245, 214, 63, 1) 5%, rgba(255, 241, 173, 1) 20%, rgba(245, 214, 63, 1) 35%, rgba(255, 198, 113) 50%, rgb(255, 198, 113) 65%, rgba(245, 214, 63, 1) 70%, rgba(255, 241, 173, 1) 80%, rgba(245, 214, 63, 1) 95%, rgba(245, 172, 63, 1) 100%);
     background: linear-gradient(90deg, rgba(176, 114, 21, 1) 0%, rgba(245, 214, 63, 1) 5%, rgba(255, 241, 173, 1) 20%, rgba(245, 214, 63, 1) 35%, rgba(255, 198, 113) 50%, rgba(255, 198, 113) 65%, rgba(245, 214, 63, 1) 70%, rgba(255, 241, 173, 1) 80%, rgba(245, 214, 63, 1) 95%, rgba(245, 172, 63, 1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#b07215", endColorstr="#f5ac3f", GradientType=1);
+    background-clip: text;
+    -moz-background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }

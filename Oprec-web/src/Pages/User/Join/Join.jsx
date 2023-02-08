@@ -29,6 +29,7 @@ import "./UploadImage/UploadImage.scss"
 import { postRequest } from "../../../Reusable/Service/AxiosClient";
 import CustomButton from "../../../Reusable/CustomComponent/CustomButton";
 import { setCookie } from 'react-use-cookie';
+import Pilar from "../../../Reusable/ComponentItems/Pilar/Pilar";
 const JoinPage0 = lazy(() => import("./Page/JoinPage0"));
 const Sparkles = lazy(() => import("../../../Reusable/Animation/Sparkle/Sparkle"));
 
@@ -173,6 +174,7 @@ export default function Join() {
                                     <BorderLinearProgress variant="determinate" value={(100 / 6) * joinpage} />
                                 </Suspense>
                                 <br />
+                                <Pilar />
                                 {(() => {
                                     switch (joinpage) {
                                         case 0:
@@ -208,6 +210,7 @@ export default function Join() {
                                                                     }}>Let's GO</CustomButton>
                                                                 </div>
                                                             </div>
+
                                                         </m.div>
                                                     </LazyMotion>
                                                 </Suspense>

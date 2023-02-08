@@ -68,12 +68,8 @@ export default function Profile(props) {
                     </div>
                 </div>
             </Modal>
-            <div onClick={handleOpen}>
-                <button className='Profile-Button'>
-                    Profile
-                </button>
-            </div>
-
+            <button onClick={handleOpen} className='Profile-Button'>
+            </button>
         </>
     );
 }
