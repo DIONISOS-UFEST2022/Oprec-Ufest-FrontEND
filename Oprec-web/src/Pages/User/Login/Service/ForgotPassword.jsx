@@ -16,7 +16,9 @@ function ForgotPassword() {
         }
 
     }
-    forgotPassword();
+    // forgotPassword();
+    return(<>
+    </>)
 }
 
 export default ForgotPassword

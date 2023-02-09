@@ -4,6 +4,8 @@ import icon_instagram from "./../../Asset/Image/OtherIcon/icon-instagram.svg";
 import icon_line from "./../../Asset/Image/OtherIcon/icon-line.svg";
 import icon_tiktok from "./../../Asset/Image/OtherIcon/icon-tiktok.svg";
 import icon_website from "./../../Asset/Image/OtherIcon/icon-website.svg";
+import icon_linkedin from "./../../Asset/Image/OtherIcon/icon-linkedin.svg";
+import icon_star from "./../../Asset/Image/OtherIcon/icon-star.svg";
 
 export const MedsosList = (
     [
@@ -41,6 +43,18 @@ export const MedsosList = (
             image: icon_website,
             title: 'UMN Festival',
             href: 'https://ufest.umn.ac.id',
+            color: "#282828"
+        },
+        {
+            image: icon_linkedin,
+            title: 'LinkedIn',
+            href: 'https://www.linkedin.com/company/umn-festival-sparta/',
+            color: "#282828"
+        },
+        {
+            image: icon_star,
+            title: 'Star',
+            href: '#',
             color: "#282828"
         }
     ]

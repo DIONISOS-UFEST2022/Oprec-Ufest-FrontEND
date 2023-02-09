@@ -12,7 +12,7 @@
     .content {
         display: flex;
         flex-direction: column;
-        @include index.form-layout;
+        @include index.form-layout("./../../../Asset/Image/OtherIcon/paperfull.webp");
         margin-top: 10vh;
 
         @media screen and (max-width: index.$sm) {
@@ -25,7 +25,6 @@
             font-size: 30px;
             font-family: index.$font;
             color: index.$blue;
-            // font-family: index.$font !important;
         }
 
         .Button {

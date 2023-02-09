@@ -1,0 +1,14 @@
+@use 'src/index.scss' as index;
+
+.JoinPage0 {
+
+    .desc {
+        font-family: index.$font2;
+        // font-weight: bold;
+    }
+
+    .title {
+        font-weight: bold;
+        font-family: index.$font2;
+    }
+}

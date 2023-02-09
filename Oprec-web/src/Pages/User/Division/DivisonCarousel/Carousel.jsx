@@ -8,6 +8,17 @@ import "./Carousel.scss"
 import { Pagination, Mousewheel, FreeMode } from "swiper";
 import { DivisionData } from "../DivisionData";
 import { Modal } from "@mui/material";
+import styled from "styled-components";
+
+const CustomModal = styled(Modal)(({ theme }) => ({
+    background: "rgb(0 0 0 0)",
+    focus: {
+        border: "none"
+    },
+    "&:focus": {
+        outline: 'none'
+    }
+}));
 
 
 function CarouselDetail({ props }) {
@@ -15,33 +26,32 @@ function CarouselDetail({ props }) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     return (<>
-        <Modal
-            sx={{
-            }}
+        <CustomModal
             open={open}
             onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
+            style={{ outline: 'none' }}
         >
-            <div className='Modal'>
-                <div className='Name'>
-                    <span className="Name-Title">{props.name}</span>
-                    <span className="Name-subTitle"> ({props.division})</span>
-                </div>
-                <div className='role'>
-                    &ldquo;{(props.role)}&rdquo;
+            <div style={{ outline: 'none' }} className='Modal-Carousel'>
+                <div className="Content-Modal">
+                    <div className='Name'>
+                        <span className="Name-Title">{props.name}</span>
+                        <span className="Name-subTitle"> ({props.division})</span>
+                    </div>
+                    <div className='role'>
+                        &ldquo;{(props.role)}&rdquo;
+                        <br />
+                        &ldquo;{(props.role2)}&rdquo;
+                    </div>
+                    <div className='NameDesc'>
+                        &ldquo;{props.namedesc}&rdquo;
+                    </div>
                     <br />
-                    &ldquo;{(props.role2)}&rdquo;
-                </div>
-                <div className='NameDesc'>
-                    &ldquo;{props.namedesc}&rdquo;
-                </div>
-                <br />
-                <div className='Jobdesk'>
-                    {props.jobdesk}
+                    <div className='Jobdesk'>
+                        {props.jobdesk}
+                    </div>
                 </div>
             </div>
-        </Modal>
+        </CustomModal>
         <div onClick={handleOpen} className="Carousel-Detail">
             <img rel="lazy" decoding="async" src={props.image} className="Carousel-Image" />
         </div>
@@ -56,12 +66,12 @@ export default function DivisonCarousel(props) {
                     // direction="horizontal"
                     slidesPerView={
                         window.innerWidth > 768 ? 3 : 1
+
                     }
                     // freeMode={true}
                     // pagination={{ clickable: true }}
                     // mousewheel={true}
-                    modules={[
-                        Pagination,
+                    modules={[Pagination,
                         Mousewheel,
                         FreeMode]}
                     // slideToClickedSlide={true}

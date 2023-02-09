@@ -4,13 +4,11 @@
     position: fixed;
     width: 80vh;
     height: 110vh;
-    bottom: 0px;
-    transform: scale(1.20) !important;
+    bottom: -30px;
+    transform: scale(1.11) !important;
     -webkit-filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.5));
     filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.5));
     z-index: index.$z-index-1;
-    // overflow: hidden;
-
 
     &.left {
         @include index.image('./../../../Asset/Image/Background/pilarLeft.webp');

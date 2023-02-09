@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import "./Pilar.scss"
 import { m, domAnimation, LazyMotion } from "framer-motion";
-// import { Fragment } from 'react';
 import { useMediaQuery } from "@mui/material";
 import { useState } from 'react';
 

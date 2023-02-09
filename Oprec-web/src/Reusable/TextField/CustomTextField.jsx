@@ -15,5 +15,5 @@ export const CustomTextField = styled(TextField)({
     },
     "& .MuiInput-underline:before": {
         borderBottomColor: "green"
-    },
+    }
 });

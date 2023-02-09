@@ -8,11 +8,11 @@
     height: 100%;
     min-height: 120vh;
     background-attachment: local;
+    padding-top: 10vh;
 
     .form {
-        @include index.form-layout;
+        @include index.form-layout("./../../../Asset/Image/OtherIcon/paperfull.webp");
         margin-top: 10vh;
-        
 
         @media screen and (max-width: index.$sm) {
             height: auto;
@@ -106,7 +106,10 @@
         }
 
         p.error {
-            margin: 20px 10px 10px 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            height: 20px;
+            // margin: 20px 10px 10px 10px;
             text-align: left;
             font-size: 10px;
             color: red;

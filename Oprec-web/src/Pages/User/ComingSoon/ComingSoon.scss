@@ -12,6 +12,7 @@
     &::after {
         filter: brightness(0.8) contrast(80%);
         content: "";
+
         background-image: url("./../../../Asset/Image/Background/Homebg.webp");
         position: absolute;
         // z-index: 7;
@@ -21,26 +22,32 @@
     }
 
 
-
-    .Content {
-        // @include index.form-layout;
-        color: index.$yellow;
-        text-align: center;
-        text-shadow: 2px 3px 9px rgba(0, 0, 0, 0.5);
-        font-family: index.$font;
-        font-size: 27px;
-        transform: scale(1.4) translateX(5px);
-        // position: absolute;
+    .Wrapper {
+        @include index.center;
+        background-image: url("./../../../Asset/Image/OtherIcon/Button.webp");
+        background-position: center;
+        background-size: cover;
+        width: 400px;
+        height: 200px;
+        transform: scale(1.4);
         z-index: index.$z-index-4;
-        width: 200px;
-        pointer-events: none;
 
-        @media screen and (max-width: index.$sm) {
-            width: 60%;
-            height: auto;
-            width: 100%;
-            margin-inline: 20px;
+        .Content {
+            color: index.$yellow;
+            text-align: center;
+            text-shadow: 2px 3px 9px rgba(0, 0, 0, 0.5);
+            font-family: index.$font;
+            font-size: 24px;
+            pointer-events: none;
+
+            @media screen and (max-width: index.$sm) {
+                width: 60%;
+                height: auto;
+                width: 100%;
+                margin-inline: 20px;
+            }
+
         }
-
     }
+
 }

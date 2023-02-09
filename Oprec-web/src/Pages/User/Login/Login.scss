@@ -6,17 +6,24 @@
     background-attachment: local;
     height: 120%;
     min-height: 100vh;
-    padding-top: 20px;
+    padding-top: 10vh;
+    overflow: hidden;
+
 
     .form {
-        @include index.form-layout;
+        @include index.form-layout("./../../../Asset/Image/OtherIcon/paperfull.webp");
+        position: relative;
+        overflow: visible;
 
         @media screen and (max-width: index.$sm) {
             width: 60%;
             height: auto;
             width: 100%;
             margin-inline: 20px;
+            overflow: visible;
+            margin: 0;
         }
+
 
 
         .Title {
@@ -72,4 +79,8 @@
 
     }
 
+}
+
+.input:-webkit-autofill {
+    background-color: rgb(0, 0, 0, 0);
 }

@@ -1,23 +1,46 @@
 @use "src/index.scss" as index;
 
 .About-Card-Mobile {
+    @include index.prevent-select;
     @include index.center;
     display: block;
     width: 100%;
-    // min-height: 333px;
     height: fit-content;
-    margin-top: 120px;
+    margin-top: 50px;
     position: relative;
     margin-inline: 30px;
-    padding: 30px;
+    padding: 15px;
     padding-top: 60px;
-    background: rgba(13, 24, 51, 0.36);
+    background: rgba(193, 130, 35, 0);
+
     border-radius: 36px;
     max-width: 500px;
     min-height: 30vh;
+    position: relative;
+
+    &::after {
+        position: absolute;
+        content: "";
+        z-index: -1;
+        transform: scale(1.5, 1);
+        background: url(./../../../../Asset/Image/OtherIcon/paperfull.webp);
+        background-position: center;
+        background-size: cover;
+        overflow: visible;
+        border-radius: 36px;
+        width: 100%;
+        max-width: 90vh;
+        min-height: 100vh;
+        height: fit-content;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        left: 0;
+        right: 0;
+        transform-origin: center center;
+    }
 
     .Title {
-        // @include index.goldgrad;
         color: index.$yellow;
         height: 10px !important;
         font-family: index.$font;
@@ -41,6 +64,7 @@
     }
 
     .Desc {
+        @include index.prevent-select;
         font-family: index.$font2;
         font-size: 17px;
         font-weight: bolder;
@@ -48,7 +72,6 @@
         text-align: justify;
         text-align-last: center;
         overflow-wrap: break-word;
-        // word-break: break-all;
         line-height: 18px;
         hyphens: auto;
 

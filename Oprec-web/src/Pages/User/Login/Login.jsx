@@ -26,6 +26,7 @@ import { postRequest } from "../../../Reusable/Service/AxiosClient";
 import { useNavigate, Navigate } from "react-router-dom";
 import { setCookie } from "react-use-cookie";
 import Pilar from "../../../Reusable/ComponentItems/Pilar/Pilar";
+import { CustomTextField } from "../../../Reusable/TextField/CustomTextField";
 
 
 
@@ -67,13 +68,14 @@ export default function Login() {
                                     localStorage.setItem('Email', res.data.user.email);
                                     Setloading(false);
                                     navigate('/admin/database');
+                                    window.location.reload();
                                 } else if (res.data.user.role_id === 2) {
                                     dispatch(userRoleAdded("user"));
                                     localStorage.setItem('LoginID', res.data.login_token);
                                     localStorage.setItem('Email', res.data.user.email);
                                     Setloading(false);
-                                    navigate('/home');
-                                    console.log('this is user');
+                                    navigate('/');
+                                    window.location.reload();
                                 } else {
                                     Setloading(false);
                                     Seterror(true);
@@ -125,8 +127,7 @@ export default function Login() {
 
                                     <Box className="Subtitle" fontSize={["10px", "10px", "15px"]}> Let's grow together with UFEST!</Box>
                                     <Divider className="Divider" />
-                                    <TextField
-                                        helperText=""
+                                    <CustomTextField
                                         id="email"
                                         name="email"
                                         label="Email Student UMN"
@@ -137,16 +138,13 @@ export default function Login() {
                                     <p className="error">
                                         {errors.email && touched.email && errors.email}
                                     </p>
-                                    <TextField
-                                        helperText=""
+                                    <CustomTextField
                                         type={"password"}
                                         id="password"
                                         name="password"
                                         label="Password"
                                         placeholder="Enter your password"
-                                        className="form-control"
                                         onChange={handleChange}
-                                        fullWidth
                                     />
                                     <p className="error">
                                         {errors.password && touched.password && errors.password}

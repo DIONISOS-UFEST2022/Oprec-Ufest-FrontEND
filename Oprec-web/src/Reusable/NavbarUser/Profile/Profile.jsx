@@ -10,6 +10,7 @@ import { selectuserNim } from '../../../Redux/features/users/userRoleSlice';
 import CustomButton from '../../CustomComponent/CustomButton';
 import Avatar from '@mui/material/Avatar';
 import { CircularProgress } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export default function Profile(props) {
     const dispatch = useDispatch();
@@ -19,6 +20,7 @@ export default function Profile(props) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [loading, Setloading] = useState(false);
+    const navigate = useNavigate();
     async function LogOut() {
         Setloading(true);
         try {
@@ -30,6 +32,8 @@ export default function Profile(props) {
                         dispatch(pageChanged('login'));
                         dispatch(userRoleAdded('guest'));
                         Setloading(false);
+                        navigate("/");
+                        window.location.reload();
                     }
                     else {
                         console.log(res.data);

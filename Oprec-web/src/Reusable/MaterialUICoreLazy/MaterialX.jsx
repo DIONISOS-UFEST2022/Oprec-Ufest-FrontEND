@@ -1,14 +1,5 @@
 import React, { lazy, Suspense } from "react";
 import { motion } from "framer-motion";
-// import { DataGrid } from "@mui/x-data-grid/DataGrid/DataGrid";
-// import { GridToolbar } from "@mui/x-data-grid/components";
-// import { gridClasses } from "@mui/x-data-grid/constants";
-// import { alpha } from "@mui/material/styles";
-// const DataGridlazy = lazy(() =>
-//     import("@mui/x-data-grid").then((module) => ({
-//         default: module.DataGrid,
-//     }))
-// );
 
 const DataGridlazy = lazy(() =>
     import('@mui/x-data-grid/DataGrid/DataGrid').then(module => {
