@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\PanitiaResource;
-use App\Models\panitia;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use App\Http\Controllers\GoogleSheetController;
-use App\Http\Services\GoogleSheetsServices;
-use Carbon\Carbon;
+use App\Models\User;
+use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Hash;
 
-class PanitiaController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,33 +18,16 @@ class PanitiaController extends Controller
      */
     public function index()
     {
-        $panitia = panitia::all();
-        if (!$panitia) {
+        $users = User::all();
+
+        if (!$users) {
             return response()->json([
                 'success' => false,
             ], 409);
         }
         return response()->json([
             'success' => true,
-            'data' => PanitiaResource::collection($panitia),
-        ], 201);
-    }
-
-    public function indexFilterByDiv($division)
-    {
-        $panitia = panitia::where('division_1', $division)
-            ->orWhere('division_2', $division)
-            ->orderBy('is_accepted', 'DESC')
-            ->get();
-
-        if (!$panitia) {
-            return response()->json([
-                'success' => false,
-            ], 409);
-        }
-        return response()->json([
-            'success' => true,
-            'data' => PanitiaResource::collection($panitia),
+            'user'    => UserResource::collection($users),
         ], 201);
     }
 
@@ -68,48 +49,35 @@ class PanitiaController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
-            'nim' => 'required|digits:11|numeric|unique:panitia|regex:/^0+\d\d\d\d\d$/',
             'name' => 'required',
-            'email' => 'required|email|unique:panitia',
-            'program_studi' => 'required',
-            'vaccine_certificate' => 'image|file|max:1024',
-            'angkatan' => 'required|string:4|regex:/^[0-9]*$/',
-            'division_1' => 'required|string',
-            'division_2' => 'required|string',
-            'phone_number' => 'required|numeric:11|unique:panitia',
-            'reason_1' => 'required|max:1000|string',
-            'reason_2' => 'required|max:1000|string',
-            'id_line' => 'required',
-            'instagram_account' => 'required|url',
-            'city' => 'required',
+            'email' => 'required|email|unique:users',
+            'nim' => 'required|digits:11|numeric|unique:users|regex:/^0+\d\d\d\d\d$/',
+            'division' => 'string',
+            'password' => [
+                'required',
+                'string',
+                Password::min(8)
+                    ->mixedCase()
+                    ->numbers(),
+            ],
         ]);
 
-        $panitia = panitia::create($request->all());
+        $password = Hash::make($request->password);
 
-        if ($request->vaccine_certificate != "") {
-            $filename = Str::random(25);
-            $extension = $request->vaccine_certificate->extension();
-            Storage::putFileAs('vaccine_image', $request->vaccine_certificate, $filename . '.' . $extension);
-            $panitia->vaccine_certificate = $filename . '.' . $extension;
-        } else {
-            $panitia->vaccine_certificate = "none";
-        }
-        if (!$request->portofolio) {
-            $panitia->portofolio = "none";
-        }
+        $user = User::create([
+            'name'      => $request->name,
+            'email'     => $request->email,
+            'nim'       => $request->nim,
+            'password'  => $password,
+            'division'  => $request->division,
+        ]);
 
-        $panitia->is_accepted = 0;
-        $panitia->save();
-
-        $service = new GoogleSheetController();
-        $service->appendData($panitia);
-
-        if ($panitia) {
+        if ($user) {
             return response()->json([
                 'success' => true,
-                'data' => new PanitiaResource($panitia, 201),
+                'users'    => new UserResource($user),
+                'login_token'   => $user->createToken('userLogin')->plainTextToken,
             ], 201);
         } else {
             return response()->json([
@@ -126,17 +94,17 @@ class PanitiaController extends Controller
      */
     public function show($id)
     {
-        $panitia = Panitia::findOrFail($id);
-
-        if (!$panitia) {
+        $user = User::findOrFail($id);
+        if ($user) {
+            return response()->json([
+                'success' => true,
+                'user'    => new UserResource($user),
+            ], 201);
+        } else {
             return response()->json([
                 'success' => false,
             ], 409);
         }
-        return response()->json([
-            'success' => true,
-            'data' => new PanitiaResource($panitia),
-        ], 201);
     }
 
     /**
@@ -159,59 +127,38 @@ class PanitiaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $panitia = Panitia::findOrFail($id);
+        $user = User::findOrFail($id);
 
         $request->validate([
-            'nim' => 'digits:11|numeric|regex:/^0+\d\d\d\d\d$/|unique:panitia,nim,' . $id . ',id',
-            'name' => 'string',
-            'email' => 'email|unique:panitia,email,' . $id . ',id',
-            'program_studi' => 'string',
-            'angkatan' => 'required|string:4|regex:/^[0-9]*$/',
-            'vaccine_certificate' => 'image|mimes:jpeg,jpg,png,bmp|max:200000',
-            'division_1' => 'string',
-            'division_2' => 'string',
-            'phone_number' => 'numeric:11|unique:panitia,phone_number,' . $id . ',id',
-            'reason_1' => 'max:500',
-            'reason_2' => 'max:500',
-            'portofolio' => 'url',
-            'id_line' => 'string',
-            'instagram_account' => 'url',
-            'city' => 'string',
-            'is_accepted' => 'numeric:1'
+            'email' => 'email|unique:users,email,' . $id . ',id',
+            'nim' => 'digits:11|regex:/^0+\d\d\d\d\d$/|unique:users,nim,' . $id . ',id',
+            'role_id' => 'digits:1',
+            'division' => 'string',
+            'password' => [
+                'string',
+                Password::min(8)
+                    ->mixedCase()
+                    ->numbers(),
+            ],
         ]);
 
+        $password = Hash::make($request->password);
+
+        //only updates the requested one
         $input = collect(request()->all())->filter()->all();
 
-        if ($request->vaccine_certificate) {
-            $imageFolder = Storage::disk('vaccine_image');
-            if ($imageFolder->exists($panitia->vaccine_certificate)) {
-                $imageFolder->delete($panitia->vaccine_certificate);
-            }
-            $filename = Str::random(25);
-            $extension = $request->vaccine_certificate->extension();
+        $user->update($input);
+        $user->update([$input, 'password' => $password]);
 
-            Storage::putFileAs('vaccine_image', $request->vaccine_certificate, $filename . '.' . $extension);
-            $panitia->update($input);
-            $panitia->vaccine_certificate = $filename . '.' . $extension;
-            $panitia->save();
-        } else {
-            $panitia->update($input);
-        }
-
-        $panitia->save();
-
-        $service = new GoogleSheetController();
-        $service->init();
-
-        if ($panitia) {
+        if ($user) {
             return response()->json([
                 'success' => true,
-                'data' => new PanitiaResource($panitia, 201),
+                'user'    => new userResource($user),
             ], 201);
         } else {
             return response()->json([
                 'success' => false,
-            ], 404);
+            ], 409);
         }
     }
 
@@ -223,52 +170,18 @@ class PanitiaController extends Controller
      */
     public function destroy($id)
     {
-        $panitia = panitia::findOrFail($id);
-        $imageFolder = Storage::disk('vaccine_image');
-        if ($imageFolder->exists($panitia->vaccine_certificate)) {
-            $imageFolder->delete($panitia->vaccine_certificate);
-        }
-        $panitia->forceDelete();
+        $user = User::findOrFail($id);
+        $user->delete();
 
-        $service = new GoogleSheetController();
-        $service->init();
-
-        if ($panitia) {
+        if ($user) {
             return response()->json([
                 'success' => true,
-                'msg'    => "Panitia " . $panitia->name . " has been deleted!",
+                'msg'    => "User " . $user->name . " has been deleted!",
             ], 201);
         } else {
             return response()->json([
                 'success' => false,
             ], 409);
-        }
-    }
-
-    public function delete_all()
-    {
-        $panitia = panitia::All();
-
-        foreach ($panitia as $p) {
-            $imageFolder = Storage::disk('vaccine_image');
-            if ($imageFolder->exists($p->vaccine_certificate)) {
-                $imageFolder->delete($p->vaccine_certificate);
-            }
-            $p->forceDelete();
-        }
-
-        $service = new GoogleSheetController();
-        $service->init();
-
-        if ($panitia) {
-            return response()->json([
-                'success' => true,
-                'msg'    => " All Panitia " . "has been deleted!",
-            ], 201);
-        } else {
-            return response()->json([
-                'success' => false,
-            ], 404);
         }
     }
 }

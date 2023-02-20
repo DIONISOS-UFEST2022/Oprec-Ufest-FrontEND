@@ -34,9 +34,10 @@ class PanitiaController extends Controller
 
     public function indexFilterByDiv($division)
     {
-        $panitia = panitia::where('division_1', $division)
-            ->orWhere('division_2', $division)
+        $panitia = panitia::where('division_2', $division)
+            ->orWhere('division_1', $division)
             ->orderBy('is_accepted', 'DESC')
+            ->orderBy('is_created', 'DESC')
             ->get();
 
         if (!$panitia) {
@@ -48,6 +49,53 @@ class PanitiaController extends Controller
             'success' => true,
             'data' => PanitiaResource::collection($panitia),
         ], 201);
+    }
+
+    public function accept(Request $request)
+    {
+        $id_list = $request->input('id');
+        $is_accepted = $request->input('category', 0);
+        $i = 0;
+        // check if all panitia id does exsist
+        foreach (explode(',', $id_list) as $id) {
+            $panitia = panitia::findOrFail($id);
+            if (!$panitia) {
+                return response()->json("something when wrong pls try again!");
+            }
+            $panitiaList[$i] = array(
+                'id' => $panitia->id,
+                'name' => $panitia->name,
+                'division_1' => $panitia->division_1,
+                'division_2' => $panitia->division_2,
+                'is_accepted' => $panitia->is_accepted,
+            );
+
+            $i++;
+        }
+
+        $i = 0;
+        foreach ($panitiaList as $panitia) {
+            $panitia = panitia::findOrFail($panitia['id']);
+            $panitia->is_accepted = (int)($is_accepted);
+            $panitia->save();
+            $panitiaList[$i]['is_accepted'] =  $panitia->is_accepted;
+            $i++;
+        }
+
+        $service = new GoogleSheetController();
+        $service->init();
+
+        if ($is_accepted == '0') {
+            return response()->json([
+                'msg' => 'success! panitia : ' . $id_list . ' have been rejected',
+                'panitia' => $panitiaList,
+            ]);
+        }
+
+        return response()->json([
+            'msg' => 'success! panitia : ' . $id_list . ' have been accepted',
+            'panitia' => $panitiaList,
+        ]);
     }
 
     /**
@@ -74,15 +122,15 @@ class PanitiaController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:panitia',
             'program_studi' => 'required',
-            'vaccine_certificate' => 'image|file|max:1024',
+            'vaccine_certificate' => 'image',
             'angkatan' => 'required|string:4|regex:/^[0-9]*$/',
             'division_1' => 'required|string',
             'division_2' => 'required|string',
             'phone_number' => 'required|numeric:11|unique:panitia',
-            'reason_1' => 'required|max:1000|string',
-            'reason_2' => 'required|max:1000|string',
+            'reason_1' => 'required|string',
+            'reason_2' => 'required|string',
             'id_line' => 'required',
-            'instagram_account' => 'required|url',
+            'instagram_account' => 'required',
             'city' => 'required',
         ]);
 
@@ -91,7 +139,7 @@ class PanitiaController extends Controller
         if ($request->vaccine_certificate != "") {
             $filename = Str::random(25);
             $extension = $request->vaccine_certificate->extension();
-            Storage::putFileAs('vaccine_image', $request->vaccine_certificate, $filename . '.' . $extension);
+            Storage::putFileAs('public/vaccine_image', $request->vaccine_certificate, $filename . '.' . $extension);
             $panitia->vaccine_certificate = $filename . '.' . $extension;
         } else {
             $panitia->vaccine_certificate = "none";
@@ -167,15 +215,15 @@ class PanitiaController extends Controller
             'email' => 'email|unique:panitia,email,' . $id . ',id',
             'program_studi' => 'string',
             'angkatan' => 'required|string:4|regex:/^[0-9]*$/',
-            'vaccine_certificate' => 'image|mimes:jpeg,jpg,png,bmp|max:200000',
+            'vaccine_certificate' => 'image|mimes:jpeg,jpg,png,bmp',
             'division_1' => 'string',
             'division_2' => 'string',
             'phone_number' => 'numeric:11|unique:panitia,phone_number,' . $id . ',id',
-            'reason_1' => 'max:500',
-            'reason_2' => 'max:500',
+            'reason_1' => 'string',
+            'reason_2' => 'string',
             'portofolio' => 'url',
             'id_line' => 'string',
-            'instagram_account' => 'url',
+            'instagram_account' => '',
             'city' => 'string',
             'is_accepted' => 'numeric:1'
         ]);
@@ -190,7 +238,7 @@ class PanitiaController extends Controller
             $filename = Str::random(25);
             $extension = $request->vaccine_certificate->extension();
 
-            Storage::putFileAs('vaccine_image', $request->vaccine_certificate, $filename . '.' . $extension);
+            Storage::putFileAs('public/vaccine_image', $request->vaccine_certificate, $filename . '.' . $extension);
             $panitia->update($input);
             $panitia->vaccine_certificate = $filename . '.' . $extension;
             $panitia->save();

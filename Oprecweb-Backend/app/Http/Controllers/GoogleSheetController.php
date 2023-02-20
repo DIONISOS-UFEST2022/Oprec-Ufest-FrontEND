@@ -18,7 +18,13 @@ class GoogleSheetController extends Controller
             return response()->json('table Panitia is empty!');
         }
 
+
         foreach ($panitia as $value) {
+            if ($value['vaccine_certificate'] != 'none') {
+                $imgLink =  asset('storage/vaccine_image/') . ('/') .  $value['vaccine_certificate'];
+            } else {
+                $imgLink = $value['vaccine_certificate'];
+            }
             $arr[] =
                 [
                     $value["nim"],
@@ -26,7 +32,7 @@ class GoogleSheetController extends Controller
                     $value['email'],
                     $value['program_studi'],
                     $value['angkatan'],
-                    $value['vaccine_certificate'],
+                    $imgLink,
                     $value['division_1'],
                     $value['division_2'],
                     $value['phone_number'],
@@ -58,6 +64,12 @@ class GoogleSheetController extends Controller
     {
         $service = new GoogleSheetsServices();
 
+        if ($panitia->vaccine_certificate != 'none') {
+            $imgLink =  asset('storage/vaccine_image/') . ('/') .  $panitia->vaccine_certificate;
+        } else {
+            $imgLink = $panitia->vaccine_certificate;
+        }
+
         $arr[] =
             [
                 $panitia->nim,
@@ -65,7 +77,7 @@ class GoogleSheetController extends Controller
                 $panitia->email,
                 $panitia->program_studi,
                 $panitia->angkatan,
-                $panitia->vaccine_certificate,
+                $imgLink,
                 $panitia->division_1,
                 $panitia->division_2,
                 $panitia->phone_number,

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\AnnouncementResource;
 use App\Models\Announcement;
 use Illuminate\Http\Request;
@@ -26,7 +28,6 @@ class AnnouncementController extends Controller
                 'success' => false,
             ], 404);
         }
-        return AnnouncementResource::collection($info);
     }
 
     /**
@@ -48,10 +49,14 @@ class AnnouncementController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'info' => 'required|string',
+            'info' => 'required|mimes:pdf|max:10000',
         ]);
 
-        $info = Announcement::create($request->all());
+        $filename = Str::random(25);
+        $extension = $request->info->extension();
+        Storage::putFileAs('public/info', $request->info, $filename . '.' . $extension);
+
+        $info = Announcement::create(['info' => $filename . '.' . $extension]);
 
         if ($info) {
             return response()->json([
@@ -110,12 +115,18 @@ class AnnouncementController extends Controller
         $info = Announcement::findOrFail($id);
 
         $request->validate([
-            'info' => 'required|string',
+            'info' => 'required|mimes:pdf|max:10000',
         ]);
 
-        $input = collect(request()->all())->filter()->all();
+        $imageFolder = Storage::disk('info');
+        if ($imageFolder->exists($info->info)) {
+            $imageFolder->delete($info->info);
+        }
+        $filename = Str::random(25);
+        $extension = $request->info->extension();
+        Storage::putFileAs('public/info', $request->info, $filename . '.' . $extension);
 
-        $info->update($input);
+        $info->update(['info' => $filename . '.' . $extension]);
 
         if ($info) {
             return response()->json([
@@ -140,11 +151,16 @@ class AnnouncementController extends Controller
         $info = Announcement::findOrFail($id);
 
         if ($info) {
+            $imageFolder = Storage::disk('info');
+            if ($imageFolder->exists($info->info)) {
+                $imageFolder->delete($info->info);
+            }
+
             $tempName = $info->id;
             $info->forceDelete();
             return response()->json([
                 'success' => true,
-                'msg' => "announcement " . $tempName . "has been deleted!",
+                'msg' => "announcement " . $tempName . " has been deleted!",
             ], 201);
         } else {
             return response()->json([

@@ -8,6 +8,9 @@ class AnnouncementResource extends JsonResource
 {
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'info' => env('APP_URL') . 'laravel/storage/app/public/info/' .  $this->info,
+        ];
     }
 }

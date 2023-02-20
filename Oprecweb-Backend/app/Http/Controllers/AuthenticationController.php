@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\PanitiaResource;
 use Illuminate\Support\Facades\Auth;
 
 class AuthenticationController extends Controller
@@ -48,9 +49,21 @@ class AuthenticationController extends Controller
 
     public function me()
     {
+        $user = Auth::user();
+        $panitia = $user->panitia;
+        if ($panitia) {
+            $panitia = new PanitiaResource($panitia);
+        }
+        if ($user) {
+            return response()->json([
+                'success' => true,
+                'user' =>  new UserResource($user),
+                'panitia' => $panitia,
+            ], 201);
+        }
         return response()->json([
-            'success' => true,
-            'user' =>  new UserResource(Auth::user())
-        ], 201);
+            'success' => false,
+            'msg' =>  'something when wrong please try again'
+        ], 404);
     }
 }

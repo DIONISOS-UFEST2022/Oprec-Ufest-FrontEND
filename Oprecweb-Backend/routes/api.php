@@ -7,10 +7,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\GoogleSheetController;
+use App\Http\Controllers\IsPanitiaFormActiveController;
 use App\Http\Controllers\PanitiaController;
 use App\Http\Controllers\VerifyEmailController;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +23,7 @@ use Illuminate\Http\Request;
 */
 
 
+
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/email/verification-notification', [VerifyEmailController::class, 'resend'])->name('verification.send');
     Route::get('/logout', [AuthenticationController::class, 'logout']);
@@ -31,6 +31,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::middleware(['admin'])->group(function () {
         Route::apiResource('users', UserController::class);
+        Route::get('/panitia/accept', [PanitiaController::class, 'accept']);
+        Route::get('/panitia/activate', [IsPanitiaFormActiveController::class, 'index']);
+        Route::patch('/panitia/activate', [IsPanitiaFormActiveController::class, 'edit']);
         Route::get('/panitia/div/{division}', [PanitiaController::class, 'indexFilterByDiv']);
         Route::delete('/panitia/deleteAll', [PanitiaController::class, 'delete_all']);
         Route::apiResource('panitia', PanitiaController::class);

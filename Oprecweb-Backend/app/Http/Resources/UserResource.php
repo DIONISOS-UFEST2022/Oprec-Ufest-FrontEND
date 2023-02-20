@@ -23,6 +23,7 @@ class UserResource extends JsonResource
                 'nim' => $this->nim,
                 'role_id' => $this->role_id,
                 'division' => $this->division,
+                'email_verified_at' => $request->email_verified_at,
             ];
     }
 }

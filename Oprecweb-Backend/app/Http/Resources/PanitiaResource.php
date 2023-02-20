@@ -21,7 +21,7 @@ class PanitiaResource extends JsonResource
                 'name' => $this->name,
                 'email' => $this->email,
                 'program_studi' => $this->program_studi,
-                'vaccine_certificate' => $this->vaccine_certificate,
+                'vaccine_certificate' =>  asset('storage/vaccine_image/') . ('/') . $this->vaccine_certificate,
                 'angkatan' => $this->angkatan,
                 'division_1' => $this->division_1,
                 'division_2' => $this->division_2,

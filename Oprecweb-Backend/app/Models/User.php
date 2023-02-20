@@ -52,6 +52,11 @@ class User extends Authenticatable implements MustVerifyEmailContract
         'email_verified_at' => 'datetime',
     ];
 
+    public function panitia()
+    {
+        return $this->hasOne(panitia::class, 'nim', 'nim');
+    }
+
     public function sendPasswordResetNotification($token)
     {
         // Your your own implementation.
