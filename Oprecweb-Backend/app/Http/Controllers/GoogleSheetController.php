@@ -26,6 +26,7 @@ class GoogleSheetController extends Controller
             } else {
                 $imgLink = $value['vaccine_certificate'];
             }
+            
             $arr[] =
                 [
                     $value["nim"],
@@ -70,7 +71,7 @@ class GoogleSheetController extends Controller
         } else {
             $imgLink = $panitia->vaccine_certificate;
         }
-
+        
         $arr[] =
             [
                 $panitia->nim,

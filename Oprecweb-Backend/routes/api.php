@@ -31,7 +31,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/email/verification-notification', [VerifyEmailController::class, 'resend'])->name('verification.send');
     Route::get('/logout', [AuthenticationController::class, 'logout']);
     Route::get('/me', [AuthenticationController::class, 'me']);
-
     Route::middleware(['admin'])->group(function () {
         Route::apiResource('users', UserController::class);
         Route::get('/panitia/accept', [PanitiaController::class, 'accept']);

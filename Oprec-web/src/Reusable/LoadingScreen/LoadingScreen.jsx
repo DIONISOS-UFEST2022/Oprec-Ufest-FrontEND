@@ -1,9 +1,16 @@
-import { Box } from "@chakra-ui/react";
+import "./LoadingScreen.scss"
 
-export function LoadinScreen() {
+
+export default function LoadingScreen() {
     return (
-        <Box>
-            Is Loading...
-        </Box>
+        <div
+            className="Loading-Screen"
+        >
+            <p className="Caption">
+                Now loading...
+            </p>
+        </div>
+
     )
 }
+

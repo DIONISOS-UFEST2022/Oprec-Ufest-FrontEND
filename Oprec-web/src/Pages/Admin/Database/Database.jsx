@@ -1,95 +1,74 @@
-import {
-    Table,
-    Thead,
-    Tbody,
-    Tfoot,
-    Tr,
-    Th,
-    Td,
-    TableCaption,
-    TableContainer,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-    useDisclosure,
-    Button,
-    Text,
-    Image,
-    Heading,
-    Box,
-    Divider
-} from '@chakra-ui/react'
-import axios from "axios";
-import { useEffect, useState } from "react";
+
+import { Suspense, useEffect, useState, lazy } from "react";
 import "./Database.scss";
-import { Dummydata } from "./../Division/dummy";
+import { GridToolbar } from "../../../Reusable/MaterialUICoreLazy/MaterialX"
+import { getRequest } from "../../../Reusable/Service/AxiosClient";
 
-function DatabaseCard(props) {
+const CustomGridLazy = lazy(() =>
+    import("./CustomGrid").then((module) => ({
+        default: module.CustomGrid,
+    }))
+);
+
+
+
+const columns = [
+    { field: 'id', headerName: 'ID', width: 70 },
+    { field: 'name', headerName: 'Nama', width: 130, editable: true },
+    { field: 'jurusan', headerName: 'Jurusan', width: 130, editable: true },
+    { field: 'angkatan', headerName: 'Angkatan', width: 130, editable: true },
+    { field: 'nim', headerName: 'NIM', width: 130, editable: true },
+    { field: 'email', headerName: 'Email', width: 130, editable: true },
+    { field: 'divisi', headerName: 'Divisi', width: 130, editable: true },
+    { field: 'divisialt', headerName: 'Divisi Alternatif', width: 130, editable: true },
+    { field: 'status', headerName: 'Status', width: 130, editable: true },
+    { field: 'id_line', headerName: 'Status', width: 130, editable: true },
+];
+
+export default function Database(props) {
+    const [userData, SetuserData] = useState([]);
+    useEffect(() => {
+        async function fetchData() {
+            const result = await getRequest('panitia')
+            SetuserData(result.data.data);
+        }
+        fetchData();
+    }, []);
     return (
-        <>
-            <Tr>
-                <Td>{props.name}</Td>
-                <Td>{props.jurusan}/{props.angkatan}</Td>
-                <Td>{props.nim}</Td>
-            </Tr>
-        </>
-    )
-}
-
-function Analytic(props) {
-    return (<Box className='Analytic'>
-        <Heading overflow={"hidden"}>Analytic</Heading>
-        Jumlah Peserta Oprec: {props.lenght}
-    </Box>)
-}
-
-export function Database(props) {
-    const [MapData, setMapData] = useState([]);
-    // useEffect(() => {
-    //     axios.get("http://127.0.0.1:8000/api/test").then((res) => {
-    //         setMapData(res.data)
-    //         console.log(res.data)
-    //     })
-    // },[])
-
-    return (
-        <Box className="database">
-            <Analytic lenght={Dummydata.length} />
-            <br />
-            <Divider />
-            <br />
-            <TableContainer className='databaseTabel'>
-                <Heading overflow={"hidden"}>Database</Heading>
-                <Table variant='simple'>
-                    <TableCaption>End of Data</TableCaption>
-                    <Thead>
-                        <Tr>
-                            <Th>Nama</Th>
-                            <Th>Jurusan/Angkatan</Th>
-                            <Th>NIM</Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        {Dummydata.map((data) => {
-                            return <DatabaseCard divisi={data.divisi} name={data.name} jurusan={data.jurusan} angkatan={data.angkatan} nim={data.nim} />
+        <div className="database">
+            <Suspense fallback={"Loading. . ."}>
+                <CustomGridLazy
+                    rowHeight={30}
+                    rows={
+                        userData.map((post, index) => {
+                            let status = "";
+                            if (post.is_accepted === 1) {
+                                status = "Di Terima"
+                            } else {
+                                status = "Di Tolak"
+                            }
+                            return (
+                                {
+                                    id: index,
+                                    name: post.name,
+                                    jurusan: post.program_studi,
+                                    angkatan: post.angkatan,
+                                    nim: post.nim,
+                                    email: post.email,
+                                    divisi: post.division_1,
+                                    divisialt: post.division_2,
+                                    status: status,
+                                    id_line: post.id_line,
+                                }
+                            )
                         })
-                        }
-                    </Tbody>
-                    <Tfoot>
-                        {/* <Tr>
-                        <Th>Nama</Th>
-                        <Th>Jurusan/Angkatan</Th>
-                        <Th>NIM</Th>
-                    </Tr> */}
-                    </Tfoot>
-                </Table>
-            </TableContainer>
-            {MapData.map((data) => {
-                return <DatabaseCard data={data} />
-            })}
-        </Box>)
+                    }
+                    columns={columns}
+                    components={{ Toolbar: GridToolbar }}
+                />
+            </Suspense>
+        </div>)
 }
+
+
+

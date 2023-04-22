@@ -110,7 +110,7 @@ class AnnouncementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+   public function update(Request $request, $id)
     {
         $info = Announcement::findOrFail($id);
 
@@ -162,6 +162,7 @@ class AnnouncementController extends Controller
                 'success' => true,
                 'msg' => "announcement " . $tempName . " has been deleted!",
             ], 201);
+
         } else {
             return response()->json([
                 'success' => false,

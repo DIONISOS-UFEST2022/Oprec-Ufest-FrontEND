@@ -1,29 +1,21 @@
-import React from 'react'
-import { Box, Center } from '@chakra-ui/react'
-import { DivisionCard } from './DivisionCard'
-import { DivisionData } from './DivisionData'
+import { useEffect } from "react"
 import "./Division.scss"
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import { useEffect } from 'react';
+import DivisonCarousel from "./DivisonCarousel/Carousel"
+import { setCookie } from "react-use-cookie";
+import Pilar from "../../../Reusable/ComponentItems/Pilar/Pilar";
 
-export function Division(props) {
-    // useEffect(() => {
-    //     AOS.init();
-    // }, [])
+
+export default function Division(props) {
+    useEffect(() => {
+        setCookie('division', 'division', { path: '/' });
+        window.scrollTo(0, 0)
+    }, [])
     return (<>
+        <div className="Division">
+            <Pilar />
+            <h1>Our Division</h1>
+            <DivisonCarousel />
 
-        <Box className="Division">
-            <Center>
-                <h1> This is Division</h1>
-            </Center>
-            {/* <div data-aos="fade-up" data-aos-duration="1000" data-aos-offset='200' data-aos-mirror='true' */}
-            {/* > */}
-                {DivisionData.map((item) => {
-                    return <DivisionCard key={item.id} name={item.name} Division={item.Division} namedesc={item.namedesc} />
-                })}
-            {/* </div> */}
-        </Box>
-
+        </div>
     </>)
 }

@@ -71,7 +71,7 @@ class GoogleSheetsServices
         }
         return true;
     }
-
+    
     public function appendSheet($data)
     {
         $body = new ValueRange([

@@ -1,82 +1,110 @@
-import React, { useState } from 'react';
-import { Box } from "@chakra-ui/react"
-import { Login } from './Login/Login';
-import { About } from './About Us/About';
-import { Division } from './Division/Division';
-import Home from './Home/Home';
-import { Navbar } from '../../Reusable/Navbar/Navbar';
-import { Footer } from '../../Reusable/Footer/Footer';
-import { AllContext } from '../../Reusable/Context/AllContext';
-import {
-    Transition, SwitchTransition, CSSTransition,
+import "./User.scss";
+import { useSelector } from 'react-redux';
+import { selectPage } from '../../Redux/features/page/pageSlice';
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { Suspense, lazy, useCallback, useRef } from "react";
+import LoadingScreen from "../../Reusable/LoadingScreen/LoadingScreen";
+import { Route, Routes, Navigate } from "react-router-dom";
+import { selectuserRole } from "../../Redux/features/users/userRoleSlice";
+import { Outlet } from "react-router-dom";
+import VerifyEmail from "./VerifyEmail/VerifyEmail";
+import ProtectedRoute from "../../Route/ProtectedRoute";
+import ProtectedRoutePath from "../../Route/ProtectedRoutePath";
+import { LazyMotion, domAnimation, m } from 'framer-motion';
+import EnterAnimation from "../../Reusable/Animation/EnterAnimation/EnterAnimation";
+import ComingSoon from "./ComingSoon/ComingSoon";
+const NavbarUser = lazy(() => import("../../Reusable/NavbarUser/Navbar"));
+const NavbarMobile = lazy(() => import("../../Reusable/NavbarUser/NavbarMobile/NavbarMobile"));
+const Footer = lazy(() => import("../../Reusable/Footer/Footer"));
+const Home = lazy(() => import("./Home/Home"));
+const About = lazy(() => import("./About Us/About"));
+const Division = lazy(() => import("./Division/Division"));
+const Login = lazy(() => import("./Login/Login"));
+const Register = lazy(() => import("./Register/Register"));
+const Join = lazy(() => import("./Join/Join"));
 
-} from 'react-transition-group';
-import "./User.scss"
-import { Register } from './Login/Register';
-import { Join } from './Join/Join';
+
+export default function User(props) {
+    const isMobile = useMediaQuery("(max-width: 960px)")
+    const HomeCallback = useCallback(() => {
+        return <Home />
+    }, [])
+
+    const AboutCallback = useCallback(() => {
+        return <About />
+    }, [])
+
+    const DivisionCallback = useCallback(() => {
+        return <Division />
+    }, [])
 
 
-function FadeDiv(props) {
+
     return (
-        <Box
-            className='fadeBox'
-            willChange={"transform, opacity"}
-            transition={'0.5s'}
-            transform={props.state === "entered" ? "translate(0,0)" : "translate(30%, 0% )"}
-            opacity={props.state === "entered" ? 1 : 0}
-            display={props.state === "exited" ? "none" : "block"}
-            timeout={props.timeout}
-        >
-            {props.children}
-        </Box>
-    )
-}
+        <LazyMotion features={domAnimation}>
+            <m.div id="User-Page"
+            // initial={{
+            //     overflow: "hidden"
+            // }}
+            // animate={{
+            //     overflow: "visible",
+            //     transition: {
+            //         delay: 3,
+            //         duration: 0.5
+            //     }
+            // }}
 
+            >
+                <Routes>
+                    <Route path="/" element={<>
+                        {isMobile ? <Suspense fallback={
+                            <LoadingScreen />}>
+                            <NavbarMobile />
+                        </Suspense>
+                            : <Suspense fallback={<LoadingScreen />}>
+                                <EnterAnimation className="NavbarUser-wrap">
+                                    <NavbarUser />
+                                </EnterAnimation>
+                            </Suspense>}
+                        <Outlet />
+                        <Footer />
+                    </>}>
+                        <Route path="/" element={<Suspense fallback={<LoadingScreen />}><HomeCallback /></Suspense>} />
+                        <Route path="home" element={<Suspense fallback={<LoadingScreen />}><HomeCallback /></Suspense>} />
+                        <Route path="about" element={<Suspense fallback={<LoadingScreen />}><AboutCallback /></Suspense>} />
+                        <Route path="division" element={<Suspense fallback={<LoadingScreen />}><DivisionCallback /></Suspense>} />
+                        <Route path="login" element={
+                            <ProtectedRoute user={"guest"}>
+                                <Suspense fallback={<LoadingScreen />}>
+                                    <Login />
+                                    {/* <ComingSoon /> */}
+                                </Suspense>
+                            </ProtectedRoute>
+                        } />
+                        <Route path="register" element={
+                            <ProtectedRoute user={"guest"}>
+                                <Suspense fallback={<LoadingScreen />}>
+                                    <Register />
+                                </Suspense>
+                            </ProtectedRoute>
+                        } />
+                        <Route path="register/verify" element={
+                            <ProtectedRoutePath path="/register/verify">
+                                <VerifyEmail />
+                            </ProtectedRoutePath>
+                        } />
+                        <Route path="join" element={
+                            <ProtectedRoute user={"user"}>
+                                <Suspense fallback={<LoadingScreen />}>
+                                    <Join />
+                                </Suspense>
+                            </ProtectedRoute>} />
+                        <Route path="/comingsoon" element={<ComingSoon />} />
+                        <Route path="*" element={<Navigate to="/" />} />
 
-const FadeTransition = ({ children, ...rest }) => (
-    <Transition {...rest}>
-        {state => <FadeDiv timeout={500} state={state}>{children}</FadeDiv>}
-    </Transition>
-);
-
-
-
-export function User() {
-    const [page, setpage] = useState('home');
-    const handleClick = pagestate => {
-        setpage(pagestate);
-    };
-    return (
-        <Box className="user">
-            <AllContext.Provider value={{ page, setpage }}>
-                <Navbar handleClick={handleClick} />
-                <SwitchTransition>
-                    <FadeTransition key={page}
-                        timeout={200}
-                    >
-                        {(() => {
-                            switch (page) {
-                                case 'home':
-                                    return <Home handleClick={handleClick} />;
-                                case 'about':
-                                    return <About handleClick={handleClick} />;
-                                case 'divison':
-                                    return <Division handleClick={handleClick} />
-                                case 'login':
-                                    return <Login handleClick={handleClick} />
-                                case 'register':
-                                    return <Register handleClick={handleClick} />
-                                case 'join':
-                                    return <Join handleClick={handleClick} />
-                                default:
-                                    return null;
-                            }
-                        })()}
-
-                    </FadeTransition>
-                </SwitchTransition>
-                <Footer />
-            </AllContext.Provider>
-        </Box>
+                    </Route>
+                </Routes>
+            </m.div>
+        </LazyMotion>
     )
 }

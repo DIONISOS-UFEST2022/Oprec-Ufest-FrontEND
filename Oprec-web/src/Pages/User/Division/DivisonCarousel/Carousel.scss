@@ -1,0 +1,211 @@
+@use "src/index" as index;
+
+#Carousel {
+
+    .Carousel-Swiper {
+        width: 70vw;
+        height: 400px;
+        z-index: index.$z-index-1;
+
+        @media screen and (max-width: index.$sm) {
+            width: 100vh
+        }
+
+        .Carousel-Swiper-Slide {
+            @include index.prevent-select;
+            @include index.center;
+            width: 150px;
+            height: auto;
+            background-color: rgb(252, 199, 199, 0);
+            margin: 0;
+            height: 100%;
+
+            // &:hover {
+            //     width: 100%;
+            //     height: 100%;
+            //     filter: brightness(0.5);
+            //     transition: 0.3s;
+            //     position: relative;
+
+            //     &::before {
+            //         filter: none;
+            //         font-family: index.$font2;
+            //         content: 'Click to see more';
+            //         position: absolute;
+            //         margin: auto;
+            //         top: 45%;
+            //         right: 0;
+            //         left: 0;
+            //         color: white;
+            //         font-size: 20px;
+            //         z-index: index.$z-index-4;
+
+            //     }
+            // }
+
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            @media screen and (max-width: index.$sm) {
+                width: 100%;
+            }
+
+
+            .Carousel-Image {
+                image-resolution: 300dpi;
+                height: 90%;
+                width: auto;
+                object-fit: cover;
+                position: relative;
+                animation: spin 20s linear infinite;
+            }
+        }
+    }
+
+    .swiper-slide {
+        height: 300px !important;
+        @include index.center;
+        text-align: center;
+        font-size: 18px;
+        background: index.$white;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+    }
+}
+
+
+
+.Modal-Carousel {
+    height: 400px !important;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 60px !important;
+    opacity: 1 !important;
+    width: 60vw !important;
+    overflow-y: visible;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    // border: 1px solid white;
+
+    &::after {
+        background-image: url(./../../../../Asset/Image/OtherIcon/paperfull.webp);
+        overflow: hidden !important;
+        z-index: -1;
+        transform: scaleX(2.3) scaleY(1) translateX(0px);
+        transform-origin: center center;
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 400px !important;
+        height: 600px;
+        background-position: center;
+        background-size: cover;
+        overflow: visible;
+
+        @media screen and (max-width: index.$sm) {
+
+            transform: scaleX(0.75) scaleY(1.1) translateX(-20%);
+            transform-origin: center center;
+
+        }
+    }
+
+    @media screen and (max-width: index.$sm) {
+        height: 450px !important;
+        padding: 20px !important;
+        width: 250px !important;
+
+    }
+
+    .Content-Modal {
+        padding: 20px;
+
+        @media screen and (max-width: index.$sm) {
+            padding: 10px !important;
+            padding-top: 20px;
+        }
+
+        @media screen and (min-width: index.$lg) {
+            padding: 40px;
+
+        }
+
+        .Name {
+            font-family: index.$font;
+
+            .Name-Title {
+                font-size: 60px;
+                color: index.$blue;
+            }
+
+            .Name-subTitle {
+                font-size: 30px;
+                font-weight: bolder;
+                color: index.$blue;
+            }
+        }
+
+        .role {
+            @include index.center;
+            display: block;
+            font-family: index.$font;
+            font-size: 20px;
+            font-weight: 1000;
+            color: index.$blue;
+            text-shadow: none !important;
+        }
+
+        .Image {
+            @include index.center;
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            object-fit: cover;
+            background-color: rgb(255, 255, 255, 0.7);
+            border-radius: 50%;
+        }
+
+        .NameDesc {
+            color: #87181D;
+            margin-top: 10px;
+            font-family: index.$font;
+        }
+
+        .Jobdesk {
+            color: #87181D;
+            flex-direction: column;
+            margin-top: 10px;
+            font-family: index.$font;
+        }
+    }
+
+
+}
+
+
+.Carousel-Detail {
+    @include index.center;
+    width: 300px;
+    height: 300px;
+
+    .Carousel-Image {
+        object-fit: cover !important;
+        background-position: center !important;
+    }
+}

@@ -1,32 +1,60 @@
-import { Box, Heading, Image } from "@chakra-ui/react"
-import { useEffect, useRef } from "react"
-import "./Home.scss"
+// react
+import { Suspense, lazy, useEffect, useState, useCallback } from "react";
+// styling
+import "./Home.scss";
+import { m, LazyMotion, domAnimation } from "framer-motion";
+import { useMediaQuery } from "@mui/material";
+import { setCookie } from "react-use-cookie";
+import { CounterTesting } from "./Component/UFESTLOGO/WordAnimate/Testing";
+const HomeButton = lazy(() => import("./Component/HomeButton/HomeButton"));
+const UFESTLOGO = lazy(() => import("./Component/UFESTLOGO/UFESTLOGO"));
+const PilarHome = lazy(() => import("./pilar"));
 
-export default function Home() {
-    const homeTitleRef = useRef(null);
+
+
+
+// start from here
+export default function Home(props) {
+    const [isMobile] = useState(useMediaQuery("(max-width: 700px)"));
+    // const dispatch = useDispatch();
+    // let loading = useSelector(selectPageLoading);
     useEffect(() => {
-        setTimeout(() => {
-            document.querySelectorAll('.circle').forEach(e => {
-                e.classList.add('loaded')
-            })
-        }, 500);
-        setTimeout(() => {
-            document.querySelectorAll('.circle').forEach(e => {
-                e.classList.add('faded')
-            })
-            document.querySelectorAll('.circle').forEach(e => {
-                e.classList.remove('loaded')
-            })
-            homeTitleRef.current.style.opacity = 1;
-        }, 1000);
-    })
+        setCookie('home', 'home', { path: '/' });
+        window.scrollTo(0, 0)
+    }, []);
+    const MemoLogo = useCallback(() => {
+        return <UFESTLOGO />
+    }, [])
 
-    const homeRef = useRef(null);
+    const MemoTag = useCallback(() => {
+        return <CounterTesting choice={'welcome'} />
+    }, [])
 
     return (
-        <Box ref={homeRef} className="home" height={"900px"}>
-            <div className="circle first"></div>
-            <Heading opacity={0} ref={homeTitleRef}>Really feels like Home. </Heading>
-        </Box>
+        <div className="home">
+            {isMobile ?
+                <>
+                    <LazyMotion features={domAnimation}>
+                        <m.div
+                            rel="preload"
+                            loading="lazy"
+                            decoding="async"
+                            className="home-image"
+                        />
+                    </LazyMotion>
+                    <MemoTag />
+                    <HomeButton />
+                </>
+                :
+                <>
+                    <Suspense fallback={""}>
+                        <PilarHome />
+                    </Suspense>
+                    <MemoLogo />
+                    <MemoTag />
+                    <HomeButton />
+                </>
+            }
+        </div>
     )
 }

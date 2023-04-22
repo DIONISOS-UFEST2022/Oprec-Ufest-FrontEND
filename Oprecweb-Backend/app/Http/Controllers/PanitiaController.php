@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Http\Controllers\GoogleSheetController;
+use App\Http\Services\GoogleSheetsServices;
 
 class PanitiaController extends Controller
 {
@@ -149,7 +150,6 @@ class PanitiaController extends Controller
 
         $panitia->is_accepted = 0;
         $panitia->save();
-
         $service = new GoogleSheetController();
         $service->appendData($panitia);
 
@@ -226,6 +226,7 @@ class PanitiaController extends Controller
             'city' => 'string',
             'is_accepted' => 'numeric:1'
         ]);
+
 
         $input = collect(request()->all())->filter()->all();
 
