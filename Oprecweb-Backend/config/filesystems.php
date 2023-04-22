@@ -49,6 +49,16 @@ return [
             'root' => storage_path('app/vaccine_image'),
         ],
 
+        'foto_ktm' => [
+            'driver' => 'local',
+            'root' => storage_path('app/foto_ktm'),
+        ],
+
+        'bukti_pembayaran' => [
+            'driver' => 'local',
+            'root' => storage_path('app/bukti_pembayaran'),
+        ],
+
         'info' => [
             'driver' => 'local',
             'root' => storage_path('app/public/info'),

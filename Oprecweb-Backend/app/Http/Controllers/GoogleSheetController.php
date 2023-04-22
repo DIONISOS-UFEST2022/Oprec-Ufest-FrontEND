@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\panitia;
+use App\Models\Ulympic;
 use App\Http\Services\GoogleSheetsServices;
+use App\Models\TimMobileLegend;
 use Illuminate\Http\Request;
 
 class GoogleSheetController extends Controller
@@ -17,7 +19,6 @@ class GoogleSheetController extends Controller
         if (!$panitia) {
             return response()->json('table Panitia is empty!');
         }
-
 
         foreach ($panitia as $value) {
             if ($value['vaccine_certificate'] != 'none') {
@@ -98,6 +99,52 @@ class GoogleSheetController extends Controller
                 'msg' => 'Something When Wrong... try again later',
             ], 403);
         }
+        return response()->json([
+            'success' => true,
+        ], 201);
+    }
+
+
+    public function initMlTeam()
+    {
+
+        $service = new GoogleSheetsServices();
+        $service->DeleteSheet();
+        $ulympic = Ulympic::all()->toArray();
+
+        if (!$ulympic) {
+            return response()->json('table ulympic is empty!');
+        }
+
+
+        foreach ($ulympic as $uly) {
+            $tim = TimMobileLegend::where('namaTim', $uly['namaTim'])->get();
+            if (count($tim) == 0) {
+                $arr[] = [
+                    $uly['namaTim'],
+                    $uly['phoneNumber'],
+                    $uly['buktiPembayaran'],
+                ];
+            }
+            foreach ($tim as $member) {
+
+                $arr[] = [
+                    $uly['namaTim'],
+                    $uly['phoneNumber'],
+                    $uly['buktiPembayaran'],
+                    $member['ketua'],
+                    $member['nama'],
+                    $member['jurusan'],
+                    $member['angkatan'],
+                    $member['userID'],
+                    $member['userName'],
+                    $member['fotoKtm'],
+                    $member['diterima'],
+                ];
+            }
+            $service->writeSheet($arr);
+        }
+
         return response()->json([
             'success' => true,
         ], 201);

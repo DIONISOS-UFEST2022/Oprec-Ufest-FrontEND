@@ -9,7 +9,10 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\GoogleSheetController;
 use App\Http\Controllers\IsPanitiaFormActiveController;
 use App\Http\Controllers\PanitiaController;
+use App\Http\Controllers\TimMobileLegendController;
+use App\Http\Controllers\UlympicController;
 use App\Http\Controllers\VerifyEmailController;
+use App\Models\TimMobileLegend;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,3 +56,9 @@ Route::post('/forgot-password', [ForgotPasswordController::class, 'sendToken']);
 Route::get('/password/reset/{token}', [ForgotPasswordController::class, 'getToken'])->name("password.reset");
 Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword']);
 Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, 'verify'])->middleware(['signed'])->name('verification.verify');
+
+//Ulympic
+Route::get('/spreadsheet', [GoogleSheetController::class, 'initMlTeam']);
+Route::apiResource('ulympic', UlympicController::class);
+Route::apiResource('timmobilelegend', TimMobileLegendController::class);
+Route::get('/spreadsheet/ML', [GoogleSheetController::class, 'initMlTeam']);

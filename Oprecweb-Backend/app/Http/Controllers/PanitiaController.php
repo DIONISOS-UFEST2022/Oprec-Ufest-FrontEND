@@ -8,8 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Http\Controllers\GoogleSheetController;
-use App\Http\Services\GoogleSheetsServices;
-use Carbon\Carbon;
 
 class PanitiaController extends Controller
 {
@@ -21,6 +19,7 @@ class PanitiaController extends Controller
     public function index()
     {
         $panitia = panitia::all();
+
         if (!$panitia) {
             return response()->json([
                 'success' => false,

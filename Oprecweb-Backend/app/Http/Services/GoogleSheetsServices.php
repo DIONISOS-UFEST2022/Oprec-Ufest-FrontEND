@@ -20,7 +20,7 @@ class GoogleSheetsServices
         $this->client = $this->getClient();
         $this->service = new Sheets($this->client);
         $this->documentId = "1mWdSzkKiuVoXP8sTnVYR3CwWbLsa37bcxDOvVyTOzEY";
-        $this->range = 'A2:P';
+        $this->range = 'PendaftaranMobileLegend!A2:P';
     }
 
     public function getClient()
@@ -48,6 +48,24 @@ class GoogleSheetsServices
 
         $result = $this->service->spreadsheets_values->update($this->documentId, $this->range, $body, $params);
 
+        if (!$result) {
+            return false;
+        }
+        return true;
+    }
+
+    public function writeSheet2($data, $row)
+    {
+
+        $body = new ValueRange([
+            'values' => $data
+        ]);
+
+        $params = [
+            'valueInputOption' => 'RAW'
+        ];
+
+        $result = $this->service->spreadsheets_values->update($this->documentId, 'PendaftaranMobileLegend!A' . $row, $body, $params);
         if (!$result) {
             return false;
         }
