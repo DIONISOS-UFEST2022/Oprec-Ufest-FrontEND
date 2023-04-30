@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Resources\TimMobileLegendResource;
 use App\Models\TimMobileLegend;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
 
 class TimMobileLegendController extends Controller
 {
@@ -49,27 +47,32 @@ class TimMobileLegendController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'namaTim' => 'string|required|exists:Ulympics,namaTim',
-            'ketua' => 'string|required',
+            'tokenID' => 'string|required|exists:Ulympics,tokenID',
+            'ketua' => 'string|',
             'nama' => 'string|required',
             'angkatan' => 'string|numeric:4|required',
             'jurusan' =>  'string|required',
             'userID' => 'string|required|unique:Tim_mobile_legends,userID',
             'userName' => 'string|required',
-            'fotoKtm' => 'image|required',
+            'phoneNumber' => 'numeric|min:11|required|unique:Tim_mobile_legends,phoneNumber'
         ], [
-            'namaTim.exists' => 'this team name does not exist'
+            'tokenID.exists' => 'this team does not exist'
         ]);
 
-        $filename = Str::random(25);
-        $extension = $request->fotoKtm->extension();
-        $isStored = Storage::putFileAs('public/foto_ktm',  $request->fotoKtm, $filename . '.' . $extension);
+        $tim = TimMobileLegend::create($request->all());
+        $ulympic = $tim->ulympic;
+        $tim->ketua = $ulympic->ketua;
+        $tim->save();
+        $sisaMember =  $tim->ulympic->jumlahMember - $ulympic->timMobileLegend->count();
 
-        if ($isStored) {
-            $tim = TimMobileLegend::create($request->all());
-            $tim->fotoKtm = $filename . '.' . $extension;
-            $tim->save();
-        } else {
+        if ($sisaMember <= 0) {
+            return response()->json([
+                'success' => false,
+                'msg' => 'jumlah Anggota sudah melebihi kapasitas tim'
+            ]);
+        }
+
+        if (!$tim) {
             return response()->json([
                 'success' => false
             ], 409);
@@ -81,6 +84,8 @@ class TimMobileLegendController extends Controller
         return response()->json([
             'success' => true,
             'data' => new TimMobileLegendResource($tim),
+            'namaTim' => $tim->ulympic->namaTim,
+            'sisaMember' => $sisaMember,
         ], 201);
     }
 
@@ -93,6 +98,8 @@ class TimMobileLegendController extends Controller
     public function show($id)
     {
         $tim = TimMobileLegend::findOrFail($id);
+        $ulympic = $tim->ulympic;
+        $sisaMember =  $tim->ulympic->jumlahMember - $ulympic->timMobileLegend->count();
 
         if (!$tim) {
             return response()->json([
@@ -103,6 +110,9 @@ class TimMobileLegendController extends Controller
         return response()->json([
             'success' => true,
             'data' => new TimMobileLegendResource($tim),
+            'namaTim' => $tim->ulympic->namaTim,
+            'sisaMember' => $sisaMember,
+
         ], 201);
     }
     /**
@@ -128,39 +138,33 @@ class TimMobileLegendController extends Controller
         $tim = TimMobileLegend::findorfail($id);
 
         $request->validate([
-            'namaTim' => 'string|exists:Ulympics,namaTim',
+            'tokenID' => 'string|exists:Ulympics,tokenID',
             'ketua' => 'string',
             'nama' => 'string',
             'angkatan' => 'string|numeric:4',
             'jurusan' =>  'string',
             'userID' => 'string|unique:Tim_mobile_legends,userID,' . $id . 'id',
             'userName' => 'string',
-            'fotoKtm' => 'image',
+            'phoneNumber' => 'numeric|min:11',
         ], [
-            'namaTim.exists' => 'this team name does not exist'
+            'tokenID.exists' => 'this team does not exist'
         ]);
 
         $input = collect(request()->all())->filter()->all();
+        $tim->update($input);
 
-        if ($request->fotoKtm) {
-            $imageFolder = Storage::disk('foto_ktm');
-            if ($imageFolder->exists($tim->fotoKtm)) {
-                $imageFolder->delete($tim->fotoKtm);
-            }
-            $filename = Str::random(25);
-            $extension = $request->fotoKtm->extension();
-            Storage::putFileAs('public/foto_ktm', $request->fotoKtm, $filename . '.' . $extension);
-            $tim->update($input);
-            $tim->fotoKtm = $filename . '.' . $extension;
-        } else {
-            $tim->update($input);
-        }
+        $ulympic = $tim->ulympic;
+        $tim->ketua = $ulympic->ketua;
         $tim->save();
 
         if ($tim) {
+            $service = new GoogleSheetController();
+            $service->initMlTeam();
+
             return response()->json([
                 'success' => true,
                 'data' => new TimMobileLegendResource($tim, 201),
+                'namaTim' => $tim->ulympic->namaTim,
             ], 201);
         } else {
             return response()->json([
@@ -178,12 +182,6 @@ class TimMobileLegendController extends Controller
     public function destroy($id)
     {
         $tim = TimMobileLegend::findOrFail($id);
-
-        $imageFolder = Storage::disk('foto_ktm');
-        if ($imageFolder->exists($tim->fotoKtm)) {
-            $imageFolder->delete($tim->fotoKtm);
-        }
-
         $isDeleted = $tim->forceDelete();
 
         if ($isDeleted) {

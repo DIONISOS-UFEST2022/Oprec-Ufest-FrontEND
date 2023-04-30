@@ -16,14 +16,14 @@ return new class extends Migration
         Schema::create('tim_mobile_legends', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('namaTim');
-            $table->string('ketua');
+            $table->string('tokenID');
+            $table->string('ketua')->default('none')->nullable();
             $table->string('nama');
             $table->string('jurusan');
             $table->string('angkatan');
             $table->string('userID');
             $table->string('userName');
-            $table->string('fotoKtm');
+            $table->string("phoneNumber")->unique();
             $table->boolean("diterima")->default(0);
         });
     }

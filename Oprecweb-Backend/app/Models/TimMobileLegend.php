@@ -12,17 +12,18 @@ class TimMobileLegend extends Model
     protected $fillable = [
         'namaTim',
         'ketua',
+        'tokenID',
         'nama',
         'jurusan',
         'angkatan',
         'userID',
         'userName',
-        'fotoKtm',
+        'phoneNumber',
         'diterima',
     ];
 
     public function ulympic()
     {
-        return $this->belongsTo(Ulympic::class, 'namaTim', 'namaTim');
+        return $this->belongsTo(Ulympic::class, 'tokenID', 'tokenID');
     }
 }

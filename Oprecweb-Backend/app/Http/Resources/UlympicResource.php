@@ -14,12 +14,33 @@ class UlympicResource extends JsonResource
      */
     public function toArray($request)
     {
+        $buktiPembayaran = $this->buktiPembayaran;
+        $buktiWA = $this->buktiWA;
+        $fotoKtm = $this->fotoKtm;
+
+
+        if ($buktiPembayaran != null) {
+            $buktiPembayaran = asset('storage/bukti_pembayaran/') . ('/') . $this->buktiPembayaran;
+        } else  $buktiPembayaran = "none";
+
+        if ($buktiWA != null) {
+            $buktiWA = asset('storage/bukti_WA/') . ('/') . $this->buktiWA;
+        } else  $buktiWA = "none";
+
+        if ($fotoKtm != null) {
+            $fotoKtm = asset('storage/foto_ktm/') . ('/') . $this->fotoKtm;
+        } else $fotoKtm = "none";
+
         return
             [
                 'id' => $this->id,
                 'namaTim' => $this->namaTim,
-                'buktiPembayaran' => $this->buktiPembayaran,
-                'phoneNumber' => $this->phoneNumber,
+                'ketua' => $this->ketua,
+                'buktiPembayaran' => $buktiPembayaran,
+                'buktiWA' => $buktiWA,
+                'fotoKTM' => $fotoKtm,
+                'jumlahMember' => $this->jumlahMember,
+                'tokenID' => $this->tokenID,
             ];
     }
 }

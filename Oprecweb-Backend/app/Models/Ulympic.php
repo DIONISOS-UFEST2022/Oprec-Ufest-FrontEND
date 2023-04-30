@@ -13,12 +13,16 @@ class Ulympic extends Model
 
     protected $fillable = [
         'namaTim',
-        'phoneNumber',
+        'ketua',
         'buktiPembayaran',
+        'buktiWA',
+        'fotoKtm',
+        'jumlahMember',
+        'tokenID',
     ];
 
     public function timMobileLegend()
     {
-        return $this->hasMany(TimMobileLegend::class, 'namaTim', 'namaTim');
+        return $this->hasMany(TimMobileLegend::class, 'tokenID', 'tokenID');
     }
 }

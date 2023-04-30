@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('is_panitia_form_actives');
+        Schema::dropIfExists('is_panitia_form_active');
     }
 };

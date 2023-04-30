@@ -17,8 +17,12 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('namaTim')->unique();
-            $table->string("buktiPembayaran")->unique();
-            $table->string("phoneNumber")->unique();
+            $table->string('ketua')->default('none');
+            $table->string("buktiPembayaran")->nullable();
+            $table->string('fotoKtm')->nullable();
+            $table->string("buktiWA")->nullable();
+            $table->smallInteger('jumlahMember');
+            $table->string('tokenID')->nullable();
         });
     }
 

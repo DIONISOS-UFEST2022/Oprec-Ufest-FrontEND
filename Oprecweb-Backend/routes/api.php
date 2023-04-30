@@ -12,7 +12,7 @@ use App\Http\Controllers\PanitiaController;
 use App\Http\Controllers\TimMobileLegendController;
 use App\Http\Controllers\UlympicController;
 use App\Http\Controllers\VerifyEmailController;
-use App\Models\TimMobileLegend;
+use App\Models\Ulympic;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +58,7 @@ Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, 'verify']
 
 //Ulympic
 Route::get('/spreadsheet', [GoogleSheetController::class, 'initMlTeam']);
+Route::get('ulympic/find/{token}', [UlympicController::class, 'showTimByToken']);
 Route::apiResource('ulympic', UlympicController::class);
 Route::apiResource('timmobilelegend', TimMobileLegendController::class);
 Route::get('/spreadsheet/ML', [GoogleSheetController::class, 'initMlTeam']);

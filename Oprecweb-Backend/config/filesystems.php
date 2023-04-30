@@ -51,12 +51,17 @@ return [
 
         'foto_ktm' => [
             'driver' => 'local',
-            'root' => storage_path('app/foto_ktm'),
+            'root' => storage_path('app\public\foto_ktm'),
         ],
 
         'bukti_pembayaran' => [
             'driver' => 'local',
-            'root' => storage_path('app/bukti_pembayaran'),
+            'root' => storage_path('app\public\bukti_pembayaran'),
+        ],
+
+        'bukti_WA' => [
+            'driver' => 'local',
+            'root' => storage_path('app\public\bukti_WA'),
         ],
 
         'info' => [

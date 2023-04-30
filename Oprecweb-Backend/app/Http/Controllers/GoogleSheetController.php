@@ -26,7 +26,7 @@ class GoogleSheetController extends Controller
             } else {
                 $imgLink = $value['vaccine_certificate'];
             }
-            
+
             $arr[] =
                 [
                     $value["nim"],
@@ -71,7 +71,7 @@ class GoogleSheetController extends Controller
         } else {
             $imgLink = $panitia->vaccine_certificate;
         }
-        
+
         $arr[] =
             [
                 $panitia->nim,
@@ -105,7 +105,6 @@ class GoogleSheetController extends Controller
         ], 201);
     }
 
-
     public function initMlTeam()
     {
 
@@ -117,29 +116,48 @@ class GoogleSheetController extends Controller
             return response()->json('table ulympic is empty!');
         }
 
-
         foreach ($ulympic as $uly) {
-            $tim = TimMobileLegend::where('namaTim', $uly['namaTim'])->get();
+
+            if ($uly['ketua'] == null) {
+                $uly['ketua'] = 'none';
+            }
+            if ($uly['buktiPembayaran'] == null) {
+                $uly['buktiPembayaran'] = 'none';
+            }
+            if ($uly['buktiWA'] == null) {
+                $uly['buktiWA'] = 'none';
+            }
+            if ($uly['fotoKtm'] == null) {
+                $uly['fotoKtm'] = 'none';
+            }
+
+            $tim = TimMobileLegend::where('tokenID', $uly['tokenID'])->get();
             if (count($tim) == 0) {
+
                 $arr[] = [
                     $uly['namaTim'],
-                    $uly['phoneNumber'],
+                    $uly['ketua'],
                     $uly['buktiPembayaran'],
+                    $uly['buktiWA'],
+                    $uly['fotoKtm'],
                 ];
             }
             foreach ($tim as $member) {
 
                 $arr[] = [
                     $uly['namaTim'],
-                    $uly['phoneNumber'],
+                    $uly['ketua'],
                     $uly['buktiPembayaran'],
-                    $member['ketua'],
+                    $uly['buktiWA'],
+                    $uly['fotoKtm'],
+
                     $member['nama'],
+                    $member['phoneNumber'],
+                    $member['jurusan'],
                     $member['jurusan'],
                     $member['angkatan'],
                     $member['userID'],
                     $member['userName'],
-                    $member['fotoKtm'],
                     $member['diterima'],
                 ];
             }
